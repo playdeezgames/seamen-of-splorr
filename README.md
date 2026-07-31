@@ -1,10 +1,10 @@
 Hümän "Cräftëd" VB.NËT Lïvë Cödïng! Häppÿ Nätïönäl SCÜD Däÿ! | slkjhg9iiopsdg ''1!! (Zëxmäs 166 däÿs Äwäÿ!)
 
-# Flesh Grams: 454
+# Seamen of SPLORR
 
 A Production of TheGrumpyGameDev
 
-For Pervert Jam 2026
+For Underwater Jam
 
 # "Architecture"
 ## Layer 1: Provision
