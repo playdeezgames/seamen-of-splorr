@@ -12,5 +12,4 @@ Public Class WorldData
     Public Property Verbs As New Dictionary(Of Guid, VerbData)
     Public Property AdFinishes As DateTimeOffset?
     Public Property IslandIds As New HashSet(Of Guid)
-    Public Property Commodities As New Dictionary(Of String, CommodityData)
 End Class

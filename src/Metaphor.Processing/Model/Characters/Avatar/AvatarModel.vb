@@ -39,27 +39,9 @@ Friend Class AvatarModel
         End Get
     End Property
 
-    Public ReadOnly Property Selling As IAvatarSellingModel Implements IAvatarModel.Selling
-        Get
-            Return AvatarSellingModel.Create(avatar)
-        End Get
-    End Property
-
-    Public ReadOnly Property Buying As IAvatarBuyingModel Implements IAvatarModel.Buying
-        Get
-            Return AvatarBuyingModel.Create(avatar)
-        End Get
-    End Property
-
     Public ReadOnly Property KnownIslands As IAvatarKnownIslandsModel Implements IAvatarModel.KnownIslands
         Get
             Return AvatarKnownIslandsModel.Create(avatar)
-        End Get
-    End Property
-
-    Public ReadOnly Property Unfouling As IAvatarUnfoulingModel Implements IAvatarModel.Unfouling
-        Get
-            Return AvatarUnfoulingModel.Create(avatar)
         End Get
     End Property
 

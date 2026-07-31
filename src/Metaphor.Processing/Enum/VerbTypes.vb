@@ -1,6 +1,5 @@
 ﻿Friend Module VerbTypes
     Friend Const ACCEPT_DELIVERY As String = NameOf(ACCEPT_DELIVERY)
-    Friend Const BUY As String = NameOf(BUY)
     Friend Const DELIVER_PACKAGE As String = NameOf(DELIVER_PACKAGE)
     Friend Const DISEMBARK As String = NameOf(DISEMBARK)
     Friend Const DOCK As String = NameOf(DOCK)
@@ -8,12 +7,9 @@
     Friend Const EMBARK As String = NameOf(EMBARK)
     Friend Const HEAD_FOR_KNOWN_ISLAND As String = NameOf(HEAD_FOR_KNOWN_ISLAND)
     Friend Const MOVE As String = NameOf(MOVE)
-    Friend Const PRICES As String = NameOf(PRICES)
-    Friend Const SELL As String = NameOf(SELL)
     Friend Const SET_HEADING As String = NameOf(SET_HEADING)
     Friend Const SET_SPEED As String = NameOf(SET_SPEED)
     Friend Const STOW As String = NameOf(STOW)
     Friend Const TAKE As String = NameOf(TAKE)
     Friend Const UNDOCK As String = NameOf(UNDOCK)
-    Friend Const UNFOUL As String = NameOf(UNFOUL)
 End Module

@@ -32,12 +32,6 @@ Friend Class Location
         End Get
     End Property
 
-    Public ReadOnly Property IslandCommodities(commodityType As String) As IIslandCommodity Implements ILocation.IslandCommodities
-        Get
-            Return IslandCommodity.Create(World, _data, EntityId, commodityType)
-        End Get
-    End Property
-
     Protected Overrides ReadOnly Property Data As LocationData
         Get
             Return _data.Locations(EntityId)
@@ -91,12 +85,5 @@ Friend Class Location
 
     Public Function HasOtherCharacters(character As ICharacter) As Boolean Implements ILocation.HasOtherCharacters
         Return Data.CharacterIds.Any(Function(x) x <> character.EntityId)
-    End Function
-
-    Public Function CreateCommodity(commodityType As String, Optional initializer As IslandCommodityInitializer = Nothing) As IIslandCommodity Implements ILocation.CreateCommodity
-        Data.IslandCommodities(commodityType) = New IslandCommodityData
-        Dim result = IslandCommodities(commodityType)
-        initializer?.Invoke(result)
-        Return result
     End Function
 End Class

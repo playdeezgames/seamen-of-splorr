@@ -60,18 +60,6 @@ Public Class World
         End Get
     End Property
 
-    Public ReadOnly Property Commodities(commodityType As String) As ICommodity Implements IWorld.Commodities
-        Get
-            Return Commodity.Create(Me, Data, commodityType)
-        End Get
-    End Property
-
-    Public ReadOnly Property CommodityIds As IEnumerable(Of String) Implements IWorld.CommodityIds
-        Get
-            Return Data.Commodities.Keys
-        End Get
-    End Property
-
     Private ReadOnly persister As IPersister
 
     Public Async Function Save(filename As String) As Task Implements IWorld.Save
@@ -119,18 +107,6 @@ Public Class World
     Public Sub AddIsland(island As ILocation) Implements IWorld.AddIsland
         Data.IslandIds.Add(island.EntityId)
     End Sub
-
-    Public Function CreateCommodity(commodityType As String, name As String, Optional initializer As CommodityInitializer = Nothing) As ICommodity Implements IWorld.CreateCommodity
-        Data.Commodities.Add(
-            commodityType,
-            New CommodityData With
-            {
-                .name = name
-            })
-        Dim result = Commodities(commodityType)
-        initializer?.Invoke(result)
-        Return result
-    End Function
 
     Public Function GetLocation(locationId As Guid) As ILocation Implements IWorld.GetLocation
         Return Location.Create(Me, Data, locationId)

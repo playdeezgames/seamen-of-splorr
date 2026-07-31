@@ -8,19 +8,8 @@ Friend Module FeatureVerbExtensions
 
     Private ReadOnly canPerformTable As New Dictionary(Of String, CanPerformHandler) From
         {
-            {VerbTypes.ACCEPT_DELIVERY, AddressOf CanAcceptDelivery},
-            {VerbTypes.SELL, AddressOf CanSell},
-            {VerbTypes.UNFOUL, AddressOf CanUnfoul}
+            {VerbTypes.ACCEPT_DELIVERY, AddressOf CanAcceptDelivery}
         }
-
-    Private Function CanUnfoul(verb As IVerb, feature As IFeature) As Boolean
-        Return Not verb.World.Avatar.GetShip().IsDimensionMinimum(Dimensions.FOULING)
-    End Function
-
-    Private Function CanSell(verb As IVerb, feature As IFeature) As Boolean
-        Dim itemTypes As New HashSet(Of String)(verb.World.Avatar.GetShip().GetCargoHold().Inventory.ItemStacks.Select(Function(x) x.ItemType))
-        Return feature.ItemTypes.Any(Function(x) itemTypes.Contains(x))
-    End Function
 
     Private Function CanAcceptDelivery(verb As IVerb, feature As IFeature) As Boolean
         Return Not verb.World.Avatar.HasTag(Tags.DELIVERING)
@@ -38,47 +27,8 @@ Friend Module FeatureVerbExtensions
     Private ReadOnly performTable As New Dictionary(Of String, PerformHandler) From
         {
             {VerbTypes.MOVE, AddressOf HandleMove},
-            {VerbTypes.ACCEPT_DELIVERY, AddressOf HandleAcceptDelivery},
-            {VerbTypes.SELL, AddressOf HandleSell},
-            {VerbTypes.BUY, AddressOf HandleBuy},
-            {VerbTypes.PRICES, AddressOf HandlePrices},
-            {VerbTypes.UNFOUL, AddressOf HandleUnfoul}
+            {VerbTypes.ACCEPT_DELIVERY, AddressOf HandleAcceptDelivery}
         }
-
-    Private Sub HandleUnfoul(verb As IVerb, feature As IFeature)
-        Dim world = verb.World
-        Dim avatar = world.Avatar
-        Dim island = avatar.Location
-        Dim jools = avatar.Location.GetUnfoulingPrice()
-        world.AddMessage($"{avatar.Name}'s ship is currently {avatar.GetShip().GetFoulingPercent():f0}% fouled.")
-        world.AddMessage($"The price will be {jools:f2}.")
-        avatar.SetTag(Tags.UNFOULING)
-    End Sub
-
-    Private Sub HandlePrices(verb As IVerb, feature As IFeature)
-        Dim world = verb.World
-        world.ClearMessages()
-        world.AddMessage($"Prices on {feature.Location.Name}:")
-        For Each itemType In feature.ItemTypes
-            world.AddMessage($"- {feature.GetItemTypeName(itemType)} (Buying @ {feature.GetUnitBuyPrice(itemType):f4}, Selling @ {feature.GetUnitSellPrice(itemType):f4})")
-        Next
-    End Sub
-
-    Private Sub HandleBuy(verb As IVerb, feature As IFeature)
-        Dim world = verb.World
-        Dim avatar = world.Avatar
-        world.AddMessage($"{avatar.Name} is buying at the market.")
-        world.AddMessage($"Jools: {avatar.GetJools():f2}")
-        avatar.SetTag(Tags.BUYING)
-    End Sub
-
-    Private Sub HandleSell(verb As IVerb, feature As IFeature)
-        Dim world = verb.World
-        Dim avatar = world.Avatar
-        world.AddMessage($"{avatar.Name} is selling at the market.")
-        world.AddMessage($"Jools: {avatar.GetJools():f2}")
-        avatar.SetTag(Tags.SELLING)
-    End Sub
 
     Private Sub HandleAcceptDelivery(verb As IVerb, feature As IFeature)
         Dim world = verb.World

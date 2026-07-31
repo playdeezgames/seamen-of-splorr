@@ -48,14 +48,4 @@ Friend Module IslandExtensions
     Private Function GenerateName(island As ILocation) As String
         Return "Nacho Mama"
     End Function
-    <Extension>
-    Friend Function GetMarket(island As ILocation) As IFeature
-        Return island.Features.SingleOrDefault(Function(x) x.EntityType = FeatureTypes.MARKET)
-    End Function
-    <Extension>
-    Friend Function GetUnfoulingPrice(island As ILocation) As Double
-        Dim fouling = island.World.Avatar.GetShip().GetDimension(Dimensions.FOULING)
-        Dim labor = fouling * UNFOULING_LABOR_FACTOR
-        Return island.IslandCommodities(CommodityTypes.LABOUR).MarketPrice * labor
-    End Function
 End Module

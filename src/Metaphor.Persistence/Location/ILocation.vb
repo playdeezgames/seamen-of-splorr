@@ -8,6 +8,4 @@ Public Interface ILocation
     Function GetOtherCharacters(character As ICharacter) As IEnumerable(Of ICharacter)
     Function HasOtherCharacters(character As ICharacter) As Boolean
     ReadOnly Property Characters As IEnumerable(Of ICharacter)
-    Function CreateCommodity(commodityType As String, Optional initializer As IslandCommodityInitializer = Nothing) As IIslandCommodity
-    ReadOnly Property IslandCommodities(commodityType As String) As IIslandCommodity
 End Interface
