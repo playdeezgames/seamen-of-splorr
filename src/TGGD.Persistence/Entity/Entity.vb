@@ -14,6 +14,8 @@ Public MustInherit Class Entity(Of TData As EntityData)
         Data.Dimensions.Clear()
         Data.Metadatas.Clear()
         Data.Tags.Clear()
+        Data.Yokes.Clear()
+        Data.Yokages.Clear()
     End Sub
 
     Public Sub SetMetadata(metadataId As String, metadataValue As String) Implements IEntity.SetMetadata
@@ -216,5 +218,44 @@ Public MustInherit Class Entity(Of TData As EntityData)
 
     Public Function IsDimensionMaximum(dimensionId As String) As Boolean Implements IEntity.IsDimensionMaximum
         Return GetDimension(dimensionId) = GetDimensionMaximum(dimensionId)
+    End Function
+
+    Public Sub SetYoke(yokeId As String, identifier As Guid) Implements IEntity.SetYoke
+        Data.Yokes.Add(yokeId, identifier)
+    End Sub
+
+    Public Function GetYoke(yokeId As String) As Guid? Implements IEntity.GetYoke
+        Dim result As Guid
+        If Data.Yokes.TryGetValue(yokeId, result) Then
+            Return result
+        End If
+        Return Nothing
+    End Function
+
+    Public Sub ClearYoke(yokeId As String) Implements IEntity.ClearYoke
+        Data.Yokes.Remove(yokeId)
+    End Sub
+
+    Private ReadOnly Property Yokages(yokageId As String) As HashSet(Of Guid)
+        Get
+            Dim value As HashSet(Of Guid) = Nothing
+            If Not Data.Yokages.TryGetValue(yokageId, value) Then
+                value = New HashSet(Of Guid)
+                Data.Yokages.Add(yokageId, value)
+            End If
+            Return value
+        End Get
+    End Property
+
+    Public Sub AddToYokage(yokageId As String, identifier As Guid) Implements IEntity.AddToYokage
+        Yokages(yokageId).Add(identifier)
+    End Sub
+
+    Public Sub RemoveFromYokage(yokageId As String, identifier As Guid) Implements IEntity.RemoveFromYokage
+        Yokages(yokageId).Remove(identifier)
+    End Sub
+
+    Public Function GetYokage(yokageId As String) As IEnumerable(Of Guid) Implements IEntity.GetYokage
+        Return Yokages(yokageId)
     End Function
 End Class

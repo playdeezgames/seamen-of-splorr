@@ -38,4 +38,10 @@ Public Interface IEntity
     Function IsCounterMaximum(counterId As String) As Boolean
     Function IsDimensionMinimum(dimensionId As String) As Boolean
     Function IsDimensionMaximum(dimensionId As String) As Boolean
+    Sub SetYoke(yokeId As String, identifier As Guid)
+    Function GetYoke(yokeId As String) As Guid?
+    Sub ClearYoke(yokeId As String)
+    Sub AddToYokage(yokageId As String, identifier As Guid)
+    Sub RemoveFromYokage(yokageId As String, identifier As Guid)
+    Function GetYokage(yokageId As String) As IEnumerable(Of Guid)
 End Interface

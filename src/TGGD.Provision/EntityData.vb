@@ -7,4 +7,6 @@ Public MustInherit Class EntityData
     Public Property DimensionMinimums As New Dictionary(Of String, Double)(StringComparer.InvariantCultureIgnoreCase)
     Public Property DimensionMaximums As New Dictionary(Of String, Double)(StringComparer.InvariantCultureIgnoreCase)
     Public Property Tags As New HashSet(Of String)(StringComparer.InvariantCultureIgnoreCase)
+    Public Property Yokes As New Dictionary(Of String, Guid)
+    Public Property Yokages As New Dictionary(Of String, HashSet(Of Guid))
 End Class
