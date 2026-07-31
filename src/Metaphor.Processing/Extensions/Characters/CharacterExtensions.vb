@@ -126,4 +126,13 @@ Friend Module CharacterExtensions
     Friend Function IsDead(character As ICharacter) As Boolean
         Return character.IsCounterMinimum(Counters.HEALTH)
     End Function
+    <Extension>
+    Friend Sub SetShip(character As ICharacter, ship As ILocation)
+        character.SetYoke(YokeTypes.SHIP, ship.EntityId)
+    End Sub
+    <Extension>
+    Friend Function GetShip(character As ICharacter) As ILocation
+        Dim identifier = character.GetYoke(YokeTypes.SHIP)
+        Return If(identifier.HasValue, character.World.GetLocation(identifier.Value), Nothing)
+    End Function
 End Module

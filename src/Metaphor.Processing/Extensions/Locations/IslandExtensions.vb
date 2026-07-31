@@ -54,7 +54,7 @@ Friend Module IslandExtensions
     End Function
     <Extension>
     Friend Function GetUnfoulingPrice(island As ILocation) As Double
-        Dim fouling = island.World.Avatar.Ship.GetDimension(Dimensions.FOULING)
+        Dim fouling = island.World.Avatar.GetShip().GetDimension(Dimensions.FOULING)
         Dim labor = fouling * UNFOULING_LABOR_FACTOR
         Return island.IslandCommodities(CommodityTypes.LABOUR).MarketPrice * labor
     End Function

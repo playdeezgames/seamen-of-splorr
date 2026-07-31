@@ -11,7 +11,7 @@ Friend Class IslandModel
 
     Public ReadOnly Property Name As String Implements IIslandModel.Name
         Get
-            Dim ship = island.World.Avatar.Ship
+            Dim ship = island.World.Avatar.GetShip()
             Return $"{island.GetIslandName()}(Distance: {island.DistanceTo(ship):f2}, Heading: {ship.HeadingTo(island):f2})"
         End Get
     End Property
@@ -20,7 +20,7 @@ Friend Class IslandModel
         Dim world = island.World
         Dim avatar = world.Avatar
         avatar.ClearTag(Tags.CHOOSING_KNOWN_ISLAND)
-        Dim ship = avatar.Ship
+        Dim ship = avatar.GetShip()
         ship.SetHeading(ship.HeadingTo(island))
         world.AddMessage($"{avatar.Name} heads for {island.GetIslandName()} by setting a heading of {ship.GetHeading():f2}.")
         avatar.Look()

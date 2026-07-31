@@ -33,15 +33,6 @@ Friend Class Character
         End Get
     End Property
 
-    Public Property Ship As ILocation Implements ICharacter.Ship
-        Get
-            Return Persistence.Location.Create(World, _data, Data.ShipId)
-        End Get
-        Set(value As ILocation)
-            Data.ShipId = value?.EntityId
-        End Set
-    End Property
-
     Public ReadOnly Property KnownIslands As IEnumerable(Of ILocation) Implements ICharacter.KnownIslands
         Get
             Return Data.KnownIslandIds.Select(Function(x) Persistence.Location.Create(World, _data, x))

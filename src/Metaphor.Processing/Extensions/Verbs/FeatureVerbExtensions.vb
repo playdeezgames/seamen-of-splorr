@@ -14,11 +14,11 @@ Friend Module FeatureVerbExtensions
         }
 
     Private Function CanUnfoul(verb As IVerb, feature As IFeature) As Boolean
-        Return Not verb.World.Avatar.Ship.IsDimensionMinimum(Dimensions.FOULING)
+        Return Not verb.World.Avatar.GetShip().IsDimensionMinimum(Dimensions.FOULING)
     End Function
 
     Private Function CanSell(verb As IVerb, feature As IFeature) As Boolean
-        Dim itemTypes As New HashSet(Of String)(verb.World.Avatar.Ship.GetCargoHold().Inventory.ItemStacks.Select(Function(x) x.ItemType))
+        Dim itemTypes As New HashSet(Of String)(verb.World.Avatar.GetShip().GetCargoHold().Inventory.ItemStacks.Select(Function(x) x.ItemType))
         Return feature.ItemTypes.Any(Function(x) itemTypes.Contains(x))
     End Function
 
@@ -50,7 +50,7 @@ Friend Module FeatureVerbExtensions
         Dim avatar = world.Avatar
         Dim island = avatar.Location
         Dim jools = avatar.Location.GetUnfoulingPrice()
-        world.AddMessage($"{avatar.Name}'s ship is currently {avatar.Ship.GetFoulingPercent():f0}% fouled.")
+        world.AddMessage($"{avatar.Name}'s ship is currently {avatar.GetShip().GetFoulingPercent():f0}% fouled.")
         world.AddMessage($"The price will be {jools:f2}.")
         avatar.SetTag(Tags.UNFOULING)
     End Sub

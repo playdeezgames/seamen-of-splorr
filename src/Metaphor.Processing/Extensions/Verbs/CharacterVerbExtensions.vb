@@ -17,7 +17,7 @@ Friend Module CharacterVerbExtensions
 
     Private Function CanHeadForKnownIsland(verb As IVerb, character As ICharacter) As Boolean
         Dim avatar = verb.World.Avatar
-        Return Not avatar.Ship.IsMoored AndAlso avatar.KnownIslands.Any
+        Return Not avatar.GetShip().IsMoored AndAlso avatar.KnownIslands.Any
     End Function
 
     <Extension>

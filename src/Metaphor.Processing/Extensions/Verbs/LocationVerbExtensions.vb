@@ -101,7 +101,7 @@ Friend Module LocationVerbExtensions
     Private Sub HandleMove(verb As IVerb, location As ILocation)
         Dim world = verb.World
         Dim avatar = world.Avatar
-        Dim ship = avatar.Ship
+        Dim ship = avatar.GetShip()
         Dim speed = ship.GetSpeed()
         Dim fouling = speed * speed
         Dim speedMultiplier = 1.0 - ship.GetDimension(Dimensions.FOULING) / ship.GetDimensionMaximum(Dimensions.FOULING) / 2
@@ -118,11 +118,11 @@ Friend Module LocationVerbExtensions
     End Sub
 
     Private Sub HandleSetSpeed(verb As IVerb, location As ILocation)
-        verb.World.Avatar.Ship.SetTags(Tags.SETTING_SPEED)
+        verb.World.Avatar.GetShip().SetTags(Tags.SETTING_SPEED)
     End Sub
 
     Private Sub HandleSetHeading(verb As IVerb, location As ILocation)
-        verb.World.Avatar.Ship.SetTags(Tags.SETTING_HEADING)
+        verb.World.Avatar.GetShip().SetTags(Tags.SETTING_HEADING)
     End Sub
 
     <Extension>

@@ -23,7 +23,7 @@ Friend Class AvatarModel
 
     Public ReadOnly Property Ship As IShipModel Implements IAvatarModel.Ship
         Get
-            Return ShipModel.Create(avatar.Ship)
+            Return ShipModel.Create(avatar.GetShip())
         End Get
     End Property
 

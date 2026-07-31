@@ -16,7 +16,7 @@ Friend Class AvatarSellingModel
 
     Public ReadOnly Property ItemStacks As IEnumerable(Of IItemStackModel) Implements IAvatarSellingModel.ItemStacks
         Get
-            Return avatar.Ship.GetCargoHold().Inventory.ItemStacks.Select(AddressOf ItemStackModel.Create)
+            Return avatar.GetShip().GetCargoHold().Inventory.ItemStacks.Select(AddressOf ItemStackModel.Create)
         End Get
     End Property
 

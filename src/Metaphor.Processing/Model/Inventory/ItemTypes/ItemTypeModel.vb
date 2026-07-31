@@ -37,7 +37,7 @@ Friend Class ItemTypeModel
         avatar.ChangeDimension(Dimensions.JOOLS, -jools)
         market.Buy(itemType, quantity)
         Utility.Repeat(quantity, Sub()
-                                     avatar.Ship.GetCargoHold().Inventory.CreateItemOfType(itemType)
+                                     avatar.GetShip().GetCargoHold().Inventory.CreateItemOfType(itemType)
                                  End Sub)
         world.ClearMessages()
         world.AddMessage($"{avatar.Name} buys {quantity} {Name} for {jools:f2} jools.")

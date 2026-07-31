@@ -131,4 +131,8 @@ Public Class World
         initializer?.Invoke(result)
         Return result
     End Function
+
+    Public Function GetLocation(locationId As Guid) As ILocation Implements IWorld.GetLocation
+        Return Location.Create(Me, Data, locationId)
+    End Function
 End Class

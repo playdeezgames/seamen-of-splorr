@@ -26,7 +26,7 @@ Friend Class AvatarUnfoulingModel
         Dim world = avatar.World
         world.AddMessage($"{avatar.Name} pays {price:f2} jools to have the ship completely unfouled.")
         avatar.ChangeDimension(Dimensions.JOOLS, -price)
-        avatar.Ship.SetDimension(Dimensions.FOULING, avatar.Ship.GetDimensionMinimum(Dimensions.FOULING))
+        avatar.GetShip().SetDimension(Dimensions.FOULING, avatar.GetShip().GetDimensionMinimum(Dimensions.FOULING))
         avatar.ClearTag(Tags.UNFOULING)
     End Sub
 

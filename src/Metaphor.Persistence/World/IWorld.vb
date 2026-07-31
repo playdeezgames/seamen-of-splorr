@@ -14,4 +14,5 @@ Public Interface IWorld
     Function CreateCommodity(commodityType As String, name As String, Optional initializer As CommodityInitializer = Nothing) As ICommodity
     ReadOnly Property Commodities(commodityType As String) As ICommodity
     ReadOnly Property CommodityIds As IEnumerable(Of String)
+    Function GetLocation(locationId As Guid) As ILocation
 End Interface

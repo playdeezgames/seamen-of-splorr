@@ -31,7 +31,7 @@ Friend Module ShipInitializer
     Private Function InitializeAvatar(context As IInitializationContext) As CharacterInitializer
         Return Sub(character)
                    character.World.Avatar = character
-                   character.Ship = character.Location
+                   character.SetShip(character.Location)
                    character.InitializeCounter(Counters.FLESH_GRAMS, 454, 0, 454)
                    character.InitializeCounter(Counters.HEALTH, 100, 0, 100)
                    character.InitializeCounter(Counters.SATIETY, 100, 0, 100)
