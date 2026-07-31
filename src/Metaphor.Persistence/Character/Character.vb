@@ -1,0 +1,70 @@
+﻿Imports Metaphor.Provision
+
+Friend Class Character
+    Inherits InventoriedEntity(Of CharacterData)
+    Implements ICharacter
+
+    Private Sub New(world As IWorld, data As WorldData, characterId As Guid)
+        MyBase.New(world, data, characterId)
+    End Sub
+
+    Public Property Location As ILocation Implements ICharacter.Location
+        Get
+            Return Persistence.Location.Create(World, _data, Data.LocationId)
+        End Get
+        Set(value As ILocation)
+            If value.EntityId <> Location.EntityId Then
+                _data.Locations(Location.EntityId).CharacterIds.Remove(EntityId)
+                Data.LocationId = value.EntityId
+                _data.Locations(Location.EntityId).CharacterIds.Add(EntityId)
+            End If
+        End Set
+    End Property
+
+    Public Overrides ReadOnly Property Exists As Boolean
+        Get
+            Return _data.Characters.ContainsKey(EntityId)
+        End Get
+    End Property
+
+    Public ReadOnly Property Pronouns As String Implements ICharacter.Pronouns
+        Get
+            Return Data.Pronouns
+        End Get
+    End Property
+
+    Public Property Ship As ILocation Implements ICharacter.Ship
+        Get
+            Return Persistence.Location.Create(World, _data, Data.ShipId)
+        End Get
+        Set(value As ILocation)
+            Data.ShipId = value?.EntityId
+        End Set
+    End Property
+
+    Public ReadOnly Property KnownIslands As IEnumerable(Of ILocation) Implements ICharacter.KnownIslands
+        Get
+            Return Data.KnownIslandIds.Select(Function(x) Persistence.Location.Create(World, _data, x))
+        End Get
+    End Property
+
+    Protected Overrides ReadOnly Property Data As CharacterData
+        Get
+            Return _data.Characters(EntityId)
+        End Get
+    End Property
+
+    Public Overrides Sub Remove()
+        Inventory.Remove()
+        _data.Locations(Data.LocationId).CharacterIds.Remove(EntityId)
+        _data.Characters.Remove(EntityId)
+    End Sub
+
+    Public Sub AddKnownIsland(island As ILocation) Implements ICharacter.AddKnownIsland
+        Data.KnownIslandIds.Add(island.EntityId)
+    End Sub
+
+    Friend Shared Function Create(world As IWorld, data As WorldData, characterId As Guid?) As ICharacter
+        Return If(characterId.HasValue, New Character(world, data, characterId.Value), Nothing)
+    End Function
+End Class
