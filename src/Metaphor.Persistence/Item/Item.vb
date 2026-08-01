@@ -14,7 +14,7 @@ Friend Class Item
         End Get
         Set(value As IInventory)
             _data.Inventories(Data.InventoryId).ItemIds.Remove(EntityId)
-            Data.InventoryId = value.InventoryId
+            Data.InventoryId = value.EntityId
             _data.Inventories(Data.InventoryId).ItemIds.Add(EntityId)
         End Set
     End Property

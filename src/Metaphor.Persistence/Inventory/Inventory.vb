@@ -1,24 +1,12 @@
 ﻿Imports Metaphor.Provision
 
 Friend Class Inventory
+    Inherits MetaphorEntity(Of InventoryData)
     Implements IInventory
 
-    Private ReadOnly world As IWorld
-    Private ReadOnly _data As WorldData
-
     Public Sub New(world As IWorld, data As WorldData, inventoryId As Guid)
-        Me.world = world
-        Me._data = data
-        Me.InventoryId = inventoryId
+        MyBase.New(world, data, inventoryId)
     End Sub
-
-    Private ReadOnly Property Data As InventoryData
-        Get
-            Return _data.Inventories(InventoryId)
-        End Get
-    End Property
-
-    Public ReadOnly Property InventoryId As Guid Implements IInventory.InventoryId
 
     Public ReadOnly Property HasItems As Boolean Implements IInventory.HasItems
         Get
@@ -38,6 +26,25 @@ Friend Class Inventory
         End Get
     End Property
 
+    Public Overrides ReadOnly Property Exists As Boolean
+        Get
+            Throw New NotImplementedException()
+        End Get
+    End Property
+
+    Protected Overrides ReadOnly Property Data As InventoryData
+        Get
+            Return _data.Inventories(EntityId)
+        End Get
+    End Property
+
+    Public Overrides Sub Remove()
+        For Each item In Items
+            item.Remove()
+        Next
+        _data.Inventories.Remove(EntityId)
+    End Sub
+
     Friend Shared Function Create(world As IWorld, data As WorldData, inventoryId As Guid?) As IInventory
         Return If(inventoryId.HasValue, New Inventory(world, data, inventoryId.Value), Nothing)
     End Function
@@ -49,18 +56,11 @@ Friend Class Inventory
                 .Name = name,
                 .Flavor = flavor,
                 .EntityType = itemType,
-                .InventoryId = InventoryId
+                .InventoryId = EntityId
             }
         Data.ItemIds.Add(itemId)
         Dim result As IItem = Item.Create(world, _data, itemId)
         initializer?.Invoke(result)
         Return result
     End Function
-
-    Public Sub Remove() Implements IInventory.Remove
-        For Each item In Items
-            item.Remove()
-        Next
-        _data.Inventories.Remove(InventoryId)
-    End Sub
 End Class
