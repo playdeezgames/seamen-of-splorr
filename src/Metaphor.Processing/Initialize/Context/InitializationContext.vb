@@ -39,6 +39,12 @@ Friend Class InitializationContext
         End Get
     End Property
 
+    Public ReadOnly Property WorldDepth As Double Implements IInitializationContext.WorldDepth
+        Get
+            Return WORLD_DEPTH
+        End Get
+    End Property
+
     Friend Shared Function Create(chosenName As String, chosenPronouns As String) As IInitializationContext
         Return New InitializationContext(chosenName, chosenPronouns)
     End Function

@@ -104,11 +104,9 @@ Friend Module LocationVerbExtensions
         Dim ship = avatar.GetShip()
         Dim speed = ship.GetSpeed()
         Dim fouling = speed * speed
-        Dim speedMultiplier = 1.0 - ship.GetDimension(Dimensions.FOULING) / ship.GetDimensionMaximum(Dimensions.FOULING) / 2
-        ship.ChangeDimension(Dimensions.FOULING, fouling)
         Dim radians = ship.GetHeading() * Math.PI * 2 / HEADING_MAXIMUM
-        Dim deltaLongitude = speed * Math.Cos(radians) * speedMultiplier
-        Dim deltaLatitude = speed * Math.Sin(radians) * speedMultiplier
+        Dim deltaLongitude = speed * Math.Cos(radians)
+        Dim deltaLatitude = speed * Math.Sin(radians)
         Dim nextLongitude = ship.GetLongitude() + deltaLongitude
         Dim nextLatitude = ship.GetLatitude() + deltaLatitude
         ship.SetLongitude(nextLongitude)

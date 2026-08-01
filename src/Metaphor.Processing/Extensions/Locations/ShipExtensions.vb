@@ -7,7 +7,6 @@ Friend Module ShipExtensions
         Dim world = ship.World
         world.AddMessage($"Heading: {ship.GetHeading():f2}")
         world.AddMessage($"Speed: {ship.GetSpeed():f2}")
-        world.AddMessage($"Fouling: {ship.GetFoulingPercent():f2}%")
         ShowVisibleIslands(world, ship)
     End Sub
 
@@ -47,10 +46,6 @@ Friend Module ShipExtensions
     <Extension>
     Friend Function GetSpeed(ship As ILocation) As Double
         Return ship.GetDimension(Dimensions.SPEED)
-    End Function
-    <Extension>
-    Friend Function GetFoulingPercent(ship As ILocation) As Double
-        Return ship.GetDimension(Dimensions.FOULING) * 100.0 / ship.GetDimensionMaximum(Dimensions.FOULING)
     End Function
     <Extension>
     Friend Sub SetHeading(ship As ILocation, heading As Double)

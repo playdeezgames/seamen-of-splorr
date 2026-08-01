@@ -9,7 +9,7 @@ Friend Module ShipInitializer
                    ship.InitializeDimension(Dimensions.SPEED, SPEED_AHEAD_TWO_THIRDS, SPEED_FULL_STOP, SPEED_AHEAD_FLANK)
                    ship.InitializeDimension(Dimensions.LONGITUDE, context.WorldWidth / 2, 0.0, context.WorldWidth)
                    ship.InitializeDimension(Dimensions.LATITUDE, context.WorldHeight / 2, 0.0, context.WorldHeight)
-                   ship.InitializeDimension(Dimensions.FOULING, 0.0, 0.0, 50.0)
+                   ship.InitializeDimension(Dimensions.DEPTH, context.WorldDepth / 2, DEPTH_MINIMUM, context.WorldDepth)
                    ship.SetDimension(Dimensions.VISIBILITY, 10.0)
                    ship.CreateVerb(VerbTypes.MOVE, "Move", "Steady as she goes.")
                    ship.CreateVerb(VerbTypes.DOCK, "Dock", "You moor the ship to the pier.")

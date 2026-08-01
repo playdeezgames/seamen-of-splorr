@@ -5,6 +5,7 @@ Friend Interface IInitializationContext
     ReadOnly Property ChosenPronouns As String
     ReadOnly Property WorldWidth As Double
     ReadOnly Property WorldHeight As Double
+    ReadOnly Property WorldDepth As Double
     Property Ship As ILocation
     ReadOnly Property IslandGenerationAttempts As Integer
     ReadOnly Property MinimumIslandDistance As Double
