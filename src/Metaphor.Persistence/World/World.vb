@@ -54,7 +54,7 @@ Public Class World
         End Set
     End Property
 
-    Public ReadOnly Property Islands As IEnumerable(Of ILocation) Implements IWorld.Islands
+    Public ReadOnly Property Bubbles As IEnumerable(Of ILocation) Implements IWorld.Bubbles
         Get
             Return Data.IslandIds.Select(Function(x) Location.Create(Me, Data, x))
         End Get
@@ -104,7 +104,7 @@ Public Class World
         Return result
     End Function
 
-    Public Sub AddIsland(island As ILocation) Implements IWorld.AddIsland
+    Public Sub AddBubble(island As ILocation) Implements IWorld.AddBubble
         Data.IslandIds.Add(island.EntityId)
     End Sub
 

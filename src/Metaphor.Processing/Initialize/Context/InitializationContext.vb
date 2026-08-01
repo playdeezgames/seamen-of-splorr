@@ -29,17 +29,35 @@ Friend Class InitializationContext
 
     Public ReadOnly Property IslandGenerationAttempts As Integer Implements IInitializationContext.IslandGenerationAttempts
         Get
-            Return ISLAND_GENERATION_ATTEMPTS
+            Return BUBBLE_GENERATION_ATTEMPTS
         End Get
     End Property
 
     Public ReadOnly Property MinimumIslandDistance As Double Implements IInitializationContext.MinimumIslandDistance
         Get
-            Return MINIMUM_ISLAND_DISTANCE
+            Return MINIMUM_BUBBLE_DISTANCE
         End Get
     End Property
 
     Public ReadOnly Property WorldDepth As Double Implements IInitializationContext.WorldDepth
+        Get
+            Return WORLD_DEPTH
+        End Get
+    End Property
+
+    Public ReadOnly Property SnorkelDepth As Double Implements IInitializationContext.SnorkelDepth
+        Get
+            Return DEPTH_MINIMUM
+        End Get
+    End Property
+
+    Public ReadOnly Property MinimumBubbleDepth As Double Implements IInitializationContext.MinimumBubbleDepth
+        Get
+            Return DEPTH_MINIMUM
+        End Get
+    End Property
+
+    Public ReadOnly Property MaximumBubbleDepth As Double Implements IInitializationContext.MaximumBubbleDepth
         Get
             Return WORLD_DEPTH
         End Get

@@ -37,7 +37,7 @@ Friend Module LocationVerbExtensions
     End Function
 
     Private Function CanDock(verb As IVerb, ship As ILocation) As Boolean
-        Return Not ship.IsMoored AndAlso verb.World.Islands.Any(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
+        Return Not ship.IsMoored AndAlso verb.World.Bubbles.Any(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
     End Function
 
     Private Function CanMove(verb As IVerb, ship As ILocation) As Boolean
@@ -91,7 +91,7 @@ Friend Module LocationVerbExtensions
     End Sub
 
     Private Sub HandleDock(verb As IVerb, ship As ILocation)
-        Dim island = verb.World.Islands.Single(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
+        Dim island = verb.World.Bubbles.Single(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
         ship.MoorTo(island, "Disembark")
         island.MoorTo(ship, "Embark")
         island.SetTag(Tags.KNOWN)

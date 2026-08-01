@@ -26,5 +26,6 @@
   <Folder Name="/_STUFF/">
     <File Path="../README.md" />
     <File Path="../shippit.sh" />
+    <File Path="POEMS.md" />
   </Folder>
 </Solution>

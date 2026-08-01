@@ -35,7 +35,7 @@ Friend Module FeatureVerbExtensions
         Dim avatar = world.Avatar
         avatar.SetTag(Tags.DELIVERING)
         Dim origin = feature.Location
-        Dim destination = RNG.FromEnumerable(world.Islands.Where(Function(x) x.EntityId <> origin.EntityId))
+        Dim destination = RNG.FromEnumerable(world.Bubbles.Where(Function(x) x.EntityId <> origin.EntityId))
         destination.SetTag(Tags.KNOWN)
         avatar.AddKnownIsland(destination)
         Dim distance = origin.DistanceTo(destination)

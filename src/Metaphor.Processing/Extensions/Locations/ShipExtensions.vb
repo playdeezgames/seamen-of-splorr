@@ -5,15 +5,32 @@ Friend Module ShipExtensions
 
     Friend Sub DescribeShip(ship As ILocation)
         Dim world = ship.World
-        world.AddMessage($"Heading: {ship.GetHeading():f2}")
-        world.AddMessage($"Speed: {ship.GetSpeed():f2}")
+        world.AddMessage($"Heading: {ship.GetHeading():f2}°")
+        world.AddMessage($"Speed: {ship.GetSpeed():f2} knots")
+        world.AddMessage($"Depth: {ship.GetDepth():f2} fathoms")
+        world.AddMessage($"Hydroplane: {ship.DescribeHydroplane()}")
         ShowVisibleIslands(world, ship)
     End Sub
+    <Extension>
+    Private Function DescribeHydroplane(ship As ILocation) As String
+        Dim hydroplane = ship.GetHydroplane()
+        If HYDROPLANE > 0.0 Then
+            Return $"{hydroplane:f2}° Down Bubble"
+        ElseIf hydroplane < 0.0 Then
+            Return $"{hydroplane:f2}° Up Bubble"
+        Else
+            Return "Zero Bubble"
+        End If
+    End Function
+    <Extension>
+    Private Function GetHydroplane(ship As ILocation) As Double
+        Return ship.GetDimension(Dimensions.HYDROPLANE)
+    End Function
 
     Private Sub ShowVisibleIslands(world As IWorld, ship As ILocation)
         If ship.IsMoored Then Return
         Dim visibility = ship.GetVisibility()
-        Dim visibleIslands = world.Islands.Where(Function(x) x.IsVisibleTo(ship)).OrderBy(Function(x) x.DistanceTo(ship))
+        Dim visibleIslands = world.Bubbles.Where(Function(x) x.IsVisibleTo(ship)).OrderBy(Function(x) x.DistanceTo(ship))
         If visibleIslands.Any Then
             world.AddMessage("Visible Islands:")
             For Each visibleIsland In visibleIslands
@@ -46,6 +63,10 @@ Friend Module ShipExtensions
     <Extension>
     Friend Function GetSpeed(ship As ILocation) As Double
         Return ship.GetDimension(Dimensions.SPEED)
+    End Function
+    <Extension>
+    Friend Function GetDepth(ship As ILocation) As Double
+        Return ship.GetDimension(Dimensions.DEPTH)
     End Function
     <Extension>
     Friend Sub SetHeading(ship As ILocation, heading As Double)

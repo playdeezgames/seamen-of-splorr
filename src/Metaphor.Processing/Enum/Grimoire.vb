@@ -2,16 +2,18 @@
     Friend Const SAVE_FILENAME = "save.json"
     Friend Const HEADING_MINIMUM = 0.0
     Friend Const HEADING_MAXIMUM = 360.0
-    Friend Const SPEED_FULL_STOP = 0.0
-    Friend Const SPEED_AHEAD_ONE_THIRD = 0.3
-    Friend Const SPEED_AHEAD_TWO_THIRDS = 0.6
-    Friend Const SPEED_AHEAD_FULL = 0.9
-    Friend Const SPEED_AHEAD_FLANK = 1.0
+    Friend Const SPEED_FULL_STOP = 0.0 'knots
+    Friend Const SPEED_AHEAD_ONE_THIRD = 10.0 'knots
+    Friend Const SPEED_AHEAD_TWO_THIRDS = 20.0 'knots
+    Friend Const SPEED_AHEAD_FULL = 30.0 'knots
+    Friend Const SPEED_AHEAD_FLANK = 35.0 'knots
     Friend Const WORLD_WIDTH = 1000.0 'nautical miles
     Friend Const WORLD_HEIGHT = 1000.0 'nautical miles
     Friend Const WORLD_DEPTH = 1000.0 'fathoms
-    Friend Const ISLAND_GENERATION_ATTEMPTS = 500
-    Friend Const MINIMUM_ISLAND_DISTANCE = 50.0
-    Friend Const DOCKING_DISTANCE = 1.0
-    Friend Const DEPTH_MINIMUM = 10.0
+    Friend Const BUBBLE_GENERATION_ATTEMPTS = 500
+    Friend Const MINIMUM_BUBBLE_DISTANCE = 50.0 'nm
+    Friend Const DOCKING_DISTANCE = 1.0 'nm
+    Friend Const DEPTH_MINIMUM = 10.0 'fathom
+    Friend Const MINIMUM_HYDROPLANE = -20.0 'degrees
+    Friend Const MAXIMUM_HYDROPLANE = 20.0 'degrees
 End Module

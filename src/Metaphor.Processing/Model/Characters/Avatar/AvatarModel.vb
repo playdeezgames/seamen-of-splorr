@@ -45,6 +45,12 @@ Friend Class AvatarModel
         End Get
     End Property
 
+    Public ReadOnly Property Mode As String Implements IAvatarModel.Mode
+        Get
+            Return avatar.GetMode()
+        End Get
+    End Property
+
     Public Sub ShowStatus() Implements IAvatarModel.ShowStatus
         avatar.World.ClearMessages()
         avatar.ShowStatus()

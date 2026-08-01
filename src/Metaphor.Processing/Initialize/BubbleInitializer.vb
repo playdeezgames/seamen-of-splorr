@@ -2,23 +2,24 @@
 Imports Metaphor.Persistence
 Imports TGGD.Processing
 
-Friend Module IslandsInitializer
+Friend Module BubbleInitializer
     Friend Sub Initialize(world As IWorld, context As IInitializationContext)
         Dim islandCoordinates = GenerateCoordinates(context)
         Dim islandNames = GenerateNames(context, islandCoordinates.Count)
         Do While islandCoordinates.Count <> 0
             Dim name = islandNames.Dequeue
             Dim coordinate = islandCoordinates.Dequeue
-            Dim island = world.CreateLocation(LocationTypes.ISLAND, name, $"This island is called `{name}`.", InitializeIsland(coordinate))
-            world.AddIsland(island)
+            Dim island = world.CreateLocation(LocationTypes.ISLAND, name, $"This island is called `{name}`.", InitializeBubble(context, coordinate))
+            world.AddBubble(island)
         Loop
     End Sub
 
-    Private Function InitializeIsland(coordinate As (Longitude As Double, Latitude As Double)) As LocationInitializer
+    Private Function InitializeBubble(context As IInitializationContext, coordinate As (Longitude As Double, Latitude As Double)) As LocationInitializer
         Return Sub(island)
                    island.SetDimension(Dimensions.VISIBILITY, RNG.RollDice("3d8"))
                    island.SetDimension(Dimensions.LONGITUDE, coordinate.Longitude)
                    island.SetDimension(Dimensions.LATITUDE, coordinate.Latitude)
+                   island.SetDimension(Dimensions.DEPTH, RNG.FromRange(context.MinimumBubbleDepth, context.MaximumBubbleDepth))
                    island.CreateVerb(VerbTypes.EMBARK, "Embark", "You step onto the ship.")
                    island.CreateJobBoard()
                    island.InitializeCommodities()

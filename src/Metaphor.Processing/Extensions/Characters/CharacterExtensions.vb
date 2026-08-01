@@ -139,4 +139,16 @@ Friend Module CharacterExtensions
     Friend Sub AddKnownIsland(character As ICharacter, island As ILocation)
         character.AddToYokage(YokageTypes.KNOWN_ISLANDS, island.EntityId)
     End Sub
+    <Extension>
+    Friend Sub SetMode(character As ICharacter, mode As String)
+        character.SetMetadata(Metadatas.MODE, mode)
+    End Sub
+    <Extension>
+    Friend Function GetMode(character As ICharacter) As String
+        Return If(character.TryGetMetadata(Metadatas.MODE), String.Empty)
+    End Function
+    <Extension>
+    Friend Sub ClearMode(character As ICharacter)
+        character.SetMetadata(Metadatas.MODE, Nothing)
+    End Sub
 End Module

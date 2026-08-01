@@ -7,4 +7,5 @@
     ReadOnly Property IsDead As Boolean
     ReadOnly Property CanStow As Boolean
     ReadOnly Property KnownIslands As IAvatarKnownIslandsModel
+    ReadOnly Property Mode As String
 End Interface
