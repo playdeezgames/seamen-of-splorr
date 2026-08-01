@@ -25,4 +25,12 @@ Friend Module FeatureExtensions
     Friend Function GetItemTypeName(market As IFeature, itemType As String) As String
         Return InventoryExtensions.GetItemTypeName(itemType)
     End Function
+    <Extension>
+    Friend Sub SetDestination(feature As IFeature, location As ILocation)
+        feature.SetYoke(YokeTypes.DESTINATION, location.EntityId)
+    End Sub
+    <Extension>
+    Friend Function GetDestination(feature As IFeature) As ILocation
+        Return feature.World.GetLocation(feature.GetYoke(YokeTypes.DESTINATION))
+    End Function
 End Module

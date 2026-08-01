@@ -33,12 +33,6 @@ Friend Class Character
         End Get
     End Property
 
-    Public ReadOnly Property KnownIslands As IEnumerable(Of ILocation) Implements ICharacter.KnownIslands
-        Get
-            Return Data.KnownIslandIds.Select(Function(x) Persistence.Location.Create(World, _data, x))
-        End Get
-    End Property
-
     Protected Overrides ReadOnly Property Data As CharacterData
         Get
             Return _data.Characters(EntityId)
@@ -49,10 +43,6 @@ Friend Class Character
         Inventory.Remove()
         _data.Locations(Data.LocationId).CharacterIds.Remove(EntityId)
         _data.Characters.Remove(EntityId)
-    End Sub
-
-    Public Sub AddKnownIsland(island As ILocation) Implements ICharacter.AddKnownIsland
-        Data.KnownIslandIds.Add(island.EntityId)
     End Sub
 
     Friend Shared Function Create(world As IWorld, data As WorldData, characterId As Guid?) As ICharacter

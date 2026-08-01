@@ -3,6 +3,4 @@ Public Interface ICharacter
     Inherits IInventoriedEntity
     Property Location As ILocation
     ReadOnly Property Pronouns As String
-    Sub AddKnownIsland(island As ILocation)
-    ReadOnly Property KnownIslands As IEnumerable(Of ILocation)
 End Interface

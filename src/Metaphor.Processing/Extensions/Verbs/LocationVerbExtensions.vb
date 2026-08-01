@@ -68,7 +68,7 @@ Friend Module LocationVerbExtensions
         Dim world = verb.World
         Dim avatar = world.Avatar
         Dim fromLocation = avatar.Location
-        Dim destination = location.Features.Single(Function(x) x.EntityType = FeatureTypes.MOORINGS).Destination
+        Dim destination = location.Features.Single(Function(x) x.EntityType = FeatureTypes.MOORINGS).GetDestination()
         avatar.Location = destination
         world.AddMessage($"{avatar.Name} moves from {fromLocation.Name} to {destination.Name}.")
         avatar.Look()
@@ -78,14 +78,14 @@ Friend Module LocationVerbExtensions
         Dim world = verb.World
         Dim avatar = world.Avatar
         Dim fromLocation = avatar.Location
-        Dim destination = location.Features.Single(Function(x) x.EntityType = FeatureTypes.MOORINGS).Destination
+        Dim destination = location.Features.Single(Function(x) x.EntityType = FeatureTypes.MOORINGS).GetDestination()
         avatar.Location = destination
         world.AddMessage($"{avatar.Name} moves from {fromLocation.Name} to {destination.Name}.")
         avatar.Look()
     End Sub
 
     Private Sub HandleUndock(verb As IVerb, ship As ILocation)
-        Dim island = ship.Features.Single(Function(x) x.EntityType = FeatureTypes.MOORINGS).Destination
+        Dim island = ship.Features.Single(Function(x) x.EntityType = FeatureTypes.MOORINGS).GetDestination()
         island.RemoveMoorings()
         ship.RemoveMoorings()
     End Sub

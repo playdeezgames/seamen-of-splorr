@@ -135,4 +135,8 @@ Friend Module CharacterExtensions
         Dim identifier = character.GetYoke(YokeTypes.SHIP)
         Return If(identifier.HasValue, character.World.GetLocation(identifier.Value), Nothing)
     End Function
+    <Extension>
+    Friend Sub AddKnownIsland(character As ICharacter, island As ILocation)
+        character.AddToYokage(YokageTypes.KNOWN_ISLANDS, island.EntityId)
+    End Sub
 End Module

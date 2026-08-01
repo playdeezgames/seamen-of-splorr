@@ -11,5 +11,5 @@ Public Interface IWorld
     Property AdFinish As DateTimeOffset?
     Sub AddIsland(island As ILocation)
     ReadOnly Property Islands As IEnumerable(Of ILocation)
-    Function GetLocation(locationId As Guid) As ILocation
+    Function GetLocation(locationId As Guid?) As ILocation
 End Interface

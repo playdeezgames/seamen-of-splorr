@@ -17,7 +17,7 @@ Friend Module CharacterVerbExtensions
 
     Private Function CanHeadForKnownIsland(verb As IVerb, character As ICharacter) As Boolean
         Dim avatar = verb.World.Avatar
-        Return Not avatar.GetShip().IsMoored AndAlso avatar.KnownIslands.Any
+        Return Not avatar.GetShip().IsMoored AndAlso avatar.GetKnownIslands().Any
     End Function
 
     <Extension>
@@ -59,4 +59,8 @@ Friend Module CharacterVerbExtensions
             Return
         End If
     End Sub
+    <Extension>
+    Friend Function GetKnownIslands(character As ICharacter) As IEnumerable(Of ILocation)
+        Return character.GetYokage(YokageTypes.KNOWN_ISLANDS).Select(AddressOf character.World.GetLocation)
+    End Function
 End Module

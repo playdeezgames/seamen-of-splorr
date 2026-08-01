@@ -16,7 +16,7 @@ Friend Class AvatarKnownIslandsModel
 
     Public ReadOnly Property All As IEnumerable(Of IIslandModel) Implements IAvatarKnownIslandsModel.All
         Get
-            Return avatar.KnownIslands.Select(AddressOf IslandModel.Create)
+            Return avatar.GetKnownIslands().Select(AddressOf IslandModel.Create)
         End Get
     End Property
 

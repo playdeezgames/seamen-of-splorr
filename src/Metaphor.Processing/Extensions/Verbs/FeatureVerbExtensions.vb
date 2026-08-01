@@ -48,7 +48,7 @@ Friend Module FeatureVerbExtensions
     Private Sub HandleMove(verb As IVerb, feature As IFeature)
         Dim world = verb.World
         Dim avatar = world.Avatar
-        avatar.Location = feature.Destination
+        avatar.Location = feature.GetDestination()
         avatar.Look()
     End Sub
 

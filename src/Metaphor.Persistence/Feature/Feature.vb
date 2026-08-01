@@ -20,15 +20,6 @@ Friend Class Feature
         End Get
     End Property
 
-    Public Property Destination As ILocation Implements IFeature.Destination
-        Get
-            Return Persistence.Location.Create(World, _data, Data.DestinationId)
-        End Get
-        Set(value As ILocation)
-            Data.DestinationId = value?.EntityId
-        End Set
-    End Property
-
     Public ReadOnly Property ItemTypes As IEnumerable(Of String) Implements IFeature.ItemTypes
         Get
             Return Data.itemTypes

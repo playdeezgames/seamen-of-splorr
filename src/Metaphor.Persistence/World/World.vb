@@ -108,7 +108,7 @@ Public Class World
         Data.IslandIds.Add(island.EntityId)
     End Sub
 
-    Public Function GetLocation(locationId As Guid) As ILocation Implements IWorld.GetLocation
+    Public Function GetLocation(locationId As Guid?) As ILocation Implements IWorld.GetLocation
         Return Location.Create(Me, Data, locationId)
     End Function
 End Class
