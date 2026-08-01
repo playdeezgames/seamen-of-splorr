@@ -3,23 +3,23 @@ Imports Metaphor.Persistence
 Imports TGGD.Processing
 
 Friend Module FeatureVerbExtensions
-    Private Delegate Function CanPerformHandler(verb As IVerb, feature As IFeature) As Boolean
-    Private Delegate Sub PerformHandler(verb As IVerb, feature As IFeature)
+    Private Delegate Function CanPerformHandler(verb As IVerb, feature As IFeature, actor As ICharacter) As Boolean
+    Private Delegate Sub PerformHandler(verb As IVerb, feature As IFeature, actor As ICharacter)
 
     Private ReadOnly canPerformTable As New Dictionary(Of String, CanPerformHandler) From
         {
             {VerbTypes.ACCEPT_DELIVERY, AddressOf CanAcceptDelivery}
         }
 
-    Private Function CanAcceptDelivery(verb As IVerb, feature As IFeature) As Boolean
+    Private Function CanAcceptDelivery(verb As IVerb, feature As IFeature, actor As ICharacter) As Boolean
         Return Not verb.World.Avatar.HasTag(Tags.DELIVERING)
     End Function
 
     <Extension>
-    Friend Function CanPerform(verb As IVerb, feature As IFeature) As Boolean
+    Friend Function CanPerform(verb As IVerb, feature As IFeature, actor As ICharacter) As Boolean
         Dim handler As CanPerformHandler = Nothing
         If canPerformTable.TryGetValue(verb.EntityType, handler) Then
-            Return handler.Invoke(verb, feature)
+            Return handler.Invoke(verb, feature, actor)
         End If
         Return True
     End Function
@@ -30,7 +30,7 @@ Friend Module FeatureVerbExtensions
             {VerbTypes.ACCEPT_DELIVERY, AddressOf HandleAcceptDelivery}
         }
 
-    Private Sub HandleAcceptDelivery(verb As IVerb, feature As IFeature)
+    Private Sub HandleAcceptDelivery(verb As IVerb, feature As IFeature, actor As ICharacter)
         Dim world = verb.World
         Dim avatar = world.Avatar
         avatar.SetTag(Tags.DELIVERING)
@@ -45,7 +45,7 @@ Friend Module FeatureVerbExtensions
         world.AddMessage($"Please deliver this {item.Name} to {recipient.Name} on {destination.GetIslandName()}.")
     End Sub
 
-    Private Sub HandleMove(verb As IVerb, feature As IFeature)
+    Private Sub HandleMove(verb As IVerb, feature As IFeature, actor As ICharacter)
         Dim world = verb.World
         Dim avatar = world.Avatar
         avatar.Location = feature.GetDestination()
@@ -53,11 +53,11 @@ Friend Module FeatureVerbExtensions
     End Sub
 
     <Extension>
-    Sub Perform(verb As IVerb, feature As IFeature)
+    Sub Perform(verb As IVerb, feature As IFeature, actor As ICharacter)
         Dim handler As PerformHandler = Nothing
         verb.World.AddMessage(verb.Flavor)
         If performTable.TryGetValue(verb.EntityType, handler) Then
-            handler.Invoke(verb, feature)
+            handler.Invoke(verb, feature, actor)
             Return
         End If
     End Sub

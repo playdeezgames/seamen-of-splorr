@@ -13,7 +13,7 @@ Friend Class CharacterVerbModel
 
     Public ReadOnly Property IsEnabled As Boolean Implements IVerbModel.IsEnabled
         Get
-            Return verb.CanPerform(character)
+            Return verb.CanPerform(character, character.World.Avatar)
         End Get
     End Property
 
@@ -25,7 +25,7 @@ Friend Class CharacterVerbModel
 
     Public Sub Perform() Implements IVerbModel.Perform
         character.World.ClearMessages()
-        verb.Perform(character)
+        verb.Perform(character, character.World.Avatar)
     End Sub
 
     Friend Shared Function Create(character As ICharacter, verb As IVerb) As IVerbModel

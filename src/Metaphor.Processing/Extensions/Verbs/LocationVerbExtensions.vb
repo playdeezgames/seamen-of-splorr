@@ -2,8 +2,8 @@
 Imports Metaphor.Persistence
 
 Friend Module LocationVerbExtensions
-    Private Delegate Function CanPerformHandler(verb As IVerb, location As ILocation) As Boolean
-    Private Delegate Sub PerformHandler(verb As IVerb, location As ILocation)
+    Private Delegate Function CanPerformHandler(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
+    Private Delegate Sub PerformHandler(verb As IVerb, location As ILocation, actor As ICharacter)
 
     Private ReadOnly canPerformTable As New Dictionary(Of String, CanPerformHandler) From
         {
@@ -16,39 +16,39 @@ Friend Module LocationVerbExtensions
             {VerbTypes.EMBARK, AddressOf CanEmbark}
         }
 
-    Private Function CanEmbark(verb As IVerb, location As ILocation) As Boolean
+    Private Function CanEmbark(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
         Return location.Features.Any(Function(x) x.EntityType = FeatureTypes.MOORINGS)
     End Function
 
-    Private Function CanDisembark(verb As IVerb, location As ILocation) As Boolean
+    Private Function CanDisembark(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
         Return location.Features.Any(Function(x) x.EntityType = FeatureTypes.MOORINGS)
     End Function
 
-    Private Function CanUndock(verb As IVerb, ship As ILocation) As Boolean
+    Private Function CanUndock(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
         Return ship.IsMoored
     End Function
 
-    Private Function CanSetSpeed(verb As IVerb, ship As ILocation) As Boolean
+    Private Function CanSetSpeed(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
         Return Not ship.IsMoored
     End Function
 
-    Private Function CanSetHeading(verb As IVerb, ship As ILocation) As Boolean
+    Private Function CanSetHeading(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
         Return Not ship.IsMoored
     End Function
 
-    Private Function CanDock(verb As IVerb, ship As ILocation) As Boolean
+    Private Function CanDock(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
         Return Not ship.IsMoored AndAlso verb.World.Bubbles.Any(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
     End Function
 
-    Private Function CanMove(verb As IVerb, ship As ILocation) As Boolean
+    Private Function CanMove(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
         Return Not ship.IsMoored AndAlso ship.GetSpeed() > SPEED_FULL_STOP
     End Function
 
     <Extension>
-    Friend Function CanPerform(verb As IVerb, location As ILocation) As Boolean
+    Friend Function CanPerform(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
         Dim handler As CanPerformHandler = Nothing
         If canPerformTable.TryGetValue(verb.EntityType, handler) Then
-            Return handler.Invoke(verb, location)
+            Return handler.Invoke(verb, location, actor)
         End If
         Return True
     End Function
@@ -64,7 +64,7 @@ Friend Module LocationVerbExtensions
             {VerbTypes.DISEMBARK, AddressOf HandleDisembark}
         }
 
-    Private Sub HandleDisembark(verb As IVerb, location As ILocation)
+    Private Sub HandleDisembark(verb As IVerb, location As ILocation, actor As ICharacter)
         Dim world = verb.World
         Dim avatar = world.Avatar
         Dim fromLocation = avatar.Location
@@ -74,7 +74,7 @@ Friend Module LocationVerbExtensions
         avatar.Look()
     End Sub
 
-    Private Sub HandleEmbark(verb As IVerb, location As ILocation)
+    Private Sub HandleEmbark(verb As IVerb, location As ILocation, actor As ICharacter)
         Dim world = verb.World
         Dim avatar = world.Avatar
         Dim fromLocation = avatar.Location
@@ -84,13 +84,13 @@ Friend Module LocationVerbExtensions
         avatar.Look()
     End Sub
 
-    Private Sub HandleUndock(verb As IVerb, ship As ILocation)
+    Private Sub HandleUndock(verb As IVerb, ship As ILocation, actor As ICharacter)
         Dim island = ship.Features.Single(Function(x) x.EntityType = FeatureTypes.MOORINGS).GetDestination()
         island.RemoveMoorings()
         ship.RemoveMoorings()
     End Sub
 
-    Private Sub HandleDock(verb As IVerb, ship As ILocation)
+    Private Sub HandleDock(verb As IVerb, ship As ILocation, actor As ICharacter)
         Dim island = verb.World.Bubbles.Single(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
         ship.MoorTo(island, "Disembark")
         island.MoorTo(ship, "Embark")
@@ -98,7 +98,7 @@ Friend Module LocationVerbExtensions
         verb.World.Avatar.AddKnownIsland(island)
     End Sub
 
-    Private Sub HandleMove(verb As IVerb, location As ILocation)
+    Private Sub HandleMove(verb As IVerb, location As ILocation, actor As ICharacter)
         Dim world = verb.World
         Dim avatar = world.Avatar
         Dim ship = avatar.GetShip()
@@ -115,20 +115,20 @@ Friend Module LocationVerbExtensions
         avatar.Look()
     End Sub
 
-    Private Sub HandleSetSpeed(verb As IVerb, location As ILocation)
+    Private Sub HandleSetSpeed(verb As IVerb, location As ILocation, actor As ICharacter)
         verb.World.Avatar.GetShip().SetTags(Tags.SETTING_SPEED)
     End Sub
 
-    Private Sub HandleSetHeading(verb As IVerb, location As ILocation)
+    Private Sub HandleSetHeading(verb As IVerb, location As ILocation, actor As ICharacter)
         verb.World.Avatar.GetShip().SetTags(Tags.SETTING_HEADING)
     End Sub
 
     <Extension>
-    Sub Perform(verb As IVerb, location As ILocation)
+    Sub Perform(verb As IVerb, location As ILocation, actor As ICharacter)
         Dim handler As PerformHandler = Nothing
         verb.World.AddMessage(verb.Flavor)
         If performTable.TryGetValue(verb.EntityType, handler) Then
-            handler.Invoke(verb, location)
+            handler.Invoke(verb, location, actor)
             Return
         End If
     End Sub

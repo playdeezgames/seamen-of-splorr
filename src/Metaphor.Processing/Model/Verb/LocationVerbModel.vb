@@ -13,7 +13,7 @@ Friend Class LocationVerbModel
 
     Public ReadOnly Property IsEnabled As Boolean Implements IVerbModel.IsEnabled
         Get
-            Return verb.CanPerform(location)
+            Return verb.CanPerform(location, location.World.Avatar)
         End Get
     End Property
 
@@ -25,7 +25,7 @@ Friend Class LocationVerbModel
 
     Public Sub Perform() Implements IVerbModel.Perform
         location.World.ClearMessages()
-        verb.Perform(location)
+        verb.Perform(location, location.World.Avatar)
     End Sub
 
     Friend Shared Function Create(location As ILocation, verb As IVerb) As IVerbModel

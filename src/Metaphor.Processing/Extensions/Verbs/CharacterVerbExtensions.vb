@@ -2,8 +2,8 @@
 Imports Metaphor.Persistence
 
 Friend Module CharacterVerbExtensions
-    Private Delegate Function CanPerformHandler(verb As IVerb, character As ICharacter) As Boolean
-    Private Delegate Sub PerformHandler(verb As IVerb, character As ICharacter)
+    Private Delegate Function CanPerformHandler(verb As IVerb, character As ICharacter, actor As ICharacter) As Boolean
+    Private Delegate Sub PerformHandler(verb As IVerb, character As ICharacter, actor As ICharacter)
 
     Private ReadOnly canPerformTable As New Dictionary(Of String, CanPerformHandler) From
         {
@@ -11,20 +11,20 @@ Friend Module CharacterVerbExtensions
             {VerbTypes.DELIVER_PACKAGE, AddressOf CanDeliverPackage}
         }
 
-    Private Function CanDeliverPackage(verb As IVerb, character As ICharacter) As Boolean
+    Private Function CanDeliverPackage(verb As IVerb, character As ICharacter, actor As ICharacter) As Boolean
         Return verb.World.Avatar.Inventory.Items.Any(Function(x) If(x.GetRecipient()?.EntityId = character.EntityId, False))
     End Function
 
-    Private Function CanHeadForKnownIsland(verb As IVerb, character As ICharacter) As Boolean
+    Private Function CanHeadForKnownIsland(verb As IVerb, character As ICharacter, actor As ICharacter) As Boolean
         Dim avatar = verb.World.Avatar
         Return Not avatar.GetShip().IsMoored AndAlso avatar.GetKnownIslands().Any
     End Function
 
     <Extension>
-    Friend Function CanPerform(verb As IVerb, character As ICharacter) As Boolean
+    Friend Function CanPerform(verb As IVerb, character As ICharacter, actor As ICharacter) As Boolean
         Dim handler As CanPerformHandler = Nothing
         If canPerformTable.TryGetValue(verb.EntityType, handler) Then
-            Return handler.Invoke(verb, character)
+            Return handler.Invoke(verb, character, actor)
         End If
         Return True
     End Function
@@ -35,7 +35,7 @@ Friend Module CharacterVerbExtensions
             {VerbTypes.DELIVER_PACKAGE, AddressOf HandleDeliverPackage}
         }
 
-    Private Sub HandleDeliverPackage(verb As IVerb, character As ICharacter)
+    Private Sub HandleDeliverPackage(verb As IVerb, character As ICharacter, actor As ICharacter)
         Dim world = verb.World
         Dim avatar = world.Avatar
         Dim item = avatar.Inventory.Items.Single(Function(x) If(x.GetRecipient()?.EntityId = character.EntityId, False))
@@ -46,16 +46,16 @@ Friend Module CharacterVerbExtensions
         character.Remove()
     End Sub
 
-    Private Sub HandleHeadForKnownIsland(verb As IVerb, character As ICharacter)
+    Private Sub HandleHeadForKnownIsland(verb As IVerb, character As ICharacter, actor As ICharacter)
         character.SetTag(Tags.CHOOSING_KNOWN_ISLAND)
     End Sub
 
     <Extension>
-    Sub Perform(verb As IVerb, character As ICharacter)
+    Sub Perform(verb As IVerb, character As ICharacter, actor As ICharacter)
         Dim handler As PerformHandler = Nothing
         verb.World.AddMessage(verb.Flavor)
         If performTable.TryGetValue(verb.EntityType, handler) Then
-            handler.Invoke(verb, character)
+            handler.Invoke(verb, character, actor)
             Return
         End If
     End Sub
