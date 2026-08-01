@@ -111,4 +111,8 @@ Public Class World
     Public Function GetLocation(locationId As Guid?) As ILocation Implements IWorld.GetLocation
         Return Location.Create(Me, Data, locationId)
     End Function
+
+    Public Function GetCharacter(characterId As Guid?) As ICharacter Implements IWorld.GetCharacter
+        Return Character.Create(Me, Data, characterId)
+    End Function
 End Class

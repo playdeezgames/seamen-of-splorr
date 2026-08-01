@@ -39,7 +39,7 @@ Friend Module InventoryExtensions
     <Extension>
     Friend Function CreateDeliveryItem(inventory As IInventory, recipient As ICharacter) As IItem
         Dim item = inventory.CreateItem(ItemTypes.PACKAGE, "Package", "Its a package. You deliver them.")
-        item.Recipient = recipient
+        item.SetRecipient(recipient)
         Return item
     End Function
 

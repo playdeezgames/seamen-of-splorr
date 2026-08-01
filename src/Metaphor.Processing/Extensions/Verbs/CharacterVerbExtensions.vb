@@ -12,7 +12,7 @@ Friend Module CharacterVerbExtensions
         }
 
     Private Function CanDeliverPackage(verb As IVerb, character As ICharacter) As Boolean
-        Return verb.World.Avatar.Inventory.Items.Any(Function(x) If(x.Recipient?.EntityId = character.EntityId, False))
+        Return verb.World.Avatar.Inventory.Items.Any(Function(x) If(x.GetRecipient()?.EntityId = character.EntityId, False))
     End Function
 
     Private Function CanHeadForKnownIsland(verb As IVerb, character As ICharacter) As Boolean
@@ -38,7 +38,7 @@ Friend Module CharacterVerbExtensions
     Private Sub HandleDeliverPackage(verb As IVerb, character As ICharacter)
         Dim world = verb.World
         Dim avatar = world.Avatar
-        Dim item = avatar.Inventory.Items.Single(Function(x) If(x.Recipient?.EntityId = character.EntityId, False))
+        Dim item = avatar.Inventory.Items.Single(Function(x) If(x.GetRecipient()?.EntityId = character.EntityId, False))
         world.AddMessage($"{avatar.Name} receives {item.GetJools():f2} jools.")
         avatar.ChangeDimension(Dimensions.JOOLS, item.GetJools())
         avatar.ClearTag(Tags.DELIVERING)

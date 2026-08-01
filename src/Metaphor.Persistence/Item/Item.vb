@@ -25,15 +25,6 @@ Friend Class Item
         End Get
     End Property
 
-    Public Property Recipient As ICharacter Implements IItem.Recipient
-        Get
-            Return Persistence.Character.Create(World, _data, Data.RecipientId)
-        End Get
-        Set(value As ICharacter)
-            Data.RecipientId = value?.EntityId
-        End Set
-    End Property
-
     Protected Overrides ReadOnly Property Data As ItemData
         Get
             Return _data.Items(EntityId)

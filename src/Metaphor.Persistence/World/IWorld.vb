@@ -12,4 +12,5 @@ Public Interface IWorld
     Sub AddIsland(island As ILocation)
     ReadOnly Property Islands As IEnumerable(Of ILocation)
     Function GetLocation(locationId As Guid?) As ILocation
+    Function GetCharacter(characterId As Guid?) As ICharacter
 End Interface
