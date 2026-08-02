@@ -11,7 +11,7 @@ Friend Module ShipInitializer
                    ship.InitializeDimension(Dimensions.LATITUDE, context.WorldHeight / 2, 0.0, context.WorldHeight)
                    ship.InitializeDimension(Dimensions.DEPTH, (context.SnorkelDepth + context.WorldDepth) / 2, context.SnorkelDepth, context.WorldDepth)
                    ship.InitializeDimension(Dimensions.HYDROPLANE, 0.0, MINIMUM_HYDROPLANE, MAXIMUM_HYDROPLANE)
-                   ship.SetDimension(Dimensions.VISIBILITY, 10.0)
+                   ship.SetDimension(Dimensions.VISIBILITY, 100.0)
                    ship.CreateVerb(VerbTypes.MOVE, "Move", "Steady as she goes.")
                    ship.CreateVerb(VerbTypes.DOCK, "Dock", "You moor the ship to the pier.")
                    ship.CreateVerb(VerbTypes.UNDOCK, "Undock", "You cast away from the pier.")

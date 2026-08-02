@@ -19,7 +19,7 @@ Friend Class IslandModel
     Public Sub SetHeadingFor() Implements IIslandModel.SetHeadingFor
         Dim world = island.World
         Dim avatar = world.Avatar
-        avatar.ClearTag(Tags.CHOOSING_KNOWN_ISLAND)
+        avatar.SetMode(Nothing)
         Dim ship = avatar.GetShip()
         ship.SetHeading(ship.HeadingTo(island))
         world.AddMessage($"{avatar.Name} heads for {island.GetIslandName()} by setting a heading of {ship.GetHeading():f2}.")

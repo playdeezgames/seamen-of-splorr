@@ -10,7 +10,7 @@ Friend Class AvatarKnownIslandsModel
 
     Public ReadOnly Property IsPicking As Boolean Implements IAvatarKnownIslandsModel.IsPicking
         Get
-            Return avatar.HasTag(Tags.CHOOSING_KNOWN_ISLAND)
+            Return avatar.GetMode() = Modes.PICKING_KNOWN_BUBBLE
         End Get
     End Property
 
@@ -21,7 +21,7 @@ Friend Class AvatarKnownIslandsModel
     End Property
 
     Public Sub HeadFor(islandModel As IIslandModel) Implements IAvatarKnownIslandsModel.HeadFor
-        avatar.ClearTag(Tags.CHOOSING_KNOWN_ISLAND)
+        avatar.SetMode(Nothing)
         If islandModel IsNot Nothing Then
             islandModel.SetHeadingFor()
         End If

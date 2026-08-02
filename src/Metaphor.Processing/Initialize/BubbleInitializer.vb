@@ -16,7 +16,7 @@ Friend Module BubbleInitializer
 
     Private Function InitializeBubble(context As IInitializationContext, coordinate As (Longitude As Double, Latitude As Double)) As LocationInitializer
         Return Sub(island)
-                   island.SetDimension(Dimensions.VISIBILITY, RNG.RollDice("3d8"))
+                   island.SetDimension(Dimensions.VISIBILITY, RNG.RollDice("3d8*10"))
                    island.SetDimension(Dimensions.LONGITUDE, coordinate.Longitude)
                    island.SetDimension(Dimensions.LATITUDE, coordinate.Latitude)
                    island.SetDimension(Dimensions.DEPTH, RNG.FromRange(context.MinimumBubbleDepth, context.MaximumBubbleDepth))

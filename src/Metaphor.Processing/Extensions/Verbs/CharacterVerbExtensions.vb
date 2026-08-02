@@ -47,7 +47,7 @@ Friend Module CharacterVerbExtensions
     End Sub
 
     Private Sub HandleHeadForKnownIsland(verb As IVerb, character As ICharacter, actor As ICharacter)
-        character.SetTag(Tags.CHOOSING_KNOWN_ISLAND)
+        character.SetMode(Modes.PICKING_KNOWN_BUBBLE)
     End Sub
 
     <Extension>

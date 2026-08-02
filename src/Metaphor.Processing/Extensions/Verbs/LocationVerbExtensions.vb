@@ -116,11 +116,11 @@ Friend Module LocationVerbExtensions
     End Sub
 
     Private Sub HandleSetSpeed(verb As IVerb, location As ILocation, actor As ICharacter)
-        verb.World.Avatar.GetShip().SetTags(Tags.SETTING_SPEED)
+        verb.World.Avatar.SetMode(Modes.SETTING_SPEED)
     End Sub
 
     Private Sub HandleSetHeading(verb As IVerb, location As ILocation, actor As ICharacter)
-        verb.World.Avatar.GetShip().SetTags(Tags.SETTING_HEADING)
+        verb.World.Avatar.SetMode(Modes.SETTING_HEADING)
     End Sub
 
     <Extension>
