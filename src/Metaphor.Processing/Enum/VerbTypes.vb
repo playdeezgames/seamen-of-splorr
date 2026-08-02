@@ -8,6 +8,7 @@
     Friend Const HEAD_FOR_KNOWN_ISLAND As String = NameOf(HEAD_FOR_KNOWN_ISLAND)
     Friend Const MOVE As String = NameOf(MOVE)
     Friend Const SET_HEADING As String = NameOf(SET_HEADING)
+    Friend Const SET_HYDROPLANE As String = NameOf(SET_HYDROPLANE)
     Friend Const SET_SPEED As String = NameOf(SET_SPEED)
     Friend Const STOW As String = NameOf(STOW)
     Friend Const TAKE As String = NameOf(TAKE)

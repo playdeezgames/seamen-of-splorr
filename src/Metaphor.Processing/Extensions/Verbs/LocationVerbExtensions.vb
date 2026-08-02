@@ -11,10 +11,15 @@ Friend Module LocationVerbExtensions
             {VerbTypes.DOCK, AddressOf CanDock},
             {VerbTypes.SET_HEADING, AddressOf CanSetHeading},
             {VerbTypes.SET_SPEED, AddressOf CanSetSpeed},
+            {VerbTypes.SET_HYDROPLANE, AddressOf CanSetHydroplane},
             {VerbTypes.UNDOCK, AddressOf CanUndock},
             {VerbTypes.DISEMBARK, AddressOf CanDisembark},
             {VerbTypes.EMBARK, AddressOf CanEmbark}
         }
+
+    Private Function CanSetHydroplane(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
+        Return Not ship.IsMoored
+    End Function
 
     Private Function CanEmbark(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
         Return location.Features.Any(Function(x) x.EntityType = FeatureTypes.MOORINGS)
@@ -57,12 +62,17 @@ Friend Module LocationVerbExtensions
         {
             {VerbTypes.SET_HEADING, AddressOf HandleSetHeading},
             {VerbTypes.SET_SPEED, AddressOf HandleSetSpeed},
+            {VerbTypes.SET_HYDROPLANE, AddressOf HandleSetHydroplane},
             {VerbTypes.MOVE, AddressOf HandleMove},
             {VerbTypes.DOCK, AddressOf HandleDock},
             {VerbTypes.UNDOCK, AddressOf HandleUndock},
             {VerbTypes.EMBARK, AddressOf HandleEmbark},
             {VerbTypes.DISEMBARK, AddressOf HandleDisembark}
         }
+
+    Private Sub HandleSetHydroplane(verb As IVerb, location As ILocation, actor As ICharacter)
+        verb.World.Avatar.SetMode(Modes.SETTING_HYDROPLANE)
+    End Sub
 
     Private Sub HandleDisembark(verb As IVerb, location As ILocation, actor As ICharacter)
         Dim world = verb.World

@@ -8,22 +8,11 @@ Friend Module ShipExtensions
         world.AddMessage($"Heading: {ship.GetHeading():f2}°")
         world.AddMessage($"Speed: {ship.GetSpeed():f2} knots")
         world.AddMessage($"Depth: {ship.GetDepth():f2} fathoms")
-        world.AddMessage($"Hydroplane: {ship.DescribeHydroplane()}")
+        world.AddMessage($"Hydroplane: {Utility.DescribeHydroplane(ship.GetHydroplane())}")
         ShowVisibleIslands(world, ship)
     End Sub
     <Extension>
-    Private Function DescribeHydroplane(ship As ILocation) As String
-        Dim hydroplane = ship.GetHydroplane()
-        If HYDROPLANE > 0.0 Then
-            Return $"{hydroplane:f2}° Down Bubble"
-        ElseIf hydroplane < 0.0 Then
-            Return $"{hydroplane:f2}° Up Bubble"
-        Else
-            Return "Zero Bubble"
-        End If
-    End Function
-    <Extension>
-    Private Function GetHydroplane(ship As ILocation) As Double
+    Friend Function GetHydroplane(ship As ILocation) As Double
         Return ship.GetDimension(Dimensions.HYDROPLANE)
     End Function
 
@@ -71,6 +60,10 @@ Friend Module ShipExtensions
     <Extension>
     Friend Sub SetHeading(ship As ILocation, heading As Double)
         ship.SetDimension(Dimensions.HEADING, heading)
+    End Sub
+    <Extension>
+    Friend Sub SetHydroplane(ship As ILocation, hydroplane As Double)
+        ship.SetDimension(Dimensions.HYDROPLANE, hydroplane)
     End Sub
     <Extension>
     Friend Sub SetSpeed(ship As ILocation, speed As Double)

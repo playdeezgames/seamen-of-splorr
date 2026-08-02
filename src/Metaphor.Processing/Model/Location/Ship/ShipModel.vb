@@ -27,6 +27,24 @@ Friend Class ShipModel
         End Get
     End Property
 
+    Public ReadOnly Property CurrentHydroplane As Double Implements IShipModel.CurrentHydroplane
+        Get
+            Return ship.GetHydroplane()
+        End Get
+    End Property
+
+    Public ReadOnly Property MinimumHydroplane As Double Implements IShipModel.MinimumHydroplane
+        Get
+            Return ship.GetDimensionMinimum(Dimensions.HYDROPLANE)
+        End Get
+    End Property
+
+    Public ReadOnly Property MaximumHydroplane As Double Implements IShipModel.MaximumHydroplane
+        Get
+            Return ship.GetDimensionMaximum(Dimensions.HYDROPLANE)
+        End Get
+    End Property
+
     Public Sub SetHeading(heading As Double) Implements IShipModel.SetHeading
         ship.SetHeading(heading)
         ship.World.Avatar.SetMode(Nothing)
@@ -35,6 +53,12 @@ Friend Class ShipModel
 
     Public Sub SetSpeed(speed As Double) Implements IShipModel.SetSpeed
         ship.SetSpeed(speed)
+        ship.World.Avatar.SetMode(Nothing)
+        ship.World.Avatar.Look()
+    End Sub
+
+    Public Sub SetHydroplane(hydroplane As Double) Implements IShipModel.SetHydroplane
+        ship.SetHydroplane(hydroplane)
         ship.World.Avatar.SetMode(Nothing)
         ship.World.Avatar.Look()
     End Sub

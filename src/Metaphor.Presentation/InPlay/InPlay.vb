@@ -21,7 +21,8 @@ Friend Class InPlay
         {
             {Modes.PICKING_KNOWN_BUBBLE, AddressOf ChooseKnownIslandPrompt.Launch},
             {Modes.SETTING_HEADING, AddressOf SetHeadingPrompt.Launch},
-            {Modes.SETTING_SPEED, AddressOf SetSpeedPrompt.Launch}
+            {Modes.SETTING_SPEED, AddressOf SetSpeedPrompt.Launch},
+            {Modes.SETTING_HYDROPLANE, AddressOf SetHydroplanePrompt.Launch}
         }
 
     Public Overrides Function Run() As IDialogPrompt
