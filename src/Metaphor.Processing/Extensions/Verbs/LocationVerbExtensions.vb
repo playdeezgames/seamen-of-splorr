@@ -113,14 +113,17 @@ Friend Module LocationVerbExtensions
         Dim avatar = world.Avatar
         Dim ship = avatar.GetShip()
         Dim speed = ship.GetSpeed()
-        Dim fouling = speed * speed
-        Dim radians = ship.GetHeading() * Math.PI * 2 / HEADING_MAXIMUM
-        Dim deltaLongitude = speed * Math.Cos(radians)
-        Dim deltaLatitude = speed * Math.Sin(radians)
+        Dim headingRadians = Utility.ToRadians(ship.GetHeading())
+        Dim bubbleRadians = Utility.ToRadians(ship.GetHydroplane())
+        Dim deltaLongitude = speed * Math.Cos(headingRadians)
+        Dim deltaLatitude = speed * Math.Sin(headingRadians)
+        Dim deltaDepth = speed * Math.Sin(bubbleRadians) * Grimoire.FATHOMS_PER_KNOT
         Dim nextLongitude = ship.GetLongitude() + deltaLongitude
         Dim nextLatitude = ship.GetLatitude() + deltaLatitude
+        Dim nextDepth = ship.GetDepth() + deltaDepth
         ship.SetLongitude(nextLongitude)
         ship.SetLatitude(nextLatitude)
+        ship.SetDepth(nextDepth)
         avatar.DoBiology(1)
         avatar.Look()
     End Sub

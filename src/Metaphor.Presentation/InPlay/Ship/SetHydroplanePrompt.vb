@@ -18,13 +18,13 @@ Friend Class SetHydroplanePrompt
         Get
             Return Enumerable.Empty(Of LaunchDelegate).
                 Append(AddressOf ChooseNeverMind).
-                Concat(Enumerable.Range(-4, 9).Select(AddressOf ChooseBubble))
+                Concat(Enumerable.Range(-10, 19).Select(AddressOf ChooseBubble))
         End Get
     End Property
 
     Private Function ChooseBubble(value As Integer) As LaunchDelegate
         Return Function(c, m, p)
-                   Dim hydroplane = value * 5.0
+                   Dim hydroplane = value * 1.0
                    Return DialogChoice.CreateEnabled(Utility.DescribeHydroplane(hydroplane), SetHydroplane(hydroplane))
                End Function
     End Function

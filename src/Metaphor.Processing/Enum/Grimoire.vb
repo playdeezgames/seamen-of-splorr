@@ -14,6 +14,7 @@
     Friend Const MINIMUM_BUBBLE_DISTANCE = 50.0 'nm
     Friend Const DOCKING_DISTANCE = 1.0 'nm
     Friend Const DEPTH_MINIMUM = 10.0 'fathom
-    Friend Const MINIMUM_HYDROPLANE = -20.0 'degrees
-    Friend Const MAXIMUM_HYDROPLANE = 20.0 'degrees
+    Friend Const MINIMUM_HYDROPLANE = -10.0 'degrees
+    Friend Const MAXIMUM_HYDROPLANE = 10.0 'degrees
+    Friend Const FATHOMS_PER_KNOT = 100.0
 End Module

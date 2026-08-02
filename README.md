@@ -6,6 +6,8 @@ A Production of TheGrumpyGameDev
 
 For Underwater Jam
 
+depthDelta = speed * 1000 * sin(hydroplane)
+
 # "Architecture"
 ## Layer 1: Provision
 ### TGGD.Provision

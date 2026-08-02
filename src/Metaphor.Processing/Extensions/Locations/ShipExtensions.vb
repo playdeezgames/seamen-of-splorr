@@ -42,6 +42,10 @@ Friend Module ShipExtensions
         Return ship.GetDimension(Dimensions.LATITUDE)
     End Function
     <Extension>
+    Friend Sub SetDepth(ship As ILocation, depth As Double)
+        ship.SetDimension(Dimensions.DEPTH, depth)
+    End Sub
+    <Extension>
     Friend Sub SetLatitude(ship As ILocation, latitude As Double)
         ship.SetDimension(Dimensions.LATITUDE, latitude)
     End Sub
