@@ -8,12 +8,6 @@ Friend Class AvatarKnownIslandsModel
         Me.avatar = avatar
     End Sub
 
-    Public ReadOnly Property IsPicking As Boolean Implements IAvatarKnownIslandsModel.IsPicking
-        Get
-            Return avatar.GetMode() = Modes.PICKING_KNOWN_BUBBLE
-        End Get
-    End Property
-
     Public ReadOnly Property All As IEnumerable(Of IIslandModel) Implements IAvatarKnownIslandsModel.All
         Get
             Return avatar.GetKnownIslands().Select(AddressOf IslandModel.Create)

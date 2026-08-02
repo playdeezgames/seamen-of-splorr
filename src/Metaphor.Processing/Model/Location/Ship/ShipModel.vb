@@ -9,18 +9,6 @@ Friend Class ShipModel
         Me.ship = ship
     End Sub
 
-    Public ReadOnly Property IsSettingHeading As Boolean Implements IShipModel.IsSettingHeading
-        Get
-            Return ship.World.Avatar.GetMode() = Modes.SETTING_HEADING
-        End Get
-    End Property
-
-    Public ReadOnly Property IsSettingSpeed As Boolean Implements IShipModel.IsSettingSpeed
-        Get
-            Return ship.World.Avatar.GetMode() = Modes.SETTING_SPEED
-        End Get
-    End Property
-
     Public ReadOnly Property CurrentHeading As Double Implements IShipModel.CurrentHeading
         Get
             Return ship.GetHeading()
@@ -30,6 +18,12 @@ Friend Class ShipModel
     Public ReadOnly Property CurrentSpeed As Double Implements IShipModel.CurrentSpeed
         Get
             Return ship.GetSpeed()
+        End Get
+    End Property
+
+    Public ReadOnly Property MaximumSpeed As Double Implements IShipModel.MaximumSpeed
+        Get
+            Return ship.GetDimensionMaximum(Dimensions.SPEED)
         End Get
     End Property
 

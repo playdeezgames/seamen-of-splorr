@@ -28,15 +28,6 @@ Friend Class InPlay
         If Model.Ad.InProgress Then
             Return AdPrompt.Launch(Context, Model, Previous).Invoke().Run()
         End If
-        If Model.Avatar.KnownIslands.IsPicking Then
-            Return ChooseKnownIslandPrompt.Launch(Context, Model, Previous).Invoke().Run()
-        End If
-        If Model.Avatar.Ship.IsSettingHeading Then
-            Return SetHeadingPrompt.Launch(Context, Model, Previous).Invoke().Run()
-        End If
-        If Model.Avatar.Ship.IsSettingSpeed Then
-            Return SetSpeedPrompt.Launch(Context, Model, Previous).Invoke().Run()
-        End If
         Dim launchDelgate As LaunchDelegate = Nothing
         If modeLaunchers.TryGetValue(Model.Avatar.Mode, launchDelgate) Then
             Return launchDelgate.Invoke(Context, Model, Previous).Invoke.Run()
