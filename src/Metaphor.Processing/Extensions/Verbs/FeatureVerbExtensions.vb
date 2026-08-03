@@ -8,7 +8,7 @@ Friend Module FeatureVerbExtensions
 
     Private ReadOnly canPerformTable As New Dictionary(Of String, CanPerformHandler) From
         {
-            {VerbTypes.ACCEPT_DELIVERY, AddressOf CanAcceptDelivery}
+            {VerbSubtypes.ACCEPT_DELIVERY, AddressOf CanAcceptDelivery}
         }
 
     Private Function CanAcceptDelivery(verb As IVerb, feature As IFeature, actor As ICharacter) As Boolean
@@ -18,7 +18,7 @@ Friend Module FeatureVerbExtensions
     <Extension>
     Friend Function CanPerform(verb As IVerb, feature As IFeature, actor As ICharacter) As Boolean
         Dim handler As CanPerformHandler = Nothing
-        If canPerformTable.TryGetValue(verb.EntityType, handler) Then
+        If canPerformTable.TryGetValue(verb.EntitySubtype, handler) Then
             Return handler.Invoke(verb, feature, actor)
         End If
         Return True
@@ -26,8 +26,8 @@ Friend Module FeatureVerbExtensions
 
     Private ReadOnly performTable As New Dictionary(Of String, PerformHandler) From
         {
-            {VerbTypes.MOVE, AddressOf HandleMove},
-            {VerbTypes.ACCEPT_DELIVERY, AddressOf HandleAcceptDelivery}
+            {VerbSubtypes.MOVE, AddressOf HandleMove},
+            {VerbSubtypes.ACCEPT_DELIVERY, AddressOf HandleAcceptDelivery}
         }
 
     Private Sub HandleAcceptDelivery(verb As IVerb, feature As IFeature, actor As ICharacter)
@@ -56,7 +56,7 @@ Friend Module FeatureVerbExtensions
     Sub Perform(verb As IVerb, feature As IFeature, actor As ICharacter)
         Dim handler As PerformHandler = Nothing
         verb.World.AddMessage(verb.Flavor)
-        If performTable.TryGetValue(verb.EntityType, handler) Then
+        If performTable.TryGetValue(verb.EntitySubtype, handler) Then
             handler.Invoke(verb, feature, actor)
             Return
         End If

@@ -12,7 +12,7 @@ Friend Module ItemVerbExtensions
     <Extension>
     Friend Function CanPerform(verb As IVerb, item As IItem, actor As ICharacter) As Boolean
         Dim handler As CanPerformHandler = Nothing
-        If canPerformTable.TryGetValue(verb.EntityType, handler) Then
+        If canPerformTable.TryGetValue(verb.EntitySubtype, handler) Then
             Return handler.Invoke(verb, item, actor)
         End If
         Return True
@@ -20,7 +20,7 @@ Friend Module ItemVerbExtensions
 
     Private ReadOnly performTable As New Dictionary(Of String, PerformHandler) From
         {
-            {VerbTypes.EAT, AddressOf HandleEat}
+            {VerbSubtypes.EAT, AddressOf HandleEat}
         }
 
     Private Sub HandleEat(verb As IVerb, item As IItem, actor As ICharacter)
@@ -38,7 +38,7 @@ Friend Module ItemVerbExtensions
     Sub Perform(verb As IVerb, item As IItem, actor As ICharacter)
         Dim handler As PerformHandler = Nothing
         verb.World.AddMessage(verb.Flavor)
-        If performTable.TryGetValue(verb.EntityType, handler) Then
+        If performTable.TryGetValue(verb.EntitySubtype, handler) Then
             handler.Invoke(verb, item, actor)
             Return
         End If

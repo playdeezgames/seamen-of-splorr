@@ -22,7 +22,7 @@ Friend Class Inventory
 
     Public ReadOnly Property ItemStacks As IEnumerable(Of IItemStack) Implements IInventory.ItemStacks
         Get
-            Return Items.GroupBy(Function(x) x.EntityType).Select(Function(x) ItemStack.Create(Me, x.Key))
+            Return Items.GroupBy(Function(x) x.EntitySubtype).Select(Function(x) ItemStack.Create(Me, x.Key))
         End Get
     End Property
 
@@ -55,7 +55,7 @@ Friend Class Inventory
             {
                 .Name = name,
                 .Flavor = flavor,
-                .EntityType = itemType,
+                .EntitySubtype = itemType,
                 .InventoryId = EntityId
             }
         Data.ItemIds.Add(itemId)

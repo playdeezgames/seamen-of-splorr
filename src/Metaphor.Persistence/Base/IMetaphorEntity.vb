@@ -7,6 +7,6 @@ Public Interface IMetaphorEntity
     ReadOnly Property Name As String
     ReadOnly Property Flavor As String
     ReadOnly Property EntityId As Guid
-    ReadOnly Property EntityType As String
+    ReadOnly Property EntitySubtype As String
     ReadOnly Property Exists As Boolean
 End Interface

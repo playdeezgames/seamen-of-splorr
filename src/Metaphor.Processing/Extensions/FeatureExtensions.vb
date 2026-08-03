@@ -19,7 +19,7 @@ Friend Module FeatureExtensions
     End Sub
     <Extension>
     Friend Function IsCargoHold(feature As IFeature) As Boolean
-        Return feature.EntityType = FeatureTypes.CARGO_HOLD
+        Return feature.EntitySubtype = FeatureSubtypes.CARGO_HOLD
     End Function
     <Extension>
     Friend Function GetItemTypeName(market As IFeature, itemType As String) As String
@@ -27,10 +27,10 @@ Friend Module FeatureExtensions
     End Function
     <Extension>
     Friend Sub SetDestination(feature As IFeature, location As ILocation)
-        feature.SetYoke(YokeTypes.DESTINATION, location.EntityId)
+        feature.SetYoke(Yokes.DESTINATION, location.EntityId)
     End Sub
     <Extension>
     Friend Function GetDestination(feature As IFeature) As ILocation
-        Return feature.World.GetLocation(feature.GetYoke(YokeTypes.DESTINATION))
+        Return feature.World.GetLocation(feature.GetYoke(Yokes.DESTINATION))
     End Function
 End Module

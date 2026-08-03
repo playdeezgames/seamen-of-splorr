@@ -105,11 +105,11 @@ Friend Module ShipExtensions
     End Sub
     <Extension>
     Friend Function IsMoored(ship As ILocation) As Boolean
-        Return ship.Features.Any(Function(x) x.EntityType = FeatureTypes.MOORINGS)
+        Return ship.Features.Any(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS)
     End Function
     <Extension>
     Friend Function GetCargoHold(ship As ILocation) As IFeature
-        Return ship.Features.Single(Function(x) x.EntityType = FeatureTypes.CARGO_HOLD)
+        Return ship.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.CARGO_HOLD)
     End Function
     <Extension>
     Friend Function IsSnorkelRaised(ship As ILocation) As Boolean

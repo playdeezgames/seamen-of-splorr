@@ -50,7 +50,7 @@ Friend Class Location
         Dim characterId = Guid.NewGuid
         _data.Characters(characterId) = New CharacterData With
             {
-                .EntityType = characterType,
+                .EntitySubtype = characterType,
                 .LocationId = EntityId,
                 .Name = name,
                 .Flavor = flavor,
@@ -69,7 +69,7 @@ Friend Class Location
                 .LocationId = EntityId,
                 .Name = name,
                 .Flavor = flavor,
-                .EntityType = featureType
+                .EntitySubtype = featureType
             }
         Data.FeatureIds.Add(featureId)
         Dim result As IFeature = Feature.Create(World, _data, featureId)

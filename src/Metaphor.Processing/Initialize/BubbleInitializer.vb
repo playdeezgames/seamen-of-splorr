@@ -9,7 +9,7 @@ Friend Module BubbleInitializer
         Do While islandCoordinates.Count <> 0
             Dim name = islandNames.Dequeue
             Dim coordinate = islandCoordinates.Dequeue
-            Dim island = world.CreateLocation(LocationTypes.ISLAND, name, $"This island is called `{name}`.", InitializeBubble(context, coordinate))
+            Dim island = world.CreateLocation(LocationSubtypes.ISLAND, name, $"This island is called `{name}`.", InitializeBubble(context, coordinate))
             world.AddBubble(island)
         Loop
     End Sub
@@ -20,7 +20,7 @@ Friend Module BubbleInitializer
                    island.SetDimension(Dimensions.LONGITUDE, coordinate.Longitude)
                    island.SetDimension(Dimensions.LATITUDE, coordinate.Latitude)
                    island.SetDimension(Dimensions.DEPTH, RNG.FromRange(context.MinimumBubbleDepth, context.MaximumBubbleDepth))
-                   island.CreateVerb(VerbTypes.EMBARK, "Embark", "You step onto the ship.")
+                   island.CreateVerb(VerbSubtypes.EMBARK, "Embark", "You step onto the ship.")
                    island.CreateJobBoard()
                    island.InitializeCommodities()
                End Sub

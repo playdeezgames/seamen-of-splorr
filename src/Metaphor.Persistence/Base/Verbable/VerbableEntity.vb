@@ -15,11 +15,11 @@ Friend MustInherit Class VerbableEntity(Of TData As VerbableEntityData)
     End Property
 
 
-    Public Function CreateVerb(verbType As String, name As String, flavor As String, Optional initializer As VerbInitializer = Nothing) As IVerb Implements IVerbableEntity.CreateVerb
+    Public Function CreateVerb(verbSubtype As String, name As String, flavor As String, Optional initializer As VerbInitializer = Nothing) As IVerb Implements IVerbableEntity.CreateVerb
         Dim verbId = Guid.NewGuid
         _data.Verbs(verbId) = New VerbData With
             {
-                .EntityType = verbType,
+                .EntitySubtype = verbSubtype,
                 .Name = name,
                 .Flavor = flavor
             }

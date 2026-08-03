@@ -7,16 +7,16 @@ Friend Module LocationVerbExtensions
 
     Private ReadOnly canPerformTable As New Dictionary(Of String, CanPerformHandler) From
         {
-            {VerbTypes.MOVE, AddressOf CanMove},
-            {VerbTypes.DOCK, AddressOf CanDock},
-            {VerbTypes.SET_HEADING, AddressOf CanSetHeading},
-            {VerbTypes.SET_SPEED, AddressOf CanSetSpeed},
-            {VerbTypes.SET_HYDROPLANE, AddressOf CanSetHydroplane},
-            {VerbTypes.UNDOCK, AddressOf CanUndock},
-            {VerbTypes.DISEMBARK, AddressOf CanDisembark},
-            {VerbTypes.EMBARK, AddressOf CanEmbark},
-            {VerbTypes.RAISE_SNORKEL, AddressOf CanRaiseSnorkel},
-            {VerbTypes.LOWER_SNORKEL, AddressOf CanLowerSnorkel}
+            {VerbSubtypes.MOVE, AddressOf CanMove},
+            {VerbSubtypes.DOCK, AddressOf CanDock},
+            {VerbSubtypes.SET_HEADING, AddressOf CanSetHeading},
+            {VerbSubtypes.SET_SPEED, AddressOf CanSetSpeed},
+            {VerbSubtypes.SET_HYDROPLANE, AddressOf CanSetHydroplane},
+            {VerbSubtypes.UNDOCK, AddressOf CanUndock},
+            {VerbSubtypes.DISEMBARK, AddressOf CanDisembark},
+            {VerbSubtypes.EMBARK, AddressOf CanEmbark},
+            {VerbSubtypes.RAISE_SNORKEL, AddressOf CanRaiseSnorkel},
+            {VerbSubtypes.LOWER_SNORKEL, AddressOf CanLowerSnorkel}
         }
 
     Private Function CanLowerSnorkel(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
@@ -32,11 +32,11 @@ Friend Module LocationVerbExtensions
     End Function
 
     Private Function CanEmbark(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
-        Return location.Features.Any(Function(x) x.EntityType = FeatureTypes.MOORINGS)
+        Return location.Features.Any(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS)
     End Function
 
     Private Function CanDisembark(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
-        Return Not location.IsSnorkelRaised() AndAlso location.Features.Any(Function(x) x.EntityType = FeatureTypes.MOORINGS)
+        Return Not location.IsSnorkelRaised() AndAlso location.Features.Any(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS)
     End Function
 
     Private Function CanUndock(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
@@ -64,7 +64,7 @@ Friend Module LocationVerbExtensions
     <Extension>
     Friend Function CanPerform(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
         Dim handler As CanPerformHandler = Nothing
-        If canPerformTable.TryGetValue(verb.EntityType, handler) Then
+        If canPerformTable.TryGetValue(verb.EntitySubtype, handler) Then
             Return handler.Invoke(verb, location, actor)
         End If
         Return True
@@ -72,16 +72,16 @@ Friend Module LocationVerbExtensions
 
     Private ReadOnly performTable As New Dictionary(Of String, PerformHandler) From
         {
-            {VerbTypes.SET_HEADING, AddressOf HandleSetHeading},
-            {VerbTypes.SET_SPEED, AddressOf HandleSetSpeed},
-            {VerbTypes.SET_HYDROPLANE, AddressOf HandleSetHydroplane},
-            {VerbTypes.MOVE, AddressOf HandleMove},
-            {VerbTypes.DOCK, AddressOf HandleDock},
-            {VerbTypes.UNDOCK, AddressOf HandleUndock},
-            {VerbTypes.EMBARK, AddressOf HandleEmbark},
-            {VerbTypes.DISEMBARK, AddressOf HandleDisembark},
-            {VerbTypes.RAISE_SNORKEL, AddressOf HandleRaiseSnorkel},
-            {VerbTypes.LOWER_SNORKEL, AddressOf HandleLowerSnorkel}
+            {VerbSubtypes.SET_HEADING, AddressOf HandleSetHeading},
+            {VerbSubtypes.SET_SPEED, AddressOf HandleSetSpeed},
+            {VerbSubtypes.SET_HYDROPLANE, AddressOf HandleSetHydroplane},
+            {VerbSubtypes.MOVE, AddressOf HandleMove},
+            {VerbSubtypes.DOCK, AddressOf HandleDock},
+            {VerbSubtypes.UNDOCK, AddressOf HandleUndock},
+            {VerbSubtypes.EMBARK, AddressOf HandleEmbark},
+            {VerbSubtypes.DISEMBARK, AddressOf HandleDisembark},
+            {VerbSubtypes.RAISE_SNORKEL, AddressOf HandleRaiseSnorkel},
+            {VerbSubtypes.LOWER_SNORKEL, AddressOf HandleLowerSnorkel}
         }
 
     Private Sub HandleLowerSnorkel(verb As IVerb, ship As ILocation, actor As ICharacter)
@@ -105,7 +105,7 @@ Friend Module LocationVerbExtensions
         Dim world = verb.World
         Dim avatar = world.Avatar
         Dim fromLocation = avatar.Location
-        Dim destination = location.Features.Single(Function(x) x.EntityType = FeatureTypes.MOORINGS).GetDestination()
+        Dim destination = location.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS).GetDestination()
         avatar.Location = destination
         world.AddMessage($"{avatar.Name} moves from {fromLocation.Name} to {destination.Name}.")
         avatar.Look()
@@ -115,14 +115,14 @@ Friend Module LocationVerbExtensions
         Dim world = verb.World
         Dim avatar = world.Avatar
         Dim fromLocation = avatar.Location
-        Dim destination = location.Features.Single(Function(x) x.EntityType = FeatureTypes.MOORINGS).GetDestination()
+        Dim destination = location.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS).GetDestination()
         avatar.Location = destination
         world.AddMessage($"{avatar.Name} moves from {fromLocation.Name} to {destination.Name}.")
         avatar.Look()
     End Sub
 
     Private Sub HandleUndock(verb As IVerb, ship As ILocation, actor As ICharacter)
-        Dim island = ship.Features.Single(Function(x) x.EntityType = FeatureTypes.MOORINGS).GetDestination()
+        Dim island = ship.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS).GetDestination()
         island.RemoveMoorings()
         ship.RemoveMoorings()
     End Sub
@@ -168,7 +168,7 @@ Friend Module LocationVerbExtensions
     Sub Perform(verb As IVerb, location As ILocation, actor As ICharacter)
         Dim handler As PerformHandler = Nothing
         verb.World.AddMessage(verb.Flavor)
-        If performTable.TryGetValue(verb.EntityType, handler) Then
+        If performTable.TryGetValue(verb.EntitySubtype, handler) Then
             handler.Invoke(verb, location, actor)
             Return
         End If

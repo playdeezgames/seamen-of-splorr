@@ -12,19 +12,19 @@
 
     Public ReadOnly Property Items As IEnumerable(Of IItem) Implements IItemStack.Items
         Get
-            Return Inventory.Items.Where(Function(x) x.EntityType = ItemType)
+            Return Inventory.Items.Where(Function(x) x.EntitySubtype = ItemType)
         End Get
     End Property
 
     Public ReadOnly Property Count As Integer Implements IItemStack.Count
         Get
-            Return Inventory.Items.Count(Function(x) x.EntityType = ItemType)
+            Return Inventory.Items.Count(Function(x) x.EntitySubtype = ItemType)
         End Get
     End Property
 
     Public ReadOnly Property Top As IItem Implements IItemStack.Top
         Get
-            Return Inventory.Items.FirstOrDefault(Function(x) x.EntityType = ItemType)
+            Return Inventory.Items.FirstOrDefault(Function(x) x.EntitySubtype = ItemType)
         End Get
     End Property
 

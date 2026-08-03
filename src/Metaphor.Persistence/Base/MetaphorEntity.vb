@@ -28,9 +28,9 @@ Friend MustInherit Class MetaphorEntity(Of TData As MetaphorEntityData)
 
     Public ReadOnly Property EntityId As Guid Implements IMetaphorEntity.EntityId
 
-    Public ReadOnly Property EntityType As String Implements IMetaphorEntity.EntityType
+    Public ReadOnly Property EntitySubtype As String Implements IMetaphorEntity.EntitySubtype
         Get
-            Return Data.EntityType
+            Return Data.EntitySubtype
         End Get
     End Property
 

@@ -7,8 +7,8 @@ Friend Module CharacterVerbExtensions
 
     Private ReadOnly canPerformTable As New Dictionary(Of String, CanPerformHandler) From
         {
-            {VerbTypes.HEAD_FOR_KNOWN_BUBBLE, AddressOf CanHeadForKnownBubble},
-            {VerbTypes.DELIVER_PACKAGE, AddressOf CanDeliverPackage}
+            {VerbSubtypes.HEAD_FOR_KNOWN_BUBBLE, AddressOf CanHeadForKnownBubble},
+            {VerbSubtypes.DELIVER_PACKAGE, AddressOf CanDeliverPackage}
         }
 
     Private Function CanDeliverPackage(verb As IVerb, character As ICharacter, actor As ICharacter) As Boolean
@@ -25,7 +25,7 @@ Friend Module CharacterVerbExtensions
     <Extension>
     Friend Function CanPerform(verb As IVerb, character As ICharacter, actor As ICharacter) As Boolean
         Dim handler As CanPerformHandler = Nothing
-        If canPerformTable.TryGetValue(verb.EntityType, handler) Then
+        If canPerformTable.TryGetValue(verb.EntitySubtype, handler) Then
             Return handler.Invoke(verb, character, actor)
         End If
         Return True
@@ -33,8 +33,8 @@ Friend Module CharacterVerbExtensions
 
     Private ReadOnly performTable As New Dictionary(Of String, PerformHandler) From
         {
-            {VerbTypes.HEAD_FOR_KNOWN_BUBBLE, AddressOf HandleHeadForKnownBubble},
-            {VerbTypes.DELIVER_PACKAGE, AddressOf HandleDeliverPackage}
+            {VerbSubtypes.HEAD_FOR_KNOWN_BUBBLE, AddressOf HandleHeadForKnownBubble},
+            {VerbSubtypes.DELIVER_PACKAGE, AddressOf HandleDeliverPackage}
         }
 
     Private Sub HandleDeliverPackage(verb As IVerb, character As ICharacter, actor As ICharacter)
@@ -56,13 +56,13 @@ Friend Module CharacterVerbExtensions
     Sub Perform(verb As IVerb, character As ICharacter, actor As ICharacter)
         Dim handler As PerformHandler = Nothing
         verb.World.AddMessage(verb.Flavor)
-        If performTable.TryGetValue(verb.EntityType, handler) Then
+        If performTable.TryGetValue(verb.EntitySubtype, handler) Then
             handler.Invoke(verb, character, actor)
             Return
         End If
     End Sub
     <Extension>
     Friend Function GetKnownIslands(character As ICharacter) As IEnumerable(Of ILocation)
-        Return character.GetYokage(YokageTypes.KNOWN_ISLANDS).Select(AddressOf character.World.GetLocation)
+        Return character.GetYokage(Yokages.KNOWN_ISLANDS).Select(AddressOf character.World.GetLocation)
     End Function
 End Module

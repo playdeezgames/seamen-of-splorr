@@ -34,19 +34,19 @@ Friend Module IslandExtensions
     End Function
     <Extension>
     Friend Sub CreateJobBoard(island As ILocation)
-        island.CreateFeature(FeatureTypes.JOB_BOARD, "Job Board", "Here are listed various errand person jobs for making a small amount of jools.", AddressOf InitializeJobBoard)
+        island.CreateFeature(FeatureSubtypes.JOB_BOARD, "Job Board", "Here are listed various errand person jobs for making a small amount of jools.", AddressOf InitializeJobBoard)
     End Sub
     Private Sub InitializeJobBoard(feature As IFeature)
-        feature.CreateVerb(VerbTypes.ACCEPT_DELIVERY, "Take Delivery Assignment", "Desperate for jools, you will take whatever whereever!")
+        feature.CreateVerb(VerbSubtypes.ACCEPT_DELIVERY, "Take Delivery Assignment", "Desperate for jools, you will take whatever whereever!")
     End Sub
     <Extension>
     Friend Function CreateRecipient(island As ILocation) As ICharacter
         Dim characterName As String = GenerateName(island)
-        Return island.CreateCharacter(CharacterTypes.RECIPIENT, characterName, "They/Them", $"This is {characterName} of {island.Name}.", AddressOf InitializeRecipient)
+        Return island.CreateCharacter(CharacterSubtypes.RECIPIENT, characterName, "They/Them", $"This is {characterName} of {island.Name}.", AddressOf InitializeRecipient)
     End Function
 
     Private Sub InitializeRecipient(character As ICharacter)
-        character.CreateVerb(VerbTypes.DELIVER_PACKAGE, "Deliver Package", "You deliver the package, right in their package delivery hole.")
+        character.CreateVerb(VerbSubtypes.DELIVER_PACKAGE, "Deliver Package", "You deliver the package, right in their package delivery hole.")
     End Sub
 
     Private Function GenerateName(island As ILocation) As String

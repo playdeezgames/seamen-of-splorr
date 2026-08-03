@@ -160,16 +160,16 @@ Friend Module CharacterExtensions
     End Function
     <Extension>
     Friend Sub SetShip(character As ICharacter, ship As ILocation)
-        character.SetYoke(YokeTypes.SHIP, ship.EntityId)
+        character.SetYoke(Yokes.SHIP, ship.EntityId)
     End Sub
     <Extension>
     Friend Function GetShip(character As ICharacter) As ILocation
-        Dim identifier = character.GetYoke(YokeTypes.SHIP)
+        Dim identifier = character.GetYoke(Yokes.SHIP)
         Return If(identifier.HasValue, character.World.GetLocation(identifier.Value), Nothing)
     End Function
     <Extension>
     Friend Sub AddKnownIsland(character As ICharacter, island As ILocation)
-        character.AddToYokage(YokageTypes.KNOWN_ISLANDS, island.EntityId)
+        character.AddToYokage(Yokages.KNOWN_ISLANDS, island.EntityId)
     End Sub
     <Extension>
     Friend Sub SetMode(character As ICharacter, mode As String)
