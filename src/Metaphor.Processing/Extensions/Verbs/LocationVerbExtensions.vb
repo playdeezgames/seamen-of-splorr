@@ -14,11 +14,21 @@ Friend Module LocationVerbExtensions
             {VerbTypes.SET_HYDROPLANE, AddressOf CanSetHydroplane},
             {VerbTypes.UNDOCK, AddressOf CanUndock},
             {VerbTypes.DISEMBARK, AddressOf CanDisembark},
-            {VerbTypes.EMBARK, AddressOf CanEmbark}
+            {VerbTypes.EMBARK, AddressOf CanEmbark},
+            {VerbTypes.RAISE_SNORKEL, AddressOf CanRaiseSnorkel},
+            {VerbTypes.LOWER_SNORKEL, AddressOf CanLowerSnorkel}
         }
 
+    Private Function CanLowerSnorkel(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
+        Return ship.IsSnorkelRaised()
+    End Function
+
+    Private Function CanRaiseSnorkel(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
+        Return Not ship.IsSnorkelRaised() AndAlso ship.IsAtSnorkelDepth()
+    End Function
+
     Private Function CanSetHydroplane(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return Not ship.IsMoored
+        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsMoored
     End Function
 
     Private Function CanEmbark(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
@@ -26,27 +36,29 @@ Friend Module LocationVerbExtensions
     End Function
 
     Private Function CanDisembark(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
-        Return location.Features.Any(Function(x) x.EntityType = FeatureTypes.MOORINGS)
+        Return Not location.IsSnorkelRaised() AndAlso location.Features.Any(Function(x) x.EntityType = FeatureTypes.MOORINGS)
     End Function
 
     Private Function CanUndock(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return ship.IsMoored
+        Return Not ship.IsSnorkelRaised() AndAlso ship.IsMoored
     End Function
 
     Private Function CanSetSpeed(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return Not ship.IsMoored
+        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsMoored
     End Function
 
     Private Function CanSetHeading(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return Not ship.IsMoored
+        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsMoored
     End Function
 
     Private Function CanDock(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return Not ship.IsMoored AndAlso verb.World.Bubbles.Any(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
+        Return Not ship.IsSnorkelRaised() AndAlso
+            Not ship.IsMoored AndAlso
+            verb.World.Bubbles.Any(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE AndAlso x.DepthDifference(ship) <= MAXIMUM_DEPTH_DIFFERENCE)
     End Function
 
     Private Function CanMove(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return Not ship.IsMoored AndAlso ship.GetSpeed() > SPEED_FULL_STOP
+        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsMoored AndAlso ship.GetSpeed() > SPEED_FULL_STOP
     End Function
 
     <Extension>
@@ -67,8 +79,23 @@ Friend Module LocationVerbExtensions
             {VerbTypes.DOCK, AddressOf HandleDock},
             {VerbTypes.UNDOCK, AddressOf HandleUndock},
             {VerbTypes.EMBARK, AddressOf HandleEmbark},
-            {VerbTypes.DISEMBARK, AddressOf HandleDisembark}
+            {VerbTypes.DISEMBARK, AddressOf HandleDisembark},
+            {VerbTypes.RAISE_SNORKEL, AddressOf HandleRaiseSnorkel},
+            {VerbTypes.LOWER_SNORKEL, AddressOf HandleLowerSnorkel}
         }
+
+    Private Sub HandleLowerSnorkel(verb As IVerb, ship As ILocation, actor As ICharacter)
+        Dim world = verb.World
+        world.AddMessage($"{actor.Name} lowers the snorkel.")
+        ship.ClearTag(Tags.SNORKEL_RAISED)
+    End Sub
+
+    Private Sub HandleRaiseSnorkel(verb As IVerb, ship As ILocation, actor As ICharacter)
+        Dim world = verb.World
+        world.AddMessage($"{actor.Name} raises the snorkel.")
+        ship.SetCounter(Counters.OXYGEN, ship.GetMaximumOxygen())
+        ship.SetTag(Tags.SNORKEL_RAISED)
+    End Sub
 
     Private Sub HandleSetHydroplane(verb As IVerb, location As ILocation, actor As ICharacter)
         verb.World.Avatar.SetMode(Modes.SETTING_HYDROPLANE)
@@ -112,7 +139,7 @@ Friend Module LocationVerbExtensions
         Dim world = verb.World
         Dim avatar = world.Avatar
         Dim ship = avatar.GetShip()
-        Dim speed = ship.GetSpeed()
+        Dim speed = Math.Min(ship.GetSpeed(), ship.GetBattery())
         Dim headingRadians = Utility.ToRadians(ship.GetHeading())
         Dim bubbleRadians = Utility.ToRadians(ship.GetHydroplane())
         Dim deltaLongitude = speed * Math.Cos(headingRadians)
@@ -124,6 +151,7 @@ Friend Module LocationVerbExtensions
         ship.SetLongitude(nextLongitude)
         ship.SetLatitude(nextLatitude)
         ship.SetDepth(nextDepth)
+        ship.ChangeDimension(Dimensions.BATTERY, -speed)
         avatar.DoBiology(1)
         avatar.Look()
     End Sub

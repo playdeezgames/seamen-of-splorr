@@ -42,7 +42,7 @@ Friend Module FeatureVerbExtensions
         Dim recipient = destination.CreateRecipient()
         Dim item = avatar.Inventory.CreateDeliveryItem(recipient)
         item.SetJools(distance)
-        world.AddMessage($"Please deliver this {item.Name} to {recipient.Name} on {destination.GetIslandName()}.")
+        world.AddMessage($"Please deliver this {item.Name} to {recipient.Name} on {destination.GetBubbleName()}.")
     End Sub
 
     Private Sub HandleMove(verb As IVerb, feature As IFeature, actor As ICharacter)

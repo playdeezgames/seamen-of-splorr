@@ -89,10 +89,42 @@ Friend Module CharacterExtensions
     End Function
     <Extension>
     Friend Sub DoBiology(character As ICharacter, amount As Integer)
+        character.ApplyBreathing(amount)
         character.ApplyHunger(amount)
     End Sub
     <Extension>
+    Private Sub ApplyBreathing(character As ICharacter, amount As Integer)
+        Dim ship = character.GetShip()
+        If character.Location.EntityId = ship.EntityId AndAlso
+            Not ship.IsSnorkelRaised Then
+            Dim oxygenAvailable = ship.GetOxygen()
+            Dim damage = Math.Max(0, amount - oxygenAvailable)
+            ship.ChangeCounter(Counters.OXYGEN, -amount)
+            If damage > 0 Then
+                Dim world = character.World
+                world.AddMessage($"{character.Name} is asphyxiating!")
+                character.ApplyDamage(damage)
+            End If
+        End If
+    End Sub
+    <Extension>
+    Private Sub ApplyDamage(character As ICharacter, damage As Integer)
+        If Not character.IsDead() AndAlso damage > 0 Then
+            Dim world = character.World
+            world.AddMessage($"{character.Name} takes {damage} damage!")
+            character.ChangeCounter(Counters.HEALTH, -damage)
+            If character.IsDead Then
+                world.AddMessage($"{character.Name} dies.")
+            Else
+                world.AddMessage($"{character.Name} has {character.GetHealth()}/{character.GetMaximumHealth()} health left!")
+            End If
+        End If
+    End Sub
+    <Extension>
     Private Sub ApplyHunger(character As ICharacter, amount As Integer)
+        If character.IsDead Then
+            Return
+        End If
         Dim world = character.World
         Dim stomach = Math.Min(character.GetStomach(), amount)
         amount -= stomach

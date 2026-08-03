@@ -17,4 +17,5 @@
     Friend Const MINIMUM_HYDROPLANE = -10.0 'degrees
     Friend Const MAXIMUM_HYDROPLANE = 10.0 'degrees
     Friend Const FATHOMS_PER_KNOT = 100.0
+    Friend Const MAXIMUM_DEPTH_DIFFERENCE = 10.0 'fathoms
 End Module

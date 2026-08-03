@@ -9,6 +9,12 @@ Friend Module ShipExtensions
         world.AddMessage($"Speed: {ship.GetSpeed():f2} knots")
         world.AddMessage($"Depth: {ship.GetDepth():f2} fathoms")
         world.AddMessage($"Hydroplane: {Utility.DescribeHydroplane(ship.GetHydroplane())}")
+        world.AddMessage($"Oxygen: {ship.GetOxygen()}/{ship.GetMaximumOxygen()}")
+        world.AddMessage($"Battery: {ship.GetBattery():f2}/{ship.GetMaximumBattery():f2}")
+        world.AddMessage($"Diesel: {ship.GetDiesel():f2}/{ship.GetMaximumDiesel():f2}")
+        If ship.IsSnorkelRaised Then
+            world.AddMessage($"Snorkel: Raised")
+        End If
         ShowVisibleIslands(world, ship)
     End Sub
     <Extension>
@@ -24,7 +30,7 @@ Friend Module ShipExtensions
             world.AddMessage("Visible Islands:")
             For Each visibleIsland In visibleIslands
                 world.Avatar.AddKnownIsland(visibleIsland)
-                world.AddMessage($"- {visibleIsland.GetIslandName()}(Distance: {visibleIsland.DistanceTo(ship):f2}, Heading: {ship.HeadingTo(visibleIsland):f2})")
+                world.AddMessage($"- {visibleIsland.GetBubbleName()}(Distance: {visibleIsland.DistanceTo(ship):f2}nm, Heading: {ship.HeadingTo(visibleIsland):f2}°, Depth: {visibleIsland.GetDepth():f2}ftm)")
             Next
         End If
     End Sub
@@ -62,6 +68,30 @@ Friend Module ShipExtensions
         Return ship.GetDimension(Dimensions.DEPTH)
     End Function
     <Extension>
+    Friend Function GetOxygen(ship As ILocation) As Integer
+        Return ship.GetCounter(Counters.OXYGEN)
+    End Function
+    <Extension>
+    Friend Function GetBattery(ship As ILocation) As Double
+        Return ship.GetDimension(Dimensions.BATTERY)
+    End Function
+    <Extension>
+    Friend Function GetDiesel(ship As ILocation) As Double
+        Return ship.GetDimension(Dimensions.DIESEL)
+    End Function
+    <Extension>
+    Friend Function GetMaximumOxygen(ship As ILocation) As Integer
+        Return ship.GetCounterMaximum(Counters.OXYGEN)
+    End Function
+    <Extension>
+    Friend Function GetMaximumBattery(ship As ILocation) As Double
+        Return ship.GetDimensionMaximum(Dimensions.BATTERY)
+    End Function
+    <Extension>
+    Friend Function GetMaximumDiesel(ship As ILocation) As Double
+        Return ship.GetDimensionMaximum(Dimensions.DIESEL)
+    End Function
+    <Extension>
     Friend Sub SetHeading(ship As ILocation, heading As Double)
         ship.SetDimension(Dimensions.HEADING, heading)
     End Sub
@@ -80,5 +110,13 @@ Friend Module ShipExtensions
     <Extension>
     Friend Function GetCargoHold(ship As ILocation) As IFeature
         Return ship.Features.Single(Function(x) x.EntityType = FeatureTypes.CARGO_HOLD)
+    End Function
+    <Extension>
+    Friend Function IsSnorkelRaised(ship As ILocation) As Boolean
+        Return ship.HasTag(Tags.SNORKEL_RAISED)
+    End Function
+    <Extension>
+    Friend Function IsAtSnorkelDepth(ship As ILocation) As Boolean
+        Return ship.IsDimensionMinimum(Dimensions.DEPTH)
     End Function
 End Module

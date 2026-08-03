@@ -7,7 +7,7 @@ Friend Module CharacterVerbExtensions
 
     Private ReadOnly canPerformTable As New Dictionary(Of String, CanPerformHandler) From
         {
-            {VerbTypes.HEAD_FOR_KNOWN_ISLAND, AddressOf CanHeadForKnownIsland},
+            {VerbTypes.HEAD_FOR_KNOWN_BUBBLE, AddressOf CanHeadForKnownBubble},
             {VerbTypes.DELIVER_PACKAGE, AddressOf CanDeliverPackage}
         }
 
@@ -15,9 +15,11 @@ Friend Module CharacterVerbExtensions
         Return verb.World.Avatar.Inventory.Items.Any(Function(x) If(x.GetRecipient()?.EntityId = character.EntityId, False))
     End Function
 
-    Private Function CanHeadForKnownIsland(verb As IVerb, character As ICharacter, actor As ICharacter) As Boolean
+    Private Function CanHeadForKnownBubble(verb As IVerb, character As ICharacter, actor As ICharacter) As Boolean
         Dim avatar = verb.World.Avatar
-        Return Not avatar.GetShip().IsMoored AndAlso avatar.GetKnownIslands().Any
+        Return Not avatar.GetShip().IsSnorkelRaised() AndAlso
+            Not avatar.GetShip().IsMoored AndAlso
+            avatar.GetKnownIslands().Any
     End Function
 
     <Extension>
@@ -31,7 +33,7 @@ Friend Module CharacterVerbExtensions
 
     Private ReadOnly performTable As New Dictionary(Of String, PerformHandler) From
         {
-            {VerbTypes.HEAD_FOR_KNOWN_ISLAND, AddressOf HandleHeadForKnownIsland},
+            {VerbTypes.HEAD_FOR_KNOWN_BUBBLE, AddressOf HandleHeadForKnownBubble},
             {VerbTypes.DELIVER_PACKAGE, AddressOf HandleDeliverPackage}
         }
 
@@ -46,7 +48,7 @@ Friend Module CharacterVerbExtensions
         character.Remove()
     End Sub
 
-    Private Sub HandleHeadForKnownIsland(verb As IVerb, character As ICharacter, actor As ICharacter)
+    Private Sub HandleHeadForKnownBubble(verb As IVerb, character As ICharacter, actor As ICharacter)
         character.SetMode(Modes.PICKING_KNOWN_BUBBLE)
     End Sub
 

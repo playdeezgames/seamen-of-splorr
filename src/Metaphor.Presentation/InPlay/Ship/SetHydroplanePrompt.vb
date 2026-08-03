@@ -18,7 +18,7 @@ Friend Class SetHydroplanePrompt
         Get
             Return Enumerable.Empty(Of LaunchDelegate).
                 Append(AddressOf ChooseNeverMind).
-                Concat(Enumerable.Range(-10, 19).Select(AddressOf ChooseBubble))
+                Concat(Enumerable.Range(-10, 21).Select(AddressOf ChooseBubble))
         End Get
     End Property
 

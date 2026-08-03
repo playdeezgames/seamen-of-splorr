@@ -20,9 +20,14 @@ Friend Class SetSpeedPrompt
             Return Enumerable.Empty(Of LaunchDelegate).
             Append(AddressOf ChooseNeverMind).
             Append(AddressOf ChooseFullStop).
+            Append(AddressOf ChooseManeuveringSpeed).
             Concat(Enumerable.Range(1, 10).Select(AddressOf ChooseSpeed))
         End Get
     End Property
+
+    Private Function ChooseManeuveringSpeed(context As IDisplayContext, model As IWorldModel, previous As DialogSource) As IDialogChoice
+        Return DialogChoice.CreateEnabled("Maneuvering Speed(1 knot)", SetSpeedActivity.Launch(context, model, previous, 1.0))
+    End Function
 
     Private Function ChooseSpeed(value As Integer) As LaunchDelegate
         Dim percentage = value * 10

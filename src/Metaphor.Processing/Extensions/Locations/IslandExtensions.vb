@@ -18,6 +18,10 @@ Friend Module IslandExtensions
             (toLocation.GetLongitude(), toLocation.GetLatitude()))
     End Function
     <Extension>
+    Function DepthDifference(fromLocation As ILocation, toLocation As ILocation) As Double
+        Return Math.Abs(fromLocation.GetDepth() - toLocation.GetDepth())
+    End Function
+    <Extension>
     Function HeadingTo(fromLocation As ILocation, toLocation As ILocation) As Double
         Dim deltaX = toLocation.GetLongitude() - fromLocation.GetLongitude()
         Dim deltaY = toLocation.GetLatitude() - fromLocation.GetLatitude()
@@ -25,8 +29,8 @@ Friend Module IslandExtensions
         Return If(heading < 0.0, heading + 360.0, heading)
     End Function
     <Extension>
-    Friend Function GetIslandName(island As ILocation) As String
-        Return If(island.HasTag(Tags.KNOWN), island.Name, "UNKNOWN ISLAND")
+    Friend Function GetBubbleName(island As ILocation) As String
+        Return If(island.HasTag(Tags.KNOWN), island.Name, "UNKNOWN BUBBLE")
     End Function
     <Extension>
     Friend Sub CreateJobBoard(island As ILocation)

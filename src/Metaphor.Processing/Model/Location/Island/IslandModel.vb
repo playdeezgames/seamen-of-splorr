@@ -12,7 +12,7 @@ Friend Class IslandModel
     Public ReadOnly Property Name As String Implements IIslandModel.Name
         Get
             Dim ship = island.World.Avatar.GetShip()
-            Return $"{island.GetIslandName()}(Distance: {island.DistanceTo(ship):f2}, Heading: {ship.HeadingTo(island):f2})"
+            Return $"{island.GetBubbleName()}(Distance: {island.DistanceTo(ship):f2}nm, Heading: {ship.HeadingTo(island):f2}°, Depth: {island.GetDepth():f2}ftm)"
         End Get
     End Property
 
@@ -22,7 +22,7 @@ Friend Class IslandModel
         avatar.SetMode(Nothing)
         Dim ship = avatar.GetShip()
         ship.SetHeading(ship.HeadingTo(island))
-        world.AddMessage($"{avatar.Name} heads for {island.GetIslandName()} by setting a heading of {ship.GetHeading():f2}.")
+        world.AddMessage($"{avatar.Name} heads for {island.GetBubbleName()} by setting a heading of {ship.GetHeading():f2}.")
         avatar.Look()
     End Sub
 

@@ -11,6 +11,9 @@ Friend Module ShipInitializer
                    ship.InitializeDimension(Dimensions.LATITUDE, context.WorldHeight / 2, 0.0, context.WorldHeight)
                    ship.InitializeDimension(Dimensions.DEPTH, (context.SnorkelDepth + context.WorldDepth) / 2, context.SnorkelDepth, context.WorldDepth)
                    ship.InitializeDimension(Dimensions.HYDROPLANE, 0.0, MINIMUM_HYDROPLANE, MAXIMUM_HYDROPLANE)
+                   ship.InitializeCounter(Counters.OXYGEN, 500, 0, 1000)
+                   ship.InitializeDimension(Dimensions.BATTERY, 500, 0, 1000)
+                   ship.InitializeDimension(Dimensions.DIESEL, 500, 0, 1000)
                    ship.SetDimension(Dimensions.VISIBILITY, 100.0)
                    ship.CreateVerb(VerbTypes.MOVE, "Move", "Steady as she goes.")
                    ship.CreateVerb(VerbTypes.DOCK, "Dock", "You moor the ship to the pier.")
@@ -19,6 +22,8 @@ Friend Module ShipInitializer
                    ship.CreateVerb(VerbTypes.SET_SPEED, "Set Speed", "You use the engines to set a new speed.")
                    ship.CreateVerb(VerbTypes.SET_HYDROPLANE, "Set Hydroplane", "You angle the hydroplane to change depth when moving.")
                    ship.CreateVerb(VerbTypes.DISEMBARK, "Disembark", "You step off the ship.")
+                   ship.CreateVerb(VerbTypes.RAISE_SNORKEL, "Raise Snorkel", "You raise the snorkel mast.")
+                   ship.CreateVerb(VerbTypes.LOWER_SNORKEL, "Lower Snorkel", "You lowerr the snorkel mast.")
                    ship.CreateCharacter(CharacterTypes.N00B, context.ChosenName, context.ChosenPronouns, $"{context.ChosenName}'s pronouns are {context.ChosenPronouns}.", InitializeAvatar(context))
                    ship.CreateFeature(FeatureTypes.CARGO_HOLD, "Cargo Hold", "This is the cargo hold. It is where you hold yer cargo.", AddressOf InitializeCargoHold)
                End Sub
@@ -44,7 +49,7 @@ Friend Module ShipInitializer
                    character.InitializeDimension(Dimensions.JOOLS, 0.0, 0.0, Double.MaxValue)
 #End If
                    Utility.Repeat(10, Sub() character.Inventory.CreateItemOfType(ItemTypes.HARDTACK))
-                   character.CreateVerb(VerbTypes.HEAD_FOR_KNOWN_ISLAND, "Head for known island...", String.Empty)
+                   character.CreateVerb(VerbTypes.HEAD_FOR_KNOWN_BUBBLE, "Head for known bubble...", String.Empty)
                End Sub
     End Function
 End Module
