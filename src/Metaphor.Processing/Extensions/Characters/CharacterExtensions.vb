@@ -159,8 +159,8 @@ Friend Module CharacterExtensions
         Return If(identifier.HasValue, character.World.GetLocation(identifier.Value), Nothing)
     End Function
     <Extension>
-    Friend Sub AddKnownIsland(character As ICharacter, island As ILocation)
-        character.AddToYokage(Yokages.KNOWN_BUBBLES, island.EntityId)
+    Friend Sub AddKnownBubble(character As ICharacter, bubble As ILocation)
+        character.AddToYokage(Yokages.KNOWN_BUBBLES, bubble.EntityId)
     End Sub
     <Extension>
     Friend Sub SetMode(character As ICharacter, mode As String)

@@ -1,10 +1,10 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports Metaphor.Persistence
 
-Friend Module IslandExtensions
-    Friend Sub DescribeIsland(island As ILocation)
-        Dim world = island.World
-        world.AddMessage($"Island: {island.Name}")
+Friend Module BubbleExtensions
+    Friend Sub DescribeBubble(bubble As ILocation)
+        Dim world = bubble.World
+        world.AddMessage($"Bubble: {bubble.Name}")
     End Sub
 
     <Extension>
@@ -29,27 +29,27 @@ Friend Module IslandExtensions
         Return If(heading < 0.0, heading + 360.0, heading)
     End Function
     <Extension>
-    Friend Function GetBubbleName(island As ILocation) As String
-        Return If(island.HasTag(Tags.KNOWN), island.Name, "UNKNOWN BUBBLE")
+    Friend Function GetBubbleName(bubble As ILocation) As String
+        Return If(bubble.HasTag(Tags.KNOWN), bubble.Name, "UNKNOWN BUBBLE")
     End Function
     <Extension>
-    Friend Sub CreateJobBoard(island As ILocation)
-        island.CreateFeature(FeatureSubtypes.JOB_BOARD, "Job Board", "Here are listed various errand person jobs for making a small amount of jools.", AddressOf InitializeJobBoard)
+    Friend Sub CreateJobBoard(bubble As ILocation)
+        bubble.CreateFeature(FeatureSubtypes.JOB_BOARD, "Job Board", "Here are listed various errand person jobs for making a small amount of jools.", AddressOf InitializeJobBoard)
     End Sub
     Private Sub InitializeJobBoard(feature As IFeature)
         feature.CreateVerb(VerbSubtypes.ACCEPT_DELIVERY, "Take Delivery Assignment", "Desperate for jools, you will take whatever whereever!")
     End Sub
     <Extension>
-    Friend Function CreateRecipient(island As ILocation) As ICharacter
-        Dim characterName As String = GenerateName(island)
-        Return island.CreateCharacter(CharacterSubtypes.RECIPIENT, characterName, "They/Them", $"This is {characterName} of {island.Name}.", AddressOf InitializeRecipient)
+    Friend Function CreateRecipient(bubble As ILocation) As ICharacter
+        Dim characterName As String = GenerateName(bubble)
+        Return bubble.CreateCharacter(CharacterSubtypes.RECIPIENT, characterName, "They/Them", $"This is {characterName} of {bubble.Name}.", AddressOf InitializeRecipient)
     End Function
 
     Private Sub InitializeRecipient(character As ICharacter)
         character.CreateVerb(VerbSubtypes.DELIVER_PACKAGE, "Deliver Package", "You deliver the package, right in their package delivery hole.")
     End Sub
 
-    Private Function GenerateName(island As ILocation) As String
+    Private Function GenerateName(bubble As ILocation) As String
         Return "Nacho Mama"
     End Function
 End Module

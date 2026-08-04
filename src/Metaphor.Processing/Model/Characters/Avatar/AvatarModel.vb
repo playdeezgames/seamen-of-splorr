@@ -39,9 +39,9 @@ Friend Class AvatarModel
         End Get
     End Property
 
-    Public ReadOnly Property KnownIslands As IAvatarKnownIslandsModel Implements IAvatarModel.KnownIslands
+    Public ReadOnly Property KnownBubbles As IAvatarKnownBubblesModel Implements IAvatarModel.KnownBubbles
         Get
-            Return AvatarKnownIslandsModel.Create(avatar)
+            Return AvatarKnownBubblesModel.Create(avatar)
         End Get
     End Property
 

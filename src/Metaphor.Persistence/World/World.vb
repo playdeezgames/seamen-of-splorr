@@ -23,7 +23,7 @@ Public Class World
         Data.Features.Clear()
         Data.Verbs.Clear()
         Data.AdFinishes = Nothing
-        Data.IslandIds.Clear()
+        Data.BubbleIds.Clear()
     End Sub
 
     Protected Overrides ReadOnly Property Data As WorldData
@@ -56,7 +56,7 @@ Public Class World
 
     Public ReadOnly Property Bubbles As IEnumerable(Of ILocation) Implements IWorld.Bubbles
         Get
-            Return Data.IslandIds.Select(Function(x) Location.Create(Me, Data, x))
+            Return Data.BubbleIds.Select(Function(x) Location.Create(Me, Data, x))
         End Get
     End Property
 
@@ -104,8 +104,8 @@ Public Class World
         Return result
     End Function
 
-    Public Sub AddBubble(island As ILocation) Implements IWorld.AddBubble
-        Data.IslandIds.Add(island.EntityId)
+    Public Sub AddBubble(bubble As ILocation) Implements IWorld.AddBubble
+        Data.BubbleIds.Add(bubble.EntityId)
     End Sub
 
     Public Function GetLocation(locationId As Guid?) As ILocation Implements IWorld.GetLocation

@@ -19,7 +19,7 @@ Friend Module CharacterVerbExtensions
         Dim avatar = verb.World.Avatar
         Return Not avatar.GetShip().IsSnorkelRaised() AndAlso
             Not avatar.GetShip().IsMoored AndAlso
-            avatar.GetKnownIslands().Any
+            avatar.GetKnownBubbles().Any
     End Function
 
     <Extension>
@@ -62,7 +62,7 @@ Friend Module CharacterVerbExtensions
         End If
     End Sub
     <Extension>
-    Friend Function GetKnownIslands(character As ICharacter) As IEnumerable(Of ILocation)
+    Friend Function GetKnownBubbles(character As ICharacter) As IEnumerable(Of ILocation)
         Return character.GetYokage(Yokages.KNOWN_BUBBLES).Select(AddressOf character.World.GetLocation)
     End Function
 End Module

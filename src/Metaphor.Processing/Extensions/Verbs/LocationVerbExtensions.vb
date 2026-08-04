@@ -146,17 +146,17 @@ Friend Module LocationVerbExtensions
     End Sub
 
     Private Sub HandleUndock(verb As IVerb, ship As ILocation, actor As ICharacter)
-        Dim island = ship.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS).GetDestination()
-        island.RemoveMoorings()
+        Dim bubble = ship.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS).GetDestination()
+        bubble.RemoveMoorings()
         ship.RemoveMoorings()
     End Sub
 
     Private Sub HandleDock(verb As IVerb, ship As ILocation, actor As ICharacter)
-        Dim island = verb.World.Bubbles.Single(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
-        ship.MoorTo(island, "Disembark")
-        island.MoorTo(ship, "Embark")
-        island.SetTag(Tags.KNOWN)
-        verb.World.Avatar.AddKnownIsland(island)
+        Dim bubble = verb.World.Bubbles.Single(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
+        ship.MoorTo(bubble, "Disembark")
+        bubble.MoorTo(ship, "Embark")
+        bubble.SetTag(Tags.KNOWN)
+        verb.World.Avatar.AddKnownBubble(bubble)
     End Sub
 
     Private Sub HandleMove(verb As IVerb, location As ILocation, actor As ICharacter)

@@ -6,6 +6,6 @@
     ReadOnly Property Ship As IShipModel
     ReadOnly Property IsDead As Boolean
     ReadOnly Property CanStow As Boolean
-    ReadOnly Property KnownIslands As IAvatarKnownIslandsModel
+    ReadOnly Property KnownBubbles As IAvatarKnownBubblesModel
     ReadOnly Property Mode As String
 End Interface

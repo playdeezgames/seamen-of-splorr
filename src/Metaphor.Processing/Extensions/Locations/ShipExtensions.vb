@@ -15,22 +15,22 @@ Friend Module ShipExtensions
         If ship.IsSnorkelRaised Then
             world.AddMessage($"Snorkel: Raised")
         End If
-        ShowVisibleIslands(world, ship)
+        ShowVisibleBubbles(world, ship)
     End Sub
     <Extension>
     Friend Function GetHydroplane(ship As ILocation) As Double
         Return ship.GetDimension(Dimensions.HYDROPLANE)
     End Function
 
-    Private Sub ShowVisibleIslands(world As IWorld, ship As ILocation)
+    Private Sub ShowVisibleBubbles(world As IWorld, ship As ILocation)
         If ship.IsMoored Then Return
         Dim visibility = ship.GetVisibility()
-        Dim visibleIslands = world.Bubbles.Where(Function(x) x.IsVisibleTo(ship)).OrderBy(Function(x) x.DistanceTo(ship))
-        If visibleIslands.Any Then
-            world.AddMessage("Visible Islands:")
-            For Each visibleIsland In visibleIslands
-                world.Avatar.AddKnownIsland(visibleIsland)
-                world.AddMessage($"- {visibleIsland.GetBubbleName()}(Distance: {visibleIsland.DistanceTo(ship):f2}nm, Heading: {ship.HeadingTo(visibleIsland):f2}°, Depth: {visibleIsland.GetDepth():f2}ftm)")
+        Dim visibleBubbles = world.Bubbles.Where(Function(x) x.IsVisibleTo(ship)).OrderBy(Function(x) x.DistanceTo(ship))
+        If visibleBubbles.Any Then
+            world.AddMessage("Visible Bubbles:")
+            For Each visibleBubble In visibleBubbles
+                world.Avatar.AddKnownBubble(visibleBubble)
+                world.AddMessage($"- {visibleBubble.GetBubbleName()}(Distance: {visibleBubble.DistanceTo(ship):f2}nm, Heading: {ship.HeadingTo(visibleBubble):f2}°, Depth: {visibleBubble.GetDepth():f2}ftm)")
             Next
         End If
     End Sub

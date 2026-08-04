@@ -1,34 +1,28 @@
-﻿Imports System.Runtime.CompilerServices
-Imports Metaphor.Persistence
+﻿Imports Metaphor.Persistence
 Imports TGGD.Processing
 
 Friend Module BubbleInitializer
     Friend Sub Initialize(world As IWorld, context As IInitializationContext)
-        Dim islandCoordinates = GenerateCoordinates(context)
-        Dim islandNames = GenerateNames(context, islandCoordinates.Count)
-        Do While islandCoordinates.Count <> 0
-            Dim name = islandNames.Dequeue
-            Dim coordinate = islandCoordinates.Dequeue
-            Dim island = world.CreateLocation(LocationSubtypes.ISLAND, name, $"This island is called `{name}`.", InitializeBubble(context, coordinate))
-            world.AddBubble(island)
+        Dim bubbleCoordinates = GenerateCoordinates(context)
+        Dim bubbleNames = GenerateNames(context, bubbleCoordinates.Count)
+        Do While bubbleCoordinates.Count <> 0
+            Dim name = bubbleNames.Dequeue
+            Dim coordinate = bubbleCoordinates.Dequeue
+            Dim bubble = world.CreateLocation(LocationSubtypes.BUBBLE, name, $"This bubble is named `{name}`.", InitializeBubble(context, coordinate))
+            world.AddBubble(bubble)
         Loop
     End Sub
 
     Private Function InitializeBubble(context As IInitializationContext, coordinate As (Longitude As Double, Latitude As Double)) As LocationInitializer
-        Return Sub(island)
-                   island.SetDimension(Dimensions.VISIBILITY, RNG.RollDice("3d8*10"))
-                   island.SetDimension(Dimensions.LONGITUDE, coordinate.Longitude)
-                   island.SetDimension(Dimensions.LATITUDE, coordinate.Latitude)
-                   island.SetDimension(Dimensions.DEPTH, RNG.FromRange(context.MinimumBubbleDepth, context.MaximumBubbleDepth))
-                   island.CreateVerb(VerbSubtypes.EMBARK, "Embark", "You step onto the ship.")
-                   island.CreateJobBoard()
-                   island.InitializeCommodities()
+        Return Sub(bubble)
+                   bubble.SetDimension(Dimensions.VISIBILITY, RNG.RollDice("3d8*10"))
+                   bubble.SetDimension(Dimensions.LONGITUDE, coordinate.Longitude)
+                   bubble.SetDimension(Dimensions.LATITUDE, coordinate.Latitude)
+                   bubble.SetDimension(Dimensions.DEPTH, RNG.FromRange(context.MinimumBubbleDepth, context.MaximumBubbleDepth))
+                   bubble.CreateVerb(VerbSubtypes.EMBARK, "Embark", "You step onto the ship.")
+                   bubble.CreateJobBoard()
                End Sub
     End Function
-
-    <Extension>
-    Private Sub InitializeCommodities(island As ILocation)
-    End Sub
 
     Private Function GenerateNames(context As IInitializationContext, count As Integer) As Queue(Of String)
         Dim result As New HashSet(Of String)
@@ -51,12 +45,12 @@ Friend Module BubbleInitializer
                                        coordinates As List(Of (Longitude As Double, Latitude As Double)),
                                        context As IInitializationContext,
                                        attempt As Integer) As Boolean
-        If attempt >= context.IslandGenerationAttempts Then
+        If attempt >= context.BubbleGenerationAttempts Then
             Return False
         End If
         Dim longitude = RNG.FromRange(0.0, context.WorldWidth)
         Dim latitude = RNG.FromRange(0.0, context.WorldHeight)
-        If coordinates.All(Function(x) Utility.Distance(x, (longitude, latitude)) >= context.MinimumIslandDistance) Then
+        If coordinates.All(Function(x) Utility.Distance(x, (longitude, latitude)) >= context.MinimumBubbleDistance) Then
             coordinates.Add((longitude, latitude))
             Return True
         End If

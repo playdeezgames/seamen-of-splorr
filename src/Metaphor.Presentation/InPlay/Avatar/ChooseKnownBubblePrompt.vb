@@ -1,7 +1,7 @@
 ﻿Imports Metaphor.Processing
 Imports TGGD.Presentation
 
-Friend Class ChooseKnownIslandPrompt
+Friend Class ChooseKnownBubblePrompt
     Inherits MetaphorPickerMenu
 
     Private Sub New(context As IDisplayContext, model As IWorldModel, previous As DialogSource)
@@ -10,7 +10,7 @@ Friend Class ChooseKnownIslandPrompt
 
     Public Overrides ReadOnly Property PromptText As String
         Get
-            Return "Which Known Island?"
+            Return "Which Known Bubble?"
         End Get
     End Property
 
@@ -18,33 +18,33 @@ Friend Class ChooseKnownIslandPrompt
         Get
             Return Enumerable.Empty(Of LaunchDelegate).
                 Append(AddressOf ChooseNeverMind).
-                Concat(Model.Avatar.KnownIslands.All.Select(AddressOf ChooseKnownIsland))
+                Concat(Model.Avatar.KnownBubbles.All.Select(AddressOf ChooseKnownBubble))
         End Get
     End Property
 
-    Private Function ChooseKnownIsland(islandModel As IIslandModel, arg2 As Integer) As LaunchDelegate
+    Private Function ChooseKnownBubble(bubbleModel As IBubbleModel, arg2 As Integer) As LaunchDelegate
         Return Function(c, m, p)
-                   Return DialogChoice.CreateEnabled(islandModel.Name, HeadForIsland(c, m, p, islandModel))
+                   Return DialogChoice.CreateEnabled(bubbleModel.Name, HeadForBubble(c, m, p, bubbleModel))
                End Function
     End Function
 
-    Private Shared Function HeadForIsland(c As IDisplayContext, m As IWorldModel, p As DialogSource, islandModel As IIslandModel) As DialogSource
+    Private Shared Function HeadForBubble(c As IDisplayContext, m As IWorldModel, p As DialogSource, bubbleModel As IBubbleModel) As DialogSource
         Return Function()
-                   islandModel.SetHeadingFor()
+                   bubbleModel.SetHeadingFor()
                    Return InPlay.Launch(c, m, p).Invoke
                End Function
     End Function
 
     Friend Shared Function Launch(context As IDisplayContext, model As IWorldModel, previous As DialogSource) As DialogSource
-        Return Function() New ChooseKnownIslandPrompt(context, model, previous)
+        Return Function() New ChooseKnownBubblePrompt(context, model, previous)
     End Function
 
     Private Function ChooseNeverMind(context As IDisplayContext, model As IWorldModel, previous As DialogSource) As IDialogChoice
-        Return DialogChoice.CreateEnabled("Never Mind", AddressOf CancelChoosingKnownIsland)
+        Return DialogChoice.CreateEnabled("Never Mind", AddressOf CancelChoosingKnownBubble)
     End Function
 
-    Private Function CancelChoosingKnownIsland() As IDialog
-        Model.Avatar.KnownIslands.HeadFor(Nothing)
+    Private Function CancelChoosingKnownBubble() As IDialog
+        Model.Avatar.KnownBubbles.HeadFor(Nothing)
         Return InPlay.Launch(Context, Model, Previous).Invoke()
     End Function
 End Class

@@ -19,7 +19,7 @@ Friend Class InPlay
 
     Private modeLaunchers As New Dictionary(Of String, LaunchDelegate) From
         {
-            {Modes.PICKING_KNOWN_BUBBLE, AddressOf ChooseKnownIslandPrompt.Launch},
+            {Modes.PICKING_KNOWN_BUBBLE, AddressOf ChooseKnownBubblePrompt.Launch},
             {Modes.SETTING_HEADING, AddressOf SetHeadingPrompt.Launch},
             {Modes.SETTING_SPEED, AddressOf SetSpeedPrompt.Launch},
             {Modes.SETTING_HYDROPLANE, AddressOf SetHydroplanePrompt.Launch}

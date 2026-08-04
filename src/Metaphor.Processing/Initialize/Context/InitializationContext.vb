@@ -27,13 +27,13 @@ Friend Class InitializationContext
         End Get
     End Property
 
-    Public ReadOnly Property IslandGenerationAttempts As Integer Implements IInitializationContext.IslandGenerationAttempts
+    Public ReadOnly Property BubbleGenerationAttempts As Integer Implements IInitializationContext.BubbleGenerationAttempts
         Get
             Return BUBBLE_GENERATION_ATTEMPTS
         End Get
     End Property
 
-    Public ReadOnly Property MinimumIslandDistance As Double Implements IInitializationContext.MinimumIslandDistance
+    Public ReadOnly Property MinimumBubbleDistance As Double Implements IInitializationContext.MinimumBubbleDistance
         Get
             Return MINIMUM_BUBBLE_DISTANCE
         End Get

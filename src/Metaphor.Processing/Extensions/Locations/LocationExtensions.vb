@@ -7,8 +7,8 @@ Friend Module LocationExtensions
         Select Case location.EntitySubtype
             Case LocationSubtypes.SHIP
                 DescribeShip(location)
-            Case LocationSubtypes.ISLAND
-                DescribeIsland(location)
+            Case LocationSubtypes.BUBBLE
+                DescribeBubble(location)
             Case Else
                 Throw New NotImplementedException
         End Select

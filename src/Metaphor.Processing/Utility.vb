@@ -4,6 +4,9 @@ Public Module Utility
     Friend Function ToRadians(degrees As Double) As Double
         Return degrees * Math.PI / 180.0
     End Function
+    Friend Function ToDegrees(radians As Double) As Double
+        Return radians * 180.0 / Math.PI
+    End Function
     Friend Function Distance(fromPosition As (Longitude As Double, Latitude As Double), toPosition As (Longitude As Double, Latitude As Double)) As Double
         Return Math.Sqrt((fromPosition.Longitude - toPosition.Longitude) * (fromPosition.Longitude - toPosition.Longitude) + (fromPosition.Latitude - toPosition.Latitude) * (fromPosition.Latitude - toPosition.Latitude))
     End Function

@@ -11,7 +11,7 @@
     Friend Const WORLD_HEIGHT = 1000.0 'nautical miles
     Friend Const WORLD_DEPTH = 1000.0 'fathoms
     Friend Const BUBBLE_GENERATION_ATTEMPTS = 500
-    Friend Const MINIMUM_BUBBLE_DISTANCE = 50.0 'nm
+    Friend Const MINIMUM_BUBBLE_DISTANCE = 100.0 'nm
     Friend Const DOCKING_DISTANCE = 1.0 'nm
     Friend Const DEPTH_MINIMUM = 10.0 'fathom
     Friend Const MINIMUM_HYDROPLANE = -10.0 'degrees

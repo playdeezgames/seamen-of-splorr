@@ -7,8 +7,8 @@ Friend Interface IInitializationContext
     ReadOnly Property WorldHeight As Double
     ReadOnly Property WorldDepth As Double
     Property Ship As ILocation
-    ReadOnly Property IslandGenerationAttempts As Integer
-    ReadOnly Property MinimumIslandDistance As Double
+    ReadOnly Property BubbleGenerationAttempts As Integer
+    ReadOnly Property MinimumBubbleDistance As Double
     Function GenerateName() As String
     ReadOnly Property SnorkelDepth As Double
     ReadOnly Property MinimumBubbleDepth As Double
