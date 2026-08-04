@@ -51,7 +51,7 @@ Friend Class Inventory
 
     Public Function CreateItem(entitySubtype As String, name As String, flavor As String, Optional initializer As ItemInitializer = Nothing) As IItem Implements IInventory.CreateItem
         Dim itemId = Guid.NewGuid
-        _data.Items(itemId) = New TGGD.Provision.EntityData With
+        _data.Entities(itemId) = New TGGD.Provision.EntityData With
             {
                 .EntityType = EntityTypes.ITEM_ENTITY,
                 .Metadatas = New Dictionary(Of String, String) From

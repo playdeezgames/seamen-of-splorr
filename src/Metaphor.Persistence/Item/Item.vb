@@ -22,19 +22,19 @@ Friend Class Item
 
     Public Overrides ReadOnly Property Exists As Boolean
         Get
-            Return _data.Items.ContainsKey(EntityId)
+            Return _data.Entities.ContainsKey(EntityId)
         End Get
     End Property
 
     Protected Overrides ReadOnly Property Data As EntityData
         Get
-            Return _data.Items(EntityId)
+            Return _data.Entities(EntityId)
         End Get
     End Property
 
     Public Overrides Sub Remove()
         _data.Inventories(GetYoke(Yokes.CONTAINER).Value).ItemIds.Remove(EntityId)
-        _data.Items.Remove(EntityId)
+        _data.Entities.Remove(EntityId)
     End Sub
 
     Friend Shared Function Create(world As IWorld, data As WorldData, itemId As Guid?) As IItem
