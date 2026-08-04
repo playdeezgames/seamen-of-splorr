@@ -7,7 +7,7 @@ Public Class WorldData
     Public Property AvatarId As Guid?
     Public Property Characters As New Dictionary(Of Guid, CharacterData)
     Public Property Inventories As New Dictionary(Of Guid, InventoryData)
-    Public Property Items As New Dictionary(Of Guid, ItemData)
+    Public Property Items As New Dictionary(Of Guid, EntityData)
     Public Property Features As New Dictionary(Of Guid, EntityData)
     Public Property Verbs As New Dictionary(Of Guid, VerbData)
     Public Property AdFinishes As DateTimeOffset?

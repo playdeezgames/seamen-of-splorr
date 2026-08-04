@@ -1,7 +1,8 @@
 ﻿Imports Metaphor.Provision
+Imports TGGD.Provision
 
 Friend Class Item
-    Inherits MetaphorEntity(Of ItemData)
+    Inherits MetaphorEntity(Of EntityData)
     Implements IItem
 
     Private Sub New(world As IWorld, data As WorldData, itemId As Guid)
@@ -25,7 +26,7 @@ Friend Class Item
         End Get
     End Property
 
-    Protected Overrides ReadOnly Property Data As ItemData
+    Protected Overrides ReadOnly Property Data As EntityData
         Get
             Return _data.Items(EntityId)
         End Get
