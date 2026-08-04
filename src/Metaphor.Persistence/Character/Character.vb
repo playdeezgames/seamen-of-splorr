@@ -29,7 +29,7 @@ Friend Class Character
 
     Public ReadOnly Property Pronouns As String Implements ICharacter.Pronouns
         Get
-            Return Data.Pronouns
+            Return TryGetMetadata(Metadatas.PRONOUNS)
         End Get
     End Property
 

@@ -60,9 +60,9 @@ Friend Class Location
                 {
                     {Metadatas.ENTITY_SUBTYPE, entitySubtype},
                     {Metadatas.NAME, name},
-                    {Metadatas.FLAVOR, flavor}
-                },
-                .Pronouns = pronouns
+                    {Metadatas.FLAVOR, flavor},
+                    {Metadatas.PRONOUNS, pronouns}
+                }
             }
         Data.CharacterIds.Add(characterId)
         Dim result = Character.Create(World, _data, characterId)
