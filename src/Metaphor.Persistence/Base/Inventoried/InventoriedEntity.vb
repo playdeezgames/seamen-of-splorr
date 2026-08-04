@@ -1,6 +1,6 @@
 ﻿Imports Metaphor.Provision
 
-Friend MustInherit Class InventoriedEntity(Of TData As InventoriedEntityData)
+Friend MustInherit Class InventoriedEntity(Of TData As MetaphorEntityData)
     Inherits MetaphorEntity(Of TData)
     Implements IInventoriedEntity
 
