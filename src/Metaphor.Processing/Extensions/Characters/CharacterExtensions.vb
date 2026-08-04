@@ -49,20 +49,11 @@ Friend Module CharacterExtensions
         Dim world = character.World
         world.AddMessage($"{character.Name}'s Status:")
         world.AddMessage(character.Flavor)
-        world.AddMessage($"Flesh: {character.GetFleshGrams()}/{character.GetMaximumFleshGrams()}g")
         world.AddMessage($"Health: {character.GetHealth()}/{character.GetMaximumHealth()}")
         world.AddMessage($"Satiety: {character.GetSatiety()}/{character.GetMaximumSatiety()}")
         world.AddMessage($"Stomach: {character.GetStomach()}/{character.GetMaximumStomach()}")
         world.AddMessage($"Jools: {character.GetJools():f2}")
     End Sub
-    <Extension>
-    Friend Function GetFleshGrams(character As ICharacter) As Integer
-        Return character.GetCounter(Counters.FLESH_GRAMS)
-    End Function
-    <Extension>
-    Friend Function GetMaximumFleshGrams(character As ICharacter) As Integer
-        Return character.GetCounterMaximum(Counters.FLESH_GRAMS)
-    End Function
     <Extension>
     Friend Function GetHealth(character As ICharacter) As Integer
         Return character.GetCounter(Counters.HEALTH)
@@ -99,11 +90,11 @@ Friend Module CharacterExtensions
             Not ship.IsSnorkelRaised Then
             Dim oxygenAvailable = ship.GetOxygen()
             Dim damage = Math.Max(0, amount - oxygenAvailable)
-            ship.ChangeCounter(Counters.OXYGEN, -amount)
+            ship.ChangeDimension(Dimensions.OXYGEN, -amount)
             If damage > 0 Then
                 Dim world = character.World
                 world.AddMessage($"{character.Name} is asphyxiating!")
-                character.ApplyDamage(damage)
+                character.ApplyDamage(CInt(damage))
             End If
         End If
     End Sub
@@ -169,7 +160,7 @@ Friend Module CharacterExtensions
     End Function
     <Extension>
     Friend Sub AddKnownIsland(character As ICharacter, island As ILocation)
-        character.AddToYokage(Yokages.KNOWN_ISLANDS, island.EntityId)
+        character.AddToYokage(Yokages.KNOWN_BUBBLES, island.EntityId)
     End Sub
     <Extension>
     Friend Sub SetMode(character As ICharacter, mode As String)

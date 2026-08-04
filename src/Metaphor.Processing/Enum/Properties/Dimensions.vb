@@ -8,5 +8,7 @@
     Friend Const VISIBILITY As String = NameOf(VISIBILITY)
     Friend Const HYDROPLANE As String = NameOf(HYDROPLANE)
     Friend Const BATTERY As String = NameOf(BATTERY)
-    Friend Const DIESEL As String = NameOf(DIESEL)
+    Friend Const FUEL As String = NameOf(FUEL)
+    Friend Const ENGINE As String = NameOf(ENGINE)
+    Friend Const OXYGEN As String = NameOf(OXYGEN)
 End Module

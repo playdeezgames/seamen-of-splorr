@@ -16,8 +16,13 @@ Friend Module LocationVerbExtensions
             {VerbSubtypes.DISEMBARK, AddressOf CanDisembark},
             {VerbSubtypes.EMBARK, AddressOf CanEmbark},
             {VerbSubtypes.RAISE_SNORKEL, AddressOf CanRaiseSnorkel},
-            {VerbSubtypes.LOWER_SNORKEL, AddressOf CanLowerSnorkel}
+            {VerbSubtypes.LOWER_SNORKEL, AddressOf CanLowerSnorkel},
+            {VerbSubtypes.CHARGE_BATTERY, AddressOf CanChargeBatteries}
         }
+
+    Private Function CanChargeBatteries(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
+        Return Not location.IsDimensionMinimum(Dimensions.FUEL) AndAlso Not location.IsDimensionMinimum(Dimensions.OXYGEN)
+    End Function
 
     Private Function CanLowerSnorkel(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
         Return ship.IsSnorkelRaised()
@@ -58,7 +63,7 @@ Friend Module LocationVerbExtensions
     End Function
 
     Private Function CanMove(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsMoored AndAlso ship.GetSpeed() > SPEED_FULL_STOP
+        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsMoored AndAlso ship.GetSpeed() > SPEED_FULL_STOP AndAlso ship.GetBattery() > 0.0
     End Function
 
     <Extension>
@@ -81,8 +86,27 @@ Friend Module LocationVerbExtensions
             {VerbSubtypes.EMBARK, AddressOf HandleEmbark},
             {VerbSubtypes.DISEMBARK, AddressOf HandleDisembark},
             {VerbSubtypes.RAISE_SNORKEL, AddressOf HandleRaiseSnorkel},
-            {VerbSubtypes.LOWER_SNORKEL, AddressOf HandleLowerSnorkel}
+            {VerbSubtypes.LOWER_SNORKEL, AddressOf HandleLowerSnorkel},
+            {VerbSubtypes.CHARGE_BATTERY, AddressOf HandleChargeBattery}
         }
+
+    Private Sub HandleChargeBattery(verb As IVerb, location As ILocation, actor As ICharacter)
+        Dim charge = {
+            location.GetDimension(Dimensions.ENGINE),
+            location.GetOxygen(),
+            location.GetFuel()}.Min()
+        If charge > 0.0 Then
+            Dim world = actor.World
+            location.ChangeDimension(Dimensions.BATTERY, charge)
+            world.AddMessage($"Battery is now: {location.GetBattery():f2}/{location.GetMaximumBattery():f2}")
+            location.ChangeDimension(Dimensions.FUEL, -charge)
+            world.AddMessage($"Fuels is now: {location.GetFuel():f2}/{location.GetMaximumFuel():f2}")
+            If Not location.IsSnorkelRaised Then
+                location.ChangeDimension(Dimensions.OXYGEN, -charge)
+                world.AddMessage($"Oxygen is now: {location.GetOxygen():f2}/{location.GetMaximumOxygen():f2}")
+            End If
+        End If
+    End Sub
 
     Private Sub HandleLowerSnorkel(verb As IVerb, ship As ILocation, actor As ICharacter)
         Dim world = verb.World
@@ -93,7 +117,7 @@ Friend Module LocationVerbExtensions
     Private Sub HandleRaiseSnorkel(verb As IVerb, ship As ILocation, actor As ICharacter)
         Dim world = verb.World
         world.AddMessage($"{actor.Name} raises the snorkel.")
-        ship.SetCounter(Counters.OXYGEN, ship.GetMaximumOxygen())
+        ship.SetDimension(Dimensions.OXYGEN, ship.GetMaximumOxygen())
         ship.SetTag(Tags.SNORKEL_RAISED)
     End Sub
 

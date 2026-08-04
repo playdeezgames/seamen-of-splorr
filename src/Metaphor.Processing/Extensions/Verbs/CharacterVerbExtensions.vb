@@ -63,6 +63,6 @@ Friend Module CharacterVerbExtensions
     End Sub
     <Extension>
     Friend Function GetKnownIslands(character As ICharacter) As IEnumerable(Of ILocation)
-        Return character.GetYokage(Yokages.KNOWN_ISLANDS).Select(AddressOf character.World.GetLocation)
+        Return character.GetYokage(Yokages.KNOWN_BUBBLES).Select(AddressOf character.World.GetLocation)
     End Function
 End Module

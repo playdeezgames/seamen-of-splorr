@@ -1,5 +1,6 @@
 ﻿Friend Module VerbSubtypes
     Friend Const ACCEPT_DELIVERY As String = NameOf(ACCEPT_DELIVERY)
+    Friend Const CHARGE_BATTERY As String = NameOf(CHARGE_BATTERY)
     Friend Const DELIVER_PACKAGE As String = NameOf(DELIVER_PACKAGE)
     Friend Const DISEMBARK As String = NameOf(DISEMBARK)
     Friend Const DOCK As String = NameOf(DOCK)

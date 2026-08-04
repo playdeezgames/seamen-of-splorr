@@ -9,9 +9,9 @@ Friend Module ShipExtensions
         world.AddMessage($"Speed: {ship.GetSpeed():f2} knots")
         world.AddMessage($"Depth: {ship.GetDepth():f2} fathoms")
         world.AddMessage($"Hydroplane: {Utility.DescribeHydroplane(ship.GetHydroplane())}")
-        world.AddMessage($"Oxygen: {ship.GetOxygen()}/{ship.GetMaximumOxygen()}")
+        world.AddMessage($"Oxygen: {ship.GetOxygen():f2}/{ship.GetMaximumOxygen():f2}")
         world.AddMessage($"Battery: {ship.GetBattery():f2}/{ship.GetMaximumBattery():f2}")
-        world.AddMessage($"Diesel: {ship.GetDiesel():f2}/{ship.GetMaximumDiesel():f2}")
+        world.AddMessage($"Diesel: {ship.GetFuel():f2}/{ship.GetMaximumFuel():f2}")
         If ship.IsSnorkelRaised Then
             world.AddMessage($"Snorkel: Raised")
         End If
@@ -68,28 +68,28 @@ Friend Module ShipExtensions
         Return ship.GetDimension(Dimensions.DEPTH)
     End Function
     <Extension>
-    Friend Function GetOxygen(ship As ILocation) As Integer
-        Return ship.GetCounter(Counters.OXYGEN)
+    Friend Function GetOxygen(ship As ILocation) As Double
+        Return ship.GetDimension(Dimensions.OXYGEN)
     End Function
     <Extension>
     Friend Function GetBattery(ship As ILocation) As Double
         Return ship.GetDimension(Dimensions.BATTERY)
     End Function
     <Extension>
-    Friend Function GetDiesel(ship As ILocation) As Double
-        Return ship.GetDimension(Dimensions.DIESEL)
+    Friend Function GetFuel(ship As ILocation) As Double
+        Return ship.GetDimension(Dimensions.FUEL)
     End Function
     <Extension>
-    Friend Function GetMaximumOxygen(ship As ILocation) As Integer
-        Return ship.GetCounterMaximum(Counters.OXYGEN)
+    Friend Function GetMaximumOxygen(ship As ILocation) As Double
+        Return ship.GetDimensionMaximum(Dimensions.OXYGEN)
     End Function
     <Extension>
     Friend Function GetMaximumBattery(ship As ILocation) As Double
         Return ship.GetDimensionMaximum(Dimensions.BATTERY)
     End Function
     <Extension>
-    Friend Function GetMaximumDiesel(ship As ILocation) As Double
-        Return ship.GetDimensionMaximum(Dimensions.DIESEL)
+    Friend Function GetMaximumFuel(ship As ILocation) As Double
+        Return ship.GetDimensionMaximum(Dimensions.FUEL)
     End Function
     <Extension>
     Friend Sub SetHeading(ship As ILocation, heading As Double)
