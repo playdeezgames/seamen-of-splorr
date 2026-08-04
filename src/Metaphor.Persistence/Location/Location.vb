@@ -49,7 +49,7 @@ Friend Class Location
 
     Public Function CreateCharacter(entitySubtype As String, name As String, pronouns As String, flavor As String, Optional initialize As CharacterInitializer = Nothing) As ICharacter Implements ILocation.CreateCharacter
         Dim characterId = Guid.NewGuid
-        _data.Characters(characterId) = New CharacterData With
+        _data.Characters(characterId) = New EntityData With
             {
                 .EntityType = EntityTypes.CHARACTER_ENTITY,
                 .Yokes = New Dictionary(Of String, Guid) From

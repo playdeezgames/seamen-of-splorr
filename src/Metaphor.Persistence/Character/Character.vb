@@ -1,7 +1,8 @@
 ﻿Imports Metaphor.Provision
+Imports TGGD.Provision
 
 Friend Class Character
-    Inherits MetaphorEntity(Of CharacterData)
+    Inherits MetaphorEntity(Of EntityData)
     Implements ICharacter
 
     Private Sub New(world As IWorld, data As WorldData, characterId As Guid)
@@ -33,7 +34,7 @@ Friend Class Character
         End Get
     End Property
 
-    Protected Overrides ReadOnly Property Data As CharacterData
+    Protected Overrides ReadOnly Property Data As EntityData
         Get
             Return _data.Characters(EntityId)
         End Get
