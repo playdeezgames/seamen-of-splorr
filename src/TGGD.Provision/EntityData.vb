@@ -1,4 +1,4 @@
-Public MustInherit Class EntityData
+Public Class EntityData
     Public Property EntityType As String
     Public Property Metadatas As New Dictionary(Of String, String)(StringComparer.InvariantCultureIgnoreCase)
     Public Property Counters As New Dictionary(Of String, Integer)(StringComparer.InvariantCultureIgnoreCase)

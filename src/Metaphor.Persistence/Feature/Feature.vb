@@ -1,7 +1,8 @@
 ﻿Imports Metaphor.Provision
+Imports TGGD.Provision
 
 Friend Class Feature
-    Inherits MetaphorEntity(Of FeatureData)
+    Inherits MetaphorEntity(Of EntityData)
     Implements IFeature
 
     Private Sub New(world As IWorld, data As WorldData, featureId As Guid)
@@ -20,7 +21,7 @@ Friend Class Feature
         End Get
     End Property
 
-    Protected Overrides ReadOnly Property Data As FeatureData
+    Protected Overrides ReadOnly Property Data As EntityData
         Get
             Return _data.Features(EntityId)
         End Get

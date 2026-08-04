@@ -1,4 +1,5 @@
 ﻿Imports Metaphor.Provision
+Imports TGGD.Provision
 
 Friend Class Location
     Inherits MetaphorEntity(Of LocationData)
@@ -71,7 +72,7 @@ Friend Class Location
 
     Public Function CreateFeature(entitySubtype As String, name As String, flavor As String, Optional initializer As FeatureInitializer = Nothing) As IFeature Implements ILocation.CreateFeature
         Dim featureId = Guid.NewGuid
-        _data.Features(featureId) = New FeatureData With
+        _data.Features(featureId) = New EntityData With
             {
                 .EntityType = EntityTypes.FEATURE_ENTITY,
                 .Yokes = New Dictionary(Of String, Guid) From
