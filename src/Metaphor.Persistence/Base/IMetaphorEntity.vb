@@ -9,4 +9,6 @@ Public Interface IMetaphorEntity
     ReadOnly Property EntityId As Guid
     ReadOnly Property EntitySubtype As String
     ReadOnly Property Exists As Boolean
+    Function CreateVerb(verbSubtype As String, name As String, flavor As String, Optional initializer As VerbInitializer = Nothing) As IVerb
+    ReadOnly Property Verbs As IEnumerable(Of IVerb)
 End Interface
