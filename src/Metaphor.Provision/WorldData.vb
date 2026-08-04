@@ -8,7 +8,7 @@ Public Class WorldData
     Public Property Characters As New Dictionary(Of Guid, CharacterData)
     Public Property Inventories As New Dictionary(Of Guid, InventoryData)
     Public Property Entities As New Dictionary(Of Guid, EntityData)
-    Public Property Verbs As New Dictionary(Of Guid, VerbData)
+    Public Property Verbs As New Dictionary(Of Guid, EntityData)
     Public Property AdFinishes As DateTimeOffset?
     Public Property BubbleIds As New HashSet(Of Guid)
 End Class

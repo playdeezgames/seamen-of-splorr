@@ -1,7 +1,8 @@
 ﻿Imports Metaphor.Provision
+Imports TGGD.Provision
 
 Friend Class Verb
-    Inherits MetaphorEntity(Of VerbData)
+    Inherits MetaphorEntity(Of EntityData)
     Implements IVerb
 
     Private Sub New(world As IWorld, data As WorldData, verbId As Guid)
@@ -14,7 +15,7 @@ Friend Class Verb
         End Get
     End Property
 
-    Protected Overrides ReadOnly Property Data As VerbData
+    Protected Overrides ReadOnly Property Data As EntityData
         Get
             Return _data.Verbs(EntityId)
         End Get
