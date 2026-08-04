@@ -1,7 +1,7 @@
 ﻿Imports Metaphor.Provision
 
 Friend MustInherit Class InventoriedEntity(Of TData As InventoriedEntityData)
-    Inherits VerbableEntity(Of TData)
+    Inherits MetaphorEntity(Of TData)
     Implements IInventoriedEntity
 
     Protected Sub New(world As IWorld, data As WorldData, entityId As Guid)

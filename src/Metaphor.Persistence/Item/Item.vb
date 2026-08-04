@@ -1,7 +1,7 @@
 ﻿Imports Metaphor.Provision
 
 Friend Class Item
-    Inherits VerbableEntity(Of ItemData)
+    Inherits MetaphorEntity(Of ItemData)
     Implements IItem
 
     Private Sub New(world As IWorld, data As WorldData, itemId As Guid)

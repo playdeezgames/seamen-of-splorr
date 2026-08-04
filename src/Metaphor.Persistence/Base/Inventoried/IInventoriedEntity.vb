@@ -1,4 +1,4 @@
 ﻿Public Interface IInventoriedEntity
-    Inherits IVerbableEntity
+    Inherits IMetaphorEntity
     ReadOnly Property Inventory As IInventory
 End Interface
