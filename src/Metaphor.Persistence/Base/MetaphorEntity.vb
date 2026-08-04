@@ -16,13 +16,13 @@ Friend MustInherit Class MetaphorEntity(Of TData As MetaphorEntityData)
 
     Public ReadOnly Property Name As String Implements IMetaphorEntity.Name
         Get
-            Return Data.Name
+            Return TryGetMetadata(Metadatas.NAME)
         End Get
     End Property
 
     Public ReadOnly Property Flavor As String Implements IMetaphorEntity.Flavor
         Get
-            Return Data.Flavor
+            Return TryGetMetadata(Metadatas.FLAVOR)
         End Get
     End Property
 
@@ -30,7 +30,7 @@ Friend MustInherit Class MetaphorEntity(Of TData As MetaphorEntityData)
 
     Public ReadOnly Property EntitySubtype As String Implements IMetaphorEntity.EntitySubtype
         Get
-            Return Data.EntitySubtype
+            Return TryGetMetadata(Metadatas.ENTITY_SUBTYPE)
         End Get
     End Property
 
@@ -45,7 +45,7 @@ Friend MustInherit Class MetaphorEntity(Of TData As MetaphorEntityData)
 
 
     Public Function CreateVerb(
-                              verbSubtype As String,
+                              entitySubtype As String,
                               name As String,
                               flavor As String,
                               Optional initializer As VerbInitializer = Nothing) As IVerb Implements IMetaphorEntity.CreateVerb
@@ -53,9 +53,12 @@ Friend MustInherit Class MetaphorEntity(Of TData As MetaphorEntityData)
         _data.Verbs(verbId) = New VerbData With
             {
                 .EntityType = EntityTypes.VERB_ENTITY,
-                .EntitySubtype = verbSubtype,
-                .Name = name,
-                .Flavor = flavor
+                .Metadatas = New Dictionary(Of String, String) From
+                {
+                    {Metadatas.ENTITY_SUBTYPE, entitySubtype},
+                    {Metadatas.NAME, name},
+                    {Metadatas.FLAVOR, flavor}
+                }
             }
         AddToYokage(Yokages.VERBS, verbId)
         Dim result As IVerb = Verb.Create(World, _data, verbId)

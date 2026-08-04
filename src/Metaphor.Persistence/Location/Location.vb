@@ -46,15 +46,18 @@ Friend Class Location
         Return If(locationId.HasValue, New Location(world, data, locationId.Value), Nothing)
     End Function
 
-    Public Function CreateCharacter(characterSubtype As String, name As String, pronouns As String, flavor As String, Optional initialize As CharacterInitializer = Nothing) As ICharacter Implements ILocation.CreateCharacter
+    Public Function CreateCharacter(entitySubtype As String, name As String, pronouns As String, flavor As String, Optional initialize As CharacterInitializer = Nothing) As ICharacter Implements ILocation.CreateCharacter
         Dim characterId = Guid.NewGuid
         _data.Characters(characterId) = New CharacterData With
             {
                 .EntityType = EntityTypes.CHARACTER_ENTITY,
-                .EntitySubtype = characterSubtype,
                 .LocationId = EntityId,
-                .Name = name,
-                .Flavor = flavor,
+                .Metadatas = New Dictionary(Of String, String) From
+                {
+                    {Metadatas.ENTITY_SUBTYPE, entitySubtype},
+                    {Metadatas.NAME, name},
+                    {Metadatas.FLAVOR, flavor}
+                },
                 .Pronouns = pronouns
             }
         Data.CharacterIds.Add(characterId)
@@ -63,15 +66,18 @@ Friend Class Location
         Return result
     End Function
 
-    Public Function CreateFeature(featureType As String, name As String, flavor As String, Optional initializer As FeatureInitializer = Nothing) As IFeature Implements ILocation.CreateFeature
+    Public Function CreateFeature(entitySubtype As String, name As String, flavor As String, Optional initializer As FeatureInitializer = Nothing) As IFeature Implements ILocation.CreateFeature
         Dim featureId = Guid.NewGuid
         _data.Features(featureId) = New FeatureData With
             {
                 .EntityType = EntityTypes.FEATURE_ENTITY,
                 .LocationId = EntityId,
-                .Name = name,
-                .Flavor = flavor,
-                .EntitySubtype = featureType
+                .Metadatas = New Dictionary(Of String, String) From
+                {
+                    {Metadatas.ENTITY_SUBTYPE, entitySubtype},
+                    {Metadatas.NAME, name},
+                    {Metadatas.FLAVOR, flavor}
+                }
             }
         Data.FeatureIds.Add(featureId)
         Dim result As IFeature = Feature.Create(World, _data, featureId)

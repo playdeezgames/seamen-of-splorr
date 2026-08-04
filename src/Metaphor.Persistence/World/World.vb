@@ -96,9 +96,12 @@ Public Class World
         Data.Locations(locationId) = New LocationData With
             {
                 .EntityType = EntityTypes.LOCATION_ENTITY,
-                .Name = name,
-                .Flavor = flavor,
-                .EntitySubtype = entitySubtype
+                .Metadatas = New Dictionary(Of String, String) From
+                {
+                    {Metadatas.ENTITY_SUBTYPE, entitySubtype},
+                    {Metadatas.NAME, name},
+                    {Metadatas.FLAVOR, flavor}
+                }
             }
         Dim result = Location.Create(Me, Data, locationId)
         initializer?.Invoke(result)
