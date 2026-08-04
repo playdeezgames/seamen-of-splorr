@@ -60,7 +60,10 @@ Friend Class Inventory
                     {Metadatas.NAME, name},
                     {Metadatas.FLAVOR, flavor}
                 },
-                .ContainerId = EntityId
+                .Yokes = New Dictionary(Of String, Guid) From
+                {
+                    {Yokes.CONTAINER, EntityId}
+                }
             }
         Data.ItemIds.Add(itemId)
         Dim result As IItem = Item.Create(world, _data, itemId)

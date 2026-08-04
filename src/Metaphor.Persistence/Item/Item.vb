@@ -10,12 +10,12 @@ Friend Class Item
 
     Public Property Container As IInventory Implements IItem.Container
         Get
-            Return Persistence.Inventory.Create(World, _data, Data.ContainerId)
+            Return Persistence.Inventory.Create(World, _data, GetYoke(Yokes.CONTAINER))
         End Get
         Set(value As IInventory)
-            _data.Inventories(Data.ContainerId).ItemIds.Remove(EntityId)
-            Data.ContainerId = value.EntityId
-            _data.Inventories(Data.ContainerId).ItemIds.Add(EntityId)
+            _data.Inventories(GetYoke(Yokes.CONTAINER).Value).ItemIds.Remove(EntityId)
+            SetYoke(Yokes.CONTAINER, value.EntityId)
+            _data.Inventories(GetYoke(Yokes.CONTAINER).Value).ItemIds.Add(EntityId)
         End Set
     End Property
 
@@ -32,7 +32,7 @@ Friend Class Item
     End Property
 
     Public Overrides Sub Remove()
-        _data.Inventories(Data.ContainerId).ItemIds.Remove(EntityId)
+        _data.Inventories(GetYoke(Yokes.CONTAINER).Value).ItemIds.Remove(EntityId)
         _data.Items.Remove(EntityId)
     End Sub
 
