@@ -10,11 +10,11 @@ Friend MustInherit Class InventoriedEntity(Of TData As InventoriedEntityData)
 
     Public ReadOnly Property Inventory As IInventory Implements IInventoriedEntity.Inventory
         Get
-            Dim inventoryId = Data.InventoryId
-            If Not inventoryId.HasValue Then
+            Dim inventoryId As Guid
+            If Not Data.Yokes.TryGetValue(Yokes.INVENTORY, inventoryId) Then
                 inventoryId = Guid.NewGuid
-                _data.Inventories(inventoryId.Value) = New InventoryData
-                Data.InventoryId = inventoryId.Value
+                _data.Inventories(inventoryId) = New InventoryData
+                Data.Yokes(Yokes.INVENTORY) = inventoryId
             End If
             Return Persistence.Inventory.Create(World, _data, inventoryId)
         End Get
