@@ -11,13 +11,13 @@ Friend Class Location
 
     Public ReadOnly Property Features As IEnumerable(Of IFeature) Implements ILocation.Features
         Get
-            Return Data.FeatureIds.Select(Function(x) Feature.Create(World, _data, x))
+            Return GetYokage(Yokages.FEATURES).Select(Function(x) Feature.Create(World, _data, x))
         End Get
     End Property
 
     Public ReadOnly Property HasFeatures As Boolean Implements ILocation.HasFeatures
         Get
-            Return Data.FeatureIds.Count <> 0
+            Return GetYokage(Yokages.FEATURES).Any()
         End Get
     End Property
 
@@ -86,7 +86,7 @@ Friend Class Location
                     {Metadatas.FLAVOR, flavor}
                 }
             }
-        Data.FeatureIds.Add(featureId)
+        AddToYokage(Yokages.FEATURES, featureId)
         Dim result As IFeature = Feature.Create(World, _data, featureId)
         initializer?.Invoke(result)
         Return result
