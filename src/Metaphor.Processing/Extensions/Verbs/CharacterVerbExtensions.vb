@@ -34,8 +34,13 @@ Friend Module CharacterVerbExtensions
     Private ReadOnly performTable As New Dictionary(Of String, PerformHandler) From
         {
             {VerbSubtypes.HEAD_FOR_KNOWN_BUBBLE, AddressOf HandleHeadForKnownBubble},
-            {VerbSubtypes.DELIVER_PACKAGE, AddressOf HandleDeliverPackage}
+            {VerbSubtypes.DELIVER_PACKAGE, AddressOf HandleDeliverPackage},
+            {VerbSubtypes.WAIT, AddressOf HandleWait}
         }
+
+    Private Sub HandleWait(verb As IVerb, character As ICharacter, actor As ICharacter)
+        actor.DoBiology(1)
+    End Sub
 
     Private Sub HandleDeliverPackage(verb As IVerb, character As ICharacter, actor As ICharacter)
         Dim world = verb.World

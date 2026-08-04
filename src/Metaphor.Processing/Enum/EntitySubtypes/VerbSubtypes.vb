@@ -16,4 +16,5 @@
     Friend Const STOW As String = NameOf(STOW)
     Friend Const TAKE As String = NameOf(TAKE)
     Friend Const UNDOCK As String = NameOf(UNDOCK)
+    Friend Const WAIT As String = NameOf(WAIT)
 End Module

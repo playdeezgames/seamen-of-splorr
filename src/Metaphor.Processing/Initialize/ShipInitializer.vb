@@ -51,6 +51,7 @@ Friend Module ShipInitializer
 #End If
                    Utility.Repeat(10, Sub() character.Inventory.CreateItemOfType(ItemSubtypes.HARDTACK))
                    character.CreateVerb(VerbSubtypes.HEAD_FOR_KNOWN_BUBBLE, "Head for known bubble...", String.Empty)
+                   character.CreateVerb(VerbSubtypes.WAIT, "Wait", "You wait a while...")
                End Sub
     End Function
 End Module
