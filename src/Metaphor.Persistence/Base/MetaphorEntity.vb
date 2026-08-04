@@ -51,7 +51,7 @@ Friend MustInherit Class MetaphorEntity(Of TData As EntityData)
                               flavor As String,
                               Optional initializer As VerbInitializer = Nothing) As IVerb Implements IMetaphorEntity.CreateVerb
         Dim verbId = Guid.NewGuid
-        _data.Verbs(verbId) = New EntityData With
+        _data.Entities(verbId) = New EntityData With
             {
                 .EntityType = EntityTypes.VERB_ENTITY,
                 .Metadatas = New Dictionary(Of String, String) From

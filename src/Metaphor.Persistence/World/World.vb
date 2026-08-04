@@ -16,10 +16,8 @@ Public Class World
         MyBase.Clear()
         ClearMessages()
         Data.AvatarId = Nothing
-        Data.Locations.Clear()
         Data.Inventories.Clear()
         Data.Entities.Clear()
-        Data.Verbs.Clear()
         Data.AdFinishes = Nothing
         Data.BubbleIds.Clear()
     End Sub
@@ -91,7 +89,7 @@ Public Class World
 
     Public Function CreateLocation(entitySubtype As String, name As String, flavor As String, Optional initializer As LocationInitializer = Nothing) As ILocation Implements IWorld.CreateLocation
         Dim locationId = Guid.NewGuid
-        Data.Locations(locationId) = New EntityData With
+        Data.Entities(locationId) = New EntityData With
             {
                 .EntityType = EntityTypes.LOCATION_ENTITY,
                 .Metadatas = New Dictionary(Of String, String) From

@@ -11,18 +11,18 @@ Friend Class Verb
 
     Public Overrides ReadOnly Property Exists As Boolean
         Get
-            Return _data.Verbs.ContainsKey(EntityId)
+            Return _data.Entities.ContainsKey(EntityId)
         End Get
     End Property
 
     Protected Overrides ReadOnly Property Data As EntityData
         Get
-            Return _data.Verbs(EntityId)
+            Return _data.Entities(EntityId)
         End Get
     End Property
 
     Public Overrides Sub Remove()
-        _data.Verbs.Remove(EntityId)
+        _data.Entities.Remove(EntityId)
     End Sub
 
     Friend Shared Function Create(world As IWorld, data As WorldData, verbId As Guid) As IVerb
