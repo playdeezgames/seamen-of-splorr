@@ -1,7 +1,7 @@
 ﻿Imports Metaphor.Provision
 
 Friend Class Location
-    Inherits InventoriedEntity(Of LocationData)
+    Inherits MetaphorEntity(Of LocationData)
     Implements ILocation
 
     Private Sub New(world As IWorld, data As WorldData, locationId As Guid)

@@ -62,4 +62,16 @@ Friend MustInherit Class MetaphorEntity(Of TData As MetaphorEntityData)
         initializer?.Invoke(result)
         Return result
     End Function
+
+    Public ReadOnly Property Inventory As IInventory Implements IMetaphorEntity.Inventory
+        Get
+            Dim inventoryId As Guid
+            If Not Data.Yokes.TryGetValue(Yokes.INVENTORY, inventoryId) Then
+                inventoryId = Guid.NewGuid
+                _data.Inventories(inventoryId) = New InventoryData
+                Data.Yokes(Yokes.INVENTORY) = inventoryId
+            End If
+            Return Persistence.Inventory.Create(World, _data, inventoryId)
+        End Get
+    End Property
 End Class

@@ -1,6 +1,6 @@
 ﻿Public Delegate Sub LocationInitializer(location As ILocation)
 Public Interface ILocation
-    Inherits IInventoriedEntity
+    Inherits IMetaphorEntity
     Function CreateCharacter(entitySubtype As String, name As String, pronouns As String, flavor As String, Optional initialize As CharacterInitializer = Nothing) As ICharacter
     Function CreateFeature(featureSubtype As String, name As String, flavor As String, Optional initializer As FeatureInitializer = Nothing) As IFeature
     ReadOnly Property Features As IEnumerable(Of IFeature)

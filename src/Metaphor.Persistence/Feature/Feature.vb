@@ -1,7 +1,7 @@
 ﻿Imports Metaphor.Provision
 
 Friend Class Feature
-    Inherits InventoriedEntity(Of FeatureData)
+    Inherits MetaphorEntity(Of FeatureData)
     Implements IFeature
 
     Private Sub New(world As IWorld, data As WorldData, featureId As Guid)

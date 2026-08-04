@@ -1,7 +1,7 @@
 ﻿Imports Metaphor.Provision
 
 Friend Class Character
-    Inherits InventoriedEntity(Of CharacterData)
+    Inherits MetaphorEntity(Of CharacterData)
     Implements ICharacter
 
     Private Sub New(world As IWorld, data As WorldData, characterId As Guid)
