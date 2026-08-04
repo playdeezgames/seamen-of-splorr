@@ -17,13 +17,13 @@ Friend Class Feature
 
     Public Overrides ReadOnly Property Exists As Boolean
         Get
-            Return _data.Features.ContainsKey(EntityId)
+            Return _data.Entities.ContainsKey(EntityId)
         End Get
     End Property
 
     Protected Overrides ReadOnly Property Data As EntityData
         Get
-            Return _data.Features(EntityId)
+            Return _data.Entities(EntityId)
         End Get
     End Property
 
@@ -33,7 +33,7 @@ Friend Class Feature
             verb.Remove()
         Next
         Inventory.Remove()
-        _data.Features.Remove(EntityId)
+        _data.Entities.Remove(EntityId)
     End Sub
 
     Friend Shared Function Create(world As IWorld, data As WorldData, featureId As Guid) As IFeature

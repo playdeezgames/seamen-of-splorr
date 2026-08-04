@@ -20,7 +20,6 @@ Public Class World
         Data.Locations.Clear()
         Data.Inventories.Clear()
         Data.Entities.Clear()
-        Data.Features.Clear()
         Data.Verbs.Clear()
         Data.AdFinishes = Nothing
         Data.BubbleIds.Clear()
