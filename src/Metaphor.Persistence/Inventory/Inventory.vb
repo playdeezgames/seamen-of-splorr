@@ -57,7 +57,7 @@ Friend Class Inventory
                 .Name = name,
                 .Flavor = flavor,
                 .EntitySubtype = itemType,
-                .InventoryId = EntityId
+                .ContainerId = EntityId
             }
         Data.ItemIds.Add(itemId)
         Dim result As IItem = Item.Create(world, _data, itemId)

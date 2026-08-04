@@ -1,4 +1,4 @@
 ﻿Public Class ItemData
     Inherits MetaphorEntityData
-    Public Property InventoryId As Guid
+    Public Property ContainerId As Guid
 End Class

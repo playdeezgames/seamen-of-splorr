@@ -8,14 +8,14 @@ Friend Class Item
         MyBase.New(world, data, itemId)
     End Sub
 
-    Public Property Inventory As IInventory Implements IItem.Inventory
+    Public Property Container As IInventory Implements IItem.Container
         Get
-            Return Persistence.Inventory.Create(World, _data, Data.InventoryId)
+            Return Persistence.Inventory.Create(World, _data, Data.ContainerId)
         End Get
         Set(value As IInventory)
-            _data.Inventories(Data.InventoryId).ItemIds.Remove(EntityId)
-            Data.InventoryId = value.EntityId
-            _data.Inventories(Data.InventoryId).ItemIds.Add(EntityId)
+            _data.Inventories(Data.ContainerId).ItemIds.Remove(EntityId)
+            Data.ContainerId = value.EntityId
+            _data.Inventories(Data.ContainerId).ItemIds.Add(EntityId)
         End Set
     End Property
 
@@ -32,7 +32,7 @@ Friend Class Item
     End Property
 
     Public Overrides Sub Remove()
-        _data.Inventories(Data.InventoryId).ItemIds.Remove(EntityId)
+        _data.Inventories(Data.ContainerId).ItemIds.Remove(EntityId)
         _data.Items.Remove(EntityId)
     End Sub
 

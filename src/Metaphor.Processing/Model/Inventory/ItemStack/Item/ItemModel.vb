@@ -27,7 +27,7 @@ Friend Class ItemModel
         world.ClearMessages()
         character.World.AddMessage($"{character.Name} takes {item.Name}.")
         character.World.AddMessage(item.Flavor)
-        item.Inventory = character.Inventory
+        item.Container = character.Inventory
     End Sub
 
     Public Sub Drop() Implements IItemModel.Drop
@@ -35,7 +35,7 @@ Friend Class ItemModel
         Dim character = world.Avatar
         world.ClearMessages()
         character.World.AddMessage($"{character.Name} drops {item.Name}.")
-        item.Inventory = character.Location.Inventory
+        item.Container = character.Location.Inventory
     End Sub
 
     Public Sub Describe() Implements IItemModel.Describe

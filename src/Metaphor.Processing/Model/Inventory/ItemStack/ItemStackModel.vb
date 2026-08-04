@@ -39,7 +39,7 @@ Friend Class ItemStackModel
         Dim character = world.Avatar
         world.ClearMessages()
         character.World.AddMessage($"{character.Name} drops {dropCount} {ItemStack.Top.Name}.")
-        Utility.Repeat(dropCount, Sub() ItemStack.Top.Inventory = character.Location.Inventory)
+        Utility.Repeat(dropCount, Sub() ItemStack.Top.Container = character.Location.Inventory)
     End Sub
 
     Public Sub Take(takeCount As Integer) Implements IItemStackModel.Take
@@ -48,7 +48,7 @@ Friend Class ItemStackModel
         Dim character = world.Avatar
         world.ClearMessages()
         character.World.AddMessage($"{character.Name} takes {takeCount} {ItemStack.Top.Name}.")
-        Utility.Repeat(takeCount, Sub() ItemStack.Top.Inventory = character.Inventory)
+        Utility.Repeat(takeCount, Sub() ItemStack.Top.Container = character.Inventory)
     End Sub
 
     Public Sub Stow(stowCount As Integer) Implements IItemStackModel.Stow
@@ -58,7 +58,7 @@ Friend Class ItemStackModel
         Dim cargoHold = character.Location.GetCargoHold()
         world.ClearMessages()
         character.World.AddMessage($"{character.Name} stows {stowCount} {ItemStack.Top.Name}.")
-        Utility.Repeat(stowCount, Sub() ItemStack.Top.Inventory = cargoHold.Inventory)
+        Utility.Repeat(stowCount, Sub() ItemStack.Top.Container = cargoHold.Inventory)
     End Sub
 
     Friend Shared Function Create(itemStack As IItemStack) As IItemStackModel
