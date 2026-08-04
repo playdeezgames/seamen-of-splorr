@@ -51,7 +51,10 @@ Friend Class Location
         _data.Characters(characterId) = New CharacterData With
             {
                 .EntityType = EntityTypes.CHARACTER_ENTITY,
-                .LocationId = EntityId,
+                .Yokes = New Dictionary(Of String, Guid) From
+                {
+                    {Yokes.LOCATION, EntityId}
+                },
                 .Metadatas = New Dictionary(Of String, String) From
                 {
                     {Metadatas.ENTITY_SUBTYPE, entitySubtype},
@@ -71,7 +74,10 @@ Friend Class Location
         _data.Features(featureId) = New FeatureData With
             {
                 .EntityType = EntityTypes.FEATURE_ENTITY,
-                .LocationId = EntityId,
+                .Yokes = New Dictionary(Of String, Guid) From
+                {
+                    {Yokes.LOCATION, EntityId}
+                },
                 .Metadatas = New Dictionary(Of String, String) From
                 {
                     {Metadatas.ENTITY_SUBTYPE, entitySubtype},

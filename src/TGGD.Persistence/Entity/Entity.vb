@@ -221,7 +221,7 @@ Public MustInherit Class Entity(Of TData As EntityData)
     End Function
 
     Public Sub SetYoke(yokeId As String, identifier As Guid) Implements IEntity.SetYoke
-        Data.Yokes.Add(yokeId, identifier)
+        Data.Yokes(yokeId) = identifier
     End Sub
 
     Public Function GetYoke(yokeId As String) As Guid? Implements IEntity.GetYoke

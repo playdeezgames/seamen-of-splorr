@@ -10,7 +10,7 @@ Friend Class Feature
 
     Public ReadOnly Property Location As ILocation Implements IFeature.Location
         Get
-            Return Persistence.Location.Create(World, _data, Data.LocationId)
+            Return Persistence.Location.Create(World, _data, GetYoke(Yokes.LOCATION))
         End Get
     End Property
 

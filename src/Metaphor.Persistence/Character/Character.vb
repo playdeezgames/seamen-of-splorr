@@ -10,12 +10,12 @@ Friend Class Character
 
     Public Property Location As ILocation Implements ICharacter.Location
         Get
-            Return Persistence.Location.Create(World, _data, Data.LocationId)
+            Return Persistence.Location.Create(World, _data, GetYoke(Yokes.LOCATION))
         End Get
         Set(value As ILocation)
             If value.EntityId <> Location.EntityId Then
                 _data.Locations(Location.EntityId).CharacterIds.Remove(EntityId)
-                Data.LocationId = value.EntityId
+                SetYoke(Yokes.LOCATION, value.EntityId)
                 _data.Locations(Location.EntityId).CharacterIds.Add(EntityId)
             End If
         End Set
@@ -41,7 +41,7 @@ Friend Class Character
 
     Public Overrides Sub Remove()
         Inventory.Remove()
-        _data.Locations(Data.LocationId).CharacterIds.Remove(EntityId)
+        _data.Locations(GetYoke(Yokes.LOCATION).Value).CharacterIds.Remove(EntityId)
         _data.Characters.Remove(EntityId)
     End Sub
 

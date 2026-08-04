@@ -40,7 +40,7 @@ Friend MustInherit Class MetaphorEntity(Of TData As EntityData)
 
     Public ReadOnly Property Verbs As IEnumerable(Of IVerb) Implements IMetaphorEntity.Verbs
         Get
-            Return Data.Yokages(Yokages.VERBS).Select(Function(x) Verb.Create(World, _data, x))
+            Return GetYokage(Yokages.VERBS).Select(Function(x) Verb.Create(World, _data, x))
         End Get
     End Property
 
