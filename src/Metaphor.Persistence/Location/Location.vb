@@ -2,7 +2,7 @@
 Imports TGGD.Provision
 
 Friend Class Location
-    Inherits MetaphorEntity(Of LocationData)
+    Inherits MetaphorEntity(Of EntityData)
     Implements ILocation
 
     Private Sub New(world As IWorld, data As WorldData, locationId As Guid)
@@ -33,7 +33,7 @@ Friend Class Location
         End Get
     End Property
 
-    Protected Overrides ReadOnly Property Data As LocationData
+    Protected Overrides ReadOnly Property Data As EntityData
         Get
             Return _data.Locations(EntityId)
         End Get

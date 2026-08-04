@@ -91,7 +91,7 @@ Public Class World
 
     Public Function CreateLocation(entitySubtype As String, name As String, flavor As String, Optional initializer As LocationInitializer = Nothing) As ILocation Implements IWorld.CreateLocation
         Dim locationId = Guid.NewGuid
-        Data.Locations(locationId) = New LocationData With
+        Data.Locations(locationId) = New EntityData With
             {
                 .EntityType = EntityTypes.LOCATION_ENTITY,
                 .Metadatas = New Dictionary(Of String, String) From
