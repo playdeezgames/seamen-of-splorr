@@ -1,6 +1,6 @@
 ﻿Imports Metaphor.Provision
 
-Friend MustInherit Class VerbableEntity(Of TData As VerbableEntityData)
+Friend MustInherit Class VerbableEntity(Of TData As MetaphorEntityData)
     Inherits MetaphorEntity(Of TData)
     Implements IVerbableEntity
 
