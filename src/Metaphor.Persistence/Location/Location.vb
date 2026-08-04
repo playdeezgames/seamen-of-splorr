@@ -23,7 +23,7 @@ Friend Class Location
 
     Public ReadOnly Property Characters As IEnumerable(Of ICharacter) Implements ILocation.Characters
         Get
-            Return Data.CharacterIds.Select(Function(x) Character.Create(World, _data, x))
+            Return GetYokage(Yokages.CHARACTERS).Select(Function(x) Character.Create(World, _data, x))
         End Get
     End Property
 
@@ -64,7 +64,7 @@ Friend Class Location
                     {Metadatas.PRONOUNS, pronouns}
                 }
             }
-        Data.CharacterIds.Add(characterId)
+        AddToYokage(Yokages.CHARACTERS, characterId)
         Dim result = Character.Create(World, _data, characterId)
         initialize?.Invoke(result)
         Return result
@@ -93,12 +93,12 @@ Friend Class Location
     End Function
 
     Public Function GetOtherCharacters(character As ICharacter) As IEnumerable(Of ICharacter) Implements ILocation.GetOtherCharacters
-        Return Data.CharacterIds.
+        Return GetYokage(Yokages.CHARACTERS).
             Where(Function(id) id <> character.EntityId).
             Select(Function(x) Persistence.Character.Create(World, _data, x))
     End Function
 
     Public Function HasOtherCharacters(character As ICharacter) As Boolean Implements ILocation.HasOtherCharacters
-        Return Data.CharacterIds.Any(Function(x) x <> character.EntityId)
+        Return GetYokage(Yokages.CHARACTERS).Any(Function(x) x <> character.EntityId)
     End Function
 End Class

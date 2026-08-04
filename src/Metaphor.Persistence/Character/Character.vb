@@ -15,9 +15,9 @@ Friend Class Character
         End Get
         Set(value As ILocation)
             If value.EntityId <> Location.EntityId Then
-                _data.Locations(Location.EntityId).CharacterIds.Remove(EntityId)
+                Location.RemoveFromYokage(Yokages.CHARACTERS, EntityId)
                 SetYoke(Yokes.LOCATION, value.EntityId)
-                _data.Locations(Location.EntityId).CharacterIds.Add(EntityId)
+                Location.AddToYokage(Yokages.CHARACTERS, EntityId)
             End If
         End Set
     End Property
@@ -42,7 +42,7 @@ Friend Class Character
 
     Public Overrides Sub Remove()
         Inventory.Remove()
-        _data.Locations(GetYoke(Yokes.LOCATION).Value).CharacterIds.Remove(EntityId)
+        Location.RemoveFromYokage(Yokages.CHARACTERS, EntityId)
         _data.Entities.Remove(EntityId)
     End Sub
 

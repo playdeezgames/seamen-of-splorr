@@ -28,7 +28,7 @@ Friend Class Feature
     End Property
 
     Public Overrides Sub Remove()
-        _data.Locations(Location.EntityId).Yokages(Yokages.FEATURES).Remove(EntityId)
+        Location.RemoveFromYokage(Yokages.FEATURES, EntityId)
         For Each verb In Verbs
             verb.Remove()
         Next
