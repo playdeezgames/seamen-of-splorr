@@ -20,12 +20,6 @@ Friend Class Feature
         End Get
     End Property
 
-    Public ReadOnly Property ItemTypes As IEnumerable(Of String) Implements IFeature.ItemTypes
-        Get
-            Return Data.itemTypes
-        End Get
-    End Property
-
     Protected Overrides ReadOnly Property Data As FeatureData
         Get
             Return _data.Features(EntityId)
@@ -39,10 +33,6 @@ Friend Class Feature
         Next
         Inventory.Remove()
         _data.Features.Remove(EntityId)
-    End Sub
-
-    Public Sub AddItemType(itemType As String) Implements IFeature.AddItemType
-        Data.ItemTypes.Add(itemType)
     End Sub
 
     Friend Shared Function Create(world As IWorld, data As WorldData, featureId As Guid) As IFeature
