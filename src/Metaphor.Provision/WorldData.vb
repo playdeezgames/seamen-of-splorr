@@ -5,7 +5,6 @@ Public Class WorldData
     Public Property Messages As New List(Of MessageData)
     Public Property Locations As New Dictionary(Of Guid, LocationData)
     Public Property AvatarId As Guid?
-    Public Property Characters As New Dictionary(Of Guid, EntityData)
     Public Property Inventories As New Dictionary(Of Guid, InventoryData)
     Public Property Entities As New Dictionary(Of Guid, EntityData)
     Public Property Verbs As New Dictionary(Of Guid, EntityData)

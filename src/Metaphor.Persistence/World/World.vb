@@ -16,7 +16,6 @@ Public Class World
         MyBase.Clear()
         ClearMessages()
         Data.AvatarId = Nothing
-        Data.Characters.Clear()
         Data.Locations.Clear()
         Data.Inventories.Clear()
         Data.Entities.Clear()
