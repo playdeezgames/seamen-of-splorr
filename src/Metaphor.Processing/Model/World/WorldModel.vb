@@ -51,7 +51,7 @@ Public Class WorldModel
         Try
             entity = Await Metaphor.Persistence.World.Load(SAVE_FILENAME, persister)
         Catch ex As Exception
-            entity = Metaphor.Persistence.World.Create(New Provision.WorldData, persister)
+            entity = Metaphor.Persistence.World.Create(New Provision.WorldData With {.EntityType = EntityTypes.WORLD_ENTITY}, persister)
         End Try
         Return New WorldModel(entity, quittable)
     End Function

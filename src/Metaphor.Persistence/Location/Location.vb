@@ -46,11 +46,12 @@ Friend Class Location
         Return If(locationId.HasValue, New Location(world, data, locationId.Value), Nothing)
     End Function
 
-    Public Function CreateCharacter(characterType As String, name As String, pronouns As String, flavor As String, Optional initialize As CharacterInitializer = Nothing) As ICharacter Implements ILocation.CreateCharacter
+    Public Function CreateCharacter(characterSubtype As String, name As String, pronouns As String, flavor As String, Optional initialize As CharacterInitializer = Nothing) As ICharacter Implements ILocation.CreateCharacter
         Dim characterId = Guid.NewGuid
         _data.Characters(characterId) = New CharacterData With
             {
-                .EntitySubtype = characterType,
+                .EntityType = EntityTypes.CHARACTER_ENTITY,
+                .EntitySubtype = characterSubtype,
                 .LocationId = EntityId,
                 .Name = name,
                 .Flavor = flavor,
@@ -66,6 +67,7 @@ Friend Class Location
         Dim featureId = Guid.NewGuid
         _data.Features(featureId) = New FeatureData With
             {
+                .EntityType = EntityTypes.FEATURE_ENTITY,
                 .LocationId = EntityId,
                 .Name = name,
                 .Flavor = flavor,

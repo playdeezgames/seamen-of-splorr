@@ -95,6 +95,7 @@ Public Class World
         Dim locationId = Guid.NewGuid
         Data.Locations(locationId) = New LocationData With
             {
+                .EntityType = EntityTypes.LOCATION_ENTITY,
                 .Name = name,
                 .Flavor = flavor,
                 .EntitySubtype = entitySubtype

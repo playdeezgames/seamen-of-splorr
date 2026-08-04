@@ -53,6 +53,7 @@ Friend Class Inventory
         Dim itemId = Guid.NewGuid
         _data.Items(itemId) = New ItemData With
             {
+                .EntityType = EntityTypes.ITEM_ENTITY,
                 .Name = name,
                 .Flavor = flavor,
                 .EntitySubtype = itemType,
