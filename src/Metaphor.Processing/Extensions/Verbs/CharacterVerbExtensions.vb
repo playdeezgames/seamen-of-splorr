@@ -18,7 +18,7 @@ Friend Module CharacterVerbExtensions
     Private Function CanHeadForKnownBubble(verb As IVerb, character As ICharacter, actor As ICharacter) As Boolean
         Dim avatar = verb.World.Avatar
         Return Not avatar.GetShip().IsSnorkelRaised() AndAlso
-            Not avatar.GetShip().IsMoored AndAlso
+            Not avatar.GetShip().IsDocked() AndAlso
             avatar.GetKnownBubbles().Any
     End Function
 

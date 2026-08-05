@@ -13,16 +13,6 @@ Friend Module LocationExtensions
                 Throw New NotImplementedException
         End Select
     End Sub
-
-    <Extension>
-    Friend Sub MoorTo(fromLocation As ILocation, toLocation As ILocation, verbName As String)
-        Dim moorings = fromLocation.CreateFeature(FeatureSubtypes.MOORINGS, $"Moorings to {toLocation.Name}", $"Lines securely fasten {fromLocation.Name} to {toLocation.Name}.")
-        moorings.SetDestination(toLocation)
-    End Sub
-    <Extension>
-    Friend Sub RemoveMoorings(location As ILocation)
-        location.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS).Remove()
-    End Sub
     <Extension>
     Friend Sub Dock(fromLocation As ILocation, toLocation As ILocation)
         fromLocation.SetYoke(Yokes.DOCKED, toLocation.EntityId)
@@ -34,5 +24,9 @@ Friend Module LocationExtensions
     <Extension>
     Friend Function IsDocked(location As ILocation) As Boolean
         Return location.GetYoke(Yokes.DOCKED).HasValue
+    End Function
+    <Extension>
+    Friend Function GetDocked(location As ILocation) As ILocation
+        Return location.World.GetLocation(location.GetYoke(Yokes.DOCKED))
     End Function
 End Module

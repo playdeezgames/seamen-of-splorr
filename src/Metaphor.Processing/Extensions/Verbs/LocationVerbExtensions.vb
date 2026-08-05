@@ -33,37 +33,37 @@ Friend Module LocationVerbExtensions
     End Function
 
     Private Function CanSetHydroplane(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsMoored
+        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsDocked()
     End Function
 
     Private Function CanEmbark(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
-        Return location.Features.Any(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS)
+        Return location.IsDocked()
     End Function
 
     Private Function CanDisembark(verb As IVerb, location As ILocation, actor As ICharacter) As Boolean
-        Return Not location.IsSnorkelRaised() AndAlso location.Features.Any(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS)
+        Return Not location.IsSnorkelRaised() AndAlso location.IsDocked()
     End Function
 
     Private Function CanUndock(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return Not ship.IsSnorkelRaised() AndAlso ship.IsMoored
+        Return Not ship.IsSnorkelRaised() AndAlso ship.IsDocked()
     End Function
 
     Private Function CanSetSpeed(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsMoored
+        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsDocked()
     End Function
 
     Private Function CanSetHeading(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsMoored
+        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsDocked()
     End Function
 
     Private Function CanDock(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
         Return Not ship.IsSnorkelRaised() AndAlso
-            Not ship.IsMoored AndAlso
+            Not ship.IsDocked() AndAlso
             verb.World.Bubbles.Any(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE AndAlso x.DepthDifference(ship) <= MAXIMUM_DEPTH_DIFFERENCE)
     End Function
 
     Private Function CanMove(verb As IVerb, ship As ILocation, actor As ICharacter) As Boolean
-        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsMoored AndAlso ship.GetSpeed() > SPEED_FULL_STOP AndAlso ship.GetBattery() > 0.0
+        Return Not ship.IsSnorkelRaised() AndAlso Not ship.IsDocked() AndAlso ship.GetSpeed() > SPEED_FULL_STOP AndAlso ship.GetBattery() > 0.0
     End Function
 
     <Extension>
@@ -129,7 +129,7 @@ Friend Module LocationVerbExtensions
         Dim world = verb.World
         Dim avatar = world.Avatar
         Dim fromLocation = avatar.Location
-        Dim destination = location.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS).GetDestination()
+        Dim destination = fromLocation.GetDocked()
         avatar.Location = destination
         world.AddMessage($"{avatar.Name} moves from {fromLocation.Name} to {destination.Name}.")
         avatar.Look()
@@ -139,18 +139,16 @@ Friend Module LocationVerbExtensions
         Dim world = verb.World
         Dim avatar = world.Avatar
         Dim fromLocation = avatar.Location
-        Dim destination = location.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS).GetDestination()
+        Dim destination = fromLocation.GetDocked()
         avatar.Location = destination
         world.AddMessage($"{avatar.Name} moves from {fromLocation.Name} to {destination.Name}.")
         avatar.Look()
     End Sub
 
     Private Sub HandleUndock(verb As IVerb, ship As ILocation, actor As ICharacter)
-        Dim bubble = ship.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS).GetDestination()
+        Dim bubble = ship.GetDocked()
         bubble.Undock()
         ship.Undock()
-        bubble.RemoveMoorings()
-        ship.RemoveMoorings()
     End Sub
 
     Private Sub HandleDock(verb As IVerb, ship As ILocation, actor As ICharacter)
@@ -158,8 +156,6 @@ Friend Module LocationVerbExtensions
         ship.ReplenishOxygen()
         ship.Dock(bubble)
         bubble.Dock(ship)
-        ship.MoorTo(bubble, "Disembark")
-        bubble.MoorTo(ship, "Embark")
         bubble.SetTag(Tags.KNOWN)
         verb.World.Avatar.AddKnownBubble(bubble)
     End Sub

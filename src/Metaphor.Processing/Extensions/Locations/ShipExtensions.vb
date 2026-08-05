@@ -23,7 +23,7 @@ Friend Module ShipExtensions
     End Function
 
     Private Sub ShowVisibleBubbles(world As IWorld, ship As ILocation)
-        If ship.IsMoored Then Return
+        If ship.IsDocked Then Return
         Dim visibility = ship.GetVisibility()
         Dim visibleBubbles = world.Bubbles.Where(Function(x) x.IsVisibleTo(ship)).OrderBy(Function(x) x.DistanceTo(ship))
         If visibleBubbles.Any Then
@@ -103,10 +103,6 @@ Friend Module ShipExtensions
     Friend Sub SetSpeed(ship As ILocation, speed As Double)
         ship.SetDimension(Dimensions.SPEED, speed)
     End Sub
-    <Extension>
-    Friend Function IsMoored(ship As ILocation) As Boolean
-        Return ship.Features.Any(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS)
-    End Function
     <Extension>
     Friend Function GetCargoHold(ship As ILocation) As IFeature
         Return ship.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.CARGO_HOLD)

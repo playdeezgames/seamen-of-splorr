@@ -226,7 +226,10 @@ Public MustInherit Class Entity(Of TData As EntityData)
 
     Public Function GetYoke(yokeId As String) As Guid? Implements IEntity.GetYoke
         Dim result As Guid
-        Return If(Data.Yokes.TryGetValue(yokeId, result), result, Nothing)
+        If Data.Yokes.TryGetValue(yokeId, result) Then
+            Return result
+        End If
+        Return Nothing
     End Function
 
     Public Sub ClearYoke(yokeId As String) Implements IEntity.ClearYoke
