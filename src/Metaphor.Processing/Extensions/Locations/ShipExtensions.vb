@@ -119,4 +119,8 @@ Friend Module ShipExtensions
     Friend Function IsAtSnorkelDepth(ship As ILocation) As Boolean
         Return ship.IsDimensionMinimum(Dimensions.DEPTH)
     End Function
+    <Extension>
+    Friend Sub ReplenishOxygen(ship As ILocation)
+        ship.SetDimension(Dimensions.OXYGEN, ship.GetMaximumOxygen())
+    End Sub
 End Module

@@ -117,7 +117,7 @@ Friend Module LocationVerbExtensions
     Private Sub HandleRaiseSnorkel(verb As IVerb, ship As ILocation, actor As ICharacter)
         Dim world = verb.World
         world.AddMessage($"{actor.Name} raises the snorkel.")
-        ship.SetDimension(Dimensions.OXYGEN, ship.GetMaximumOxygen())
+        ship.ReplenishOxygen()
         ship.SetTag(Tags.SNORKEL_RAISED)
     End Sub
 
@@ -153,6 +153,7 @@ Friend Module LocationVerbExtensions
 
     Private Sub HandleDock(verb As IVerb, ship As ILocation, actor As ICharacter)
         Dim bubble = verb.World.Bubbles.Single(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
+        ship.ReplenishOxygen()
         ship.MoorTo(bubble, "Disembark")
         bubble.MoorTo(ship, "Embark")
         bubble.SetTag(Tags.KNOWN)
