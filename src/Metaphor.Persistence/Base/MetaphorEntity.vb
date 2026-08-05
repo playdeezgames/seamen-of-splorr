@@ -72,7 +72,7 @@ Friend MustInherit Class MetaphorEntity(Of TData As EntityData)
             Dim inventoryId As Guid
             If Not Data.Yokes.TryGetValue(Yokes.INVENTORY, inventoryId) Then
                 inventoryId = Guid.NewGuid
-                _data.Inventories(inventoryId) = New InventoryData
+                _data.Entities(inventoryId) = New EntityData
                 Data.Yokes(Yokes.INVENTORY) = inventoryId
             End If
             Return Persistence.Inventory.Create(World, _data, inventoryId)

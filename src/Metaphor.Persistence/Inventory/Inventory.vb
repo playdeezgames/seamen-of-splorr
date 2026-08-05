@@ -1,7 +1,8 @@
 ﻿Imports Metaphor.Provision
+Imports TGGD.Provision
 
 Friend Class Inventory
-    Inherits MetaphorEntity(Of InventoryData)
+    Inherits MetaphorEntity(Of EntityData)
     Implements IInventory
 
     Public Sub New(world As IWorld, data As WorldData, inventoryId As Guid)
@@ -32,9 +33,9 @@ Friend Class Inventory
         End Get
     End Property
 
-    Protected Overrides ReadOnly Property Data As InventoryData
+    Protected Overrides ReadOnly Property Data As EntityData
         Get
-            Return _data.Inventories(EntityId)
+            Return _data.Entities(EntityId)
         End Get
     End Property
 
@@ -42,7 +43,7 @@ Friend Class Inventory
         For Each item In Items
             item.Remove()
         Next
-        _data.Inventories.Remove(EntityId)
+        _data.Entities.Remove(EntityId)
     End Sub
 
     Friend Shared Function Create(world As IWorld, data As WorldData, inventoryId As Guid?) As IInventory

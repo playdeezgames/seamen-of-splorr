@@ -15,8 +15,6 @@ Public Class World
     Public Overrides Sub Clear()
         MyBase.Clear()
         ClearMessages()
-        Data.AvatarId = Nothing
-        Data.Inventories.Clear()
         Data.Entities.Clear()
         Data.AdFinishes = Nothing
         Data.BubbleIds.Clear()
@@ -34,10 +32,14 @@ Public Class World
 
     Public Property Avatar As ICharacter Implements IWorld.Avatar
         Get
-            Return Character.Create(Me, Data, Data.AvatarId)
+            Return Character.Create(Me, Data, GetYoke(Yokes.AVATAR))
         End Get
         Set(value As ICharacter)
-            Data.AvatarId = value?.EntityId
+            If value Is Nothing Then
+                ClearYoke(Yokes.AVATAR)
+            Else
+                SetYoke(Yokes.AVATAR, value.EntityId)
+            End If
         End Set
     End Property
 
