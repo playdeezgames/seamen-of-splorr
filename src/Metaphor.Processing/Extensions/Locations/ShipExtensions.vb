@@ -16,7 +16,17 @@ Friend Module ShipExtensions
             world.AddMessage($"Snorkel: Raised")
         End If
         ShowVisibleBubbles(world, ship)
+        ShowBoundFor(ship)
     End Sub
+
+    Private Sub ShowBoundFor(ship As ILocation)
+        Dim boundFor = ship.GetBoundFor()
+        If boundFor IsNot Nothing Then
+            Dim world = ship.World
+            world.AddMessage($"Bound for: {boundFor.GetBubbleName()}")
+        End If
+    End Sub
+
     <Extension>
     Friend Function GetHydroplane(ship As ILocation) As Double
         Return ship.GetDimension(Dimensions.HYDROPLANE)
@@ -119,4 +129,16 @@ Friend Module ShipExtensions
     Friend Sub ReplenishOxygen(ship As ILocation)
         ship.SetDimension(Dimensions.OXYGEN, ship.GetMaximumOxygen())
     End Sub
+    <Extension>
+    Friend Sub HeadFor(ship As ILocation, bubble As ILocation)
+        If bubble IsNot Nothing Then
+            ship.SetYoke(Yokes.BOUND_FOR, bubble.EntityId)
+        Else
+            ship.ClearYoke(Yokes.BOUND_FOR)
+        End If
+    End Sub
+    <Extension>
+    Friend Function GetBoundFor(ship As ILocation) As ILocation
+        Return ship.World.GetLocation(ship.GetYoke(Yokes.BOUND_FOR))
+    End Function
 End Module

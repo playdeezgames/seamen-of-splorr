@@ -46,6 +46,7 @@ Friend Class ShipModel
     End Property
 
     Public Sub SetHeading(heading As Double) Implements IShipModel.SetHeading
+        ship.HeadFor(Nothing)
         ship.SetHeading(heading)
         ship.World.Avatar.SetMode(Nothing)
         ship.World.Avatar.Look()

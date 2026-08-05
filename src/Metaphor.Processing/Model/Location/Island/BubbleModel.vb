@@ -21,6 +21,7 @@ Friend Class BubbleModel
         Dim avatar = world.Avatar
         avatar.SetMode(Nothing)
         Dim ship = avatar.GetShip()
+        ship.HeadFor(bubble)
         ship.SetHeading(ship.HeadingTo(bubble))
         Dim depthDelta = bubble.GetDepth() - ship.GetDepth()
         Dim distance = bubble.DistanceTo(ship)

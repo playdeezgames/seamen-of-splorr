@@ -154,6 +154,7 @@ Friend Module LocationVerbExtensions
     Private Sub HandleDock(verb As IVerb, ship As ILocation, actor As ICharacter)
         Dim bubble = verb.World.Bubbles.Single(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
         ship.ReplenishOxygen()
+        ship.HeadFor(Nothing)
         ship.Dock(bubble)
         bubble.Dock(ship)
         bubble.SetTag(Tags.KNOWN)
