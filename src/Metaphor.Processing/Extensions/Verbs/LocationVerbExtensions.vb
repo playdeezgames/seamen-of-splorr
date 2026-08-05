@@ -147,6 +147,8 @@ Friend Module LocationVerbExtensions
 
     Private Sub HandleUndock(verb As IVerb, ship As ILocation, actor As ICharacter)
         Dim bubble = ship.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS).GetDestination()
+        bubble.Undock()
+        ship.Undock()
         bubble.RemoveMoorings()
         ship.RemoveMoorings()
     End Sub
@@ -154,6 +156,8 @@ Friend Module LocationVerbExtensions
     Private Sub HandleDock(verb As IVerb, ship As ILocation, actor As ICharacter)
         Dim bubble = verb.World.Bubbles.Single(Function(x) x.DistanceTo(ship) <= DOCKING_DISTANCE)
         ship.ReplenishOxygen()
+        ship.Dock(bubble)
+        bubble.Dock(ship)
         ship.MoorTo(bubble, "Disembark")
         bubble.MoorTo(ship, "Embark")
         bubble.SetTag(Tags.KNOWN)

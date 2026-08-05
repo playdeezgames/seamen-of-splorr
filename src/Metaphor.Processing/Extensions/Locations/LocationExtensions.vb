@@ -23,4 +23,12 @@ Friend Module LocationExtensions
     Friend Sub RemoveMoorings(location As ILocation)
         location.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.MOORINGS).Remove()
     End Sub
+    <Extension>
+    Friend Sub Dock(fromLocation As ILocation, toLocation As ILocation)
+        fromLocation.SetYoke(Yokes.DOCKED, toLocation.EntityId)
+    End Sub
+    <Extension>
+    Friend Sub Undock(location As ILocation)
+        location.ClearYoke(Yokes.DOCKED)
+    End Sub
 End Module
