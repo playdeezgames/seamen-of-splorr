@@ -59,6 +59,7 @@ Friend Class ShipModel
     End Sub
 
     Public Sub SetHydroplane(hydroplane As Double) Implements IShipModel.SetHydroplane
+        ship.HeadFor(Nothing)
         ship.SetHydroplane(hydroplane)
         ship.World.Avatar.SetMode(Nothing)
         ship.World.Avatar.Look()

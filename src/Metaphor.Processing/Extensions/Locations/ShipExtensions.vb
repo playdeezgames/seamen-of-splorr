@@ -2,7 +2,7 @@
 Imports Metaphor.Persistence
 
 Friend Module ShipExtensions
-
+#Region "Describe"
     Friend Sub DescribeShip(ship As ILocation)
         Dim world = ship.World
         world.AddMessage($"Heading: {ship.GetHeading():f2}°")
@@ -18,7 +18,6 @@ Friend Module ShipExtensions
         ShowVisibleBubbles(world, ship)
         ShowBoundFor(ship)
     End Sub
-
     Private Sub ShowBoundFor(ship As ILocation)
         Dim boundFor = ship.GetBoundFor()
         If boundFor IsNot Nothing Then
@@ -26,12 +25,6 @@ Friend Module ShipExtensions
             world.AddMessage($"Bound for: {boundFor.GetBubbleName()}")
         End If
     End Sub
-
-    <Extension>
-    Friend Function GetHydroplane(ship As ILocation) As Double
-        Return ship.GetDimension(Dimensions.HYDROPLANE)
-    End Function
-
     Private Sub ShowVisibleBubbles(world As IWorld, ship As ILocation)
         If ship.IsDocked Then Return
         Dim visibility = ship.GetVisibility()
@@ -44,7 +37,12 @@ Friend Module ShipExtensions
             Next
         End If
     End Sub
-
+#End Region
+#Region "Dimensions"
+    <Extension>
+    Friend Function GetHydroplane(ship As ILocation) As Double
+        Return ship.GetDimension(Dimensions.HYDROPLANE)
+    End Function
     <Extension>
     Friend Function GetLongitude(ship As ILocation) As Double
         Return ship.GetDimension(Dimensions.LONGITUDE)
@@ -94,6 +92,10 @@ Friend Module ShipExtensions
         Return ship.GetDimensionMaximum(Dimensions.OXYGEN)
     End Function
     <Extension>
+    Friend Sub ReplenishOxygen(ship As ILocation)
+        ship.SetDimension(Dimensions.OXYGEN, ship.GetMaximumOxygen())
+    End Sub
+    <Extension>
     Friend Function GetMaximumBattery(ship As ILocation) As Double
         Return ship.GetDimensionMaximum(Dimensions.BATTERY)
     End Function
@@ -113,10 +115,8 @@ Friend Module ShipExtensions
     Friend Sub SetSpeed(ship As ILocation, speed As Double)
         ship.SetDimension(Dimensions.SPEED, speed)
     End Sub
-    <Extension>
-    Friend Function GetCargoHold(ship As ILocation) As IFeature
-        Return ship.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.CARGO_HOLD)
-    End Function
+#End Region
+#Region "Tags"
     <Extension>
     Friend Function IsSnorkelRaised(ship As ILocation) As Boolean
         Return ship.HasTag(Tags.SNORKEL_RAISED)
@@ -125,10 +125,14 @@ Friend Module ShipExtensions
     Friend Function IsAtSnorkelDepth(ship As ILocation) As Boolean
         Return ship.IsDimensionMinimum(Dimensions.DEPTH)
     End Function
+#End Region
+#Region "Features"
     <Extension>
-    Friend Sub ReplenishOxygen(ship As ILocation)
-        ship.SetDimension(Dimensions.OXYGEN, ship.GetMaximumOxygen())
-    End Sub
+    Friend Function GetCargoHold(ship As ILocation) As IFeature
+        Return ship.Features.Single(Function(x) x.EntitySubtype = FeatureSubtypes.CARGO_HOLD)
+    End Function
+#End Region
+#Region "Heading For"
     <Extension>
     Friend Sub HeadFor(ship As ILocation, bubble As ILocation)
         If bubble IsNot Nothing Then
@@ -141,4 +145,5 @@ Friend Module ShipExtensions
     Friend Function GetBoundFor(ship As ILocation) As ILocation
         Return ship.World.GetLocation(ship.GetYoke(Yokes.BOUND_FOR))
     End Function
+#End Region
 End Module
