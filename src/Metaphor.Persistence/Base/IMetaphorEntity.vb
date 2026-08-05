@@ -1,5 +1,5 @@
 Imports TGGD.Persistence
-
+Public Delegate Sub EntityInitializer(entity As IMetaphorEntity)
 Public Interface IMetaphorEntity
     Inherits IEntity
     ReadOnly Property World As IWorld
