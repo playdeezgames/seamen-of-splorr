@@ -31,4 +31,8 @@ Friend Module LocationExtensions
     Friend Sub Undock(location As ILocation)
         location.ClearYoke(Yokes.DOCKED)
     End Sub
+    <Extension>
+    Friend Function IsDocked(location As ILocation) As Boolean
+        Return location.GetYoke(Yokes.DOCKED).HasValue
+    End Function
 End Module
