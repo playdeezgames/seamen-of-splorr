@@ -5,5 +5,4 @@ Public Class WorldData
     Public Property Entities As New Dictionary(Of Guid, EntityData)
     Public Property Messages As New List(Of MessageData)
     Public Property AdFinishes As DateTimeOffset?
-    Public Property BubbleIds As New HashSet(Of Guid)
 End Class

@@ -17,7 +17,6 @@ Public Class World
         ClearMessages()
         Data.Entities.Clear()
         Data.AdFinishes = Nothing
-        Data.BubbleIds.Clear()
     End Sub
 
     Protected Overrides ReadOnly Property Data As WorldData
@@ -54,7 +53,7 @@ Public Class World
 
     Public ReadOnly Property Bubbles As IEnumerable(Of ILocation) Implements IWorld.Bubbles
         Get
-            Return Data.BubbleIds.Select(Function(x) Location.Create(Me, Data, x))
+            Return GetYokage(Yokages.BUBBLES).Select(Function(x) Location.Create(Me, Data, x))
         End Get
     End Property
 
@@ -107,7 +106,7 @@ Public Class World
     End Function
 
     Public Sub AddBubble(bubble As ILocation) Implements IWorld.AddBubble
-        Data.BubbleIds.Add(bubble.EntityId)
+        AddToYokage(Yokages.BUBBLES, bubble.EntityId)
     End Sub
 
     Public Function GetLocation(locationId As Guid?) As ILocation Implements IWorld.GetLocation
