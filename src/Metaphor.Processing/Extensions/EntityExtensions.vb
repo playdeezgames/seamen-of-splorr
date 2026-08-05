@@ -35,4 +35,12 @@ Friend Module EntityExtensions
     Friend Function GetJools(entity As IMetaphorEntity) As Double
         Return entity.GetDimension(Dimensions.JOOLS)
     End Function
+    <Extension>
+    Friend Function GetCounterStatistic(entity As IMetaphorEntity, counter As String) As String
+        Return $"{entity.GetCounter(counter)}/{entity.GetCounterMaximum(counter)}"
+    End Function
+    <Extension>
+    Friend Function GetDimensionStatistic(entity As IMetaphorEntity, dimension As String) As String
+        Return $"{entity.GetDimension(dimension):f2}/{entity.GetDimensionMaximum(dimension):f2}"
+    End Function
 End Module

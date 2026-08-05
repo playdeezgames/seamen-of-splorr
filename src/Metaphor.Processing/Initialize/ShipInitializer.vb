@@ -6,7 +6,7 @@ Friend Module ShipInitializer
         Return Sub(ship)
                    context.Ship = ship
                    ship.InitializeDimension(Dimensions.HEADING, RNG.FromRange(HEADING_MINIMUM, HEADING_MAXIMUM), HEADING_MINIMUM, HEADING_MAXIMUM)
-                   ship.InitializeDimension(Dimensions.SPEED, SPEED_AHEAD_TWO_THIRDS, SPEED_FULL_STOP, SPEED_AHEAD_FLANK)
+                   ship.InitializeDimension(Dimensions.SPEED, SPEED_AHEAD_FLANK / 2, SPEED_FULL_STOP, SPEED_AHEAD_FLANK)
                    ship.InitializeDimension(Dimensions.LONGITUDE, context.WorldWidth / 2, 0.0, context.WorldWidth)
                    ship.InitializeDimension(Dimensions.LATITUDE, context.WorldHeight / 2, 0.0, context.WorldHeight)
                    ship.InitializeDimension(Dimensions.DEPTH, (context.SnorkelDepth + context.WorldDepth) / 2, context.SnorkelDepth, context.WorldDepth)

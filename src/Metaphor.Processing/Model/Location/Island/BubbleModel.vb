@@ -24,7 +24,7 @@ Friend Class BubbleModel
         ship.SetHeading(ship.HeadingTo(bubble))
         Dim depthDelta = bubble.GetDepth() - ship.GetDepth()
         Dim distance = bubble.DistanceTo(ship)
-        ship.SetHydroplane(Utility.ToDegrees(Math.Asin(depthDelta / distance / Grimoire.FATHOMS_PER_KNOT)))
+        ship.SetHydroplane(Utility.ToDegrees(Math.Asin(depthDelta / distance / Grimoire.FTM_PER_NM)))
         world.AddMessage($"{avatar.Name} heads for {bubble.GetBubbleName()} by setting a heading of {ship.GetHeading():f2}.")
         avatar.Look()
     End Sub

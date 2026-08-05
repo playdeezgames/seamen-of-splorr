@@ -168,7 +168,7 @@ Friend Module LocationVerbExtensions
         Dim bubbleRadians = Utility.ToRadians(ship.GetHydroplane())
         Dim deltaLongitude = speed * Math.Cos(headingRadians)
         Dim deltaLatitude = speed * Math.Sin(headingRadians)
-        Dim deltaDepth = speed * Math.Sin(bubbleRadians) * Grimoire.FATHOMS_PER_KNOT
+        Dim deltaDepth = speed * Math.Sin(bubbleRadians) * Grimoire.FTM_PER_NM
         Dim nextLongitude = ship.GetLongitude() + deltaLongitude
         Dim nextLatitude = ship.GetLatitude() + deltaLatitude
         Dim nextDepth = ship.GetDepth() + deltaDepth

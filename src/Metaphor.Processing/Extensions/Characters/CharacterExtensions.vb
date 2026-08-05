@@ -49,9 +49,9 @@ Friend Module CharacterExtensions
         Dim world = character.World
         world.AddMessage($"{character.Name}'s Status:")
         world.AddMessage(character.Flavor)
-        world.AddMessage($"Health: {character.GetHealth()}/{character.GetMaximumHealth()}")
-        world.AddMessage($"Satiety: {character.GetSatiety()}/{character.GetMaximumSatiety()}")
-        world.AddMessage($"Stomach: {character.GetStomach()}/{character.GetMaximumStomach()}")
+        world.AddMessage($"Health: {character.GetCounterStatistic(Counters.HEALTH)}")
+        world.AddMessage($"Satiety: {character.GetCounterStatistic(Counters.SATIETY)}")
+        world.AddMessage($"Stomach: {character.GetCounterStatistic(Counters.STOMACH)}")
         world.AddMessage($"Jools: {character.GetJools():f2}")
     End Sub
     <Extension>
