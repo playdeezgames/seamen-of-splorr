@@ -10,13 +10,13 @@ Friend Class Inventory
 
     Public ReadOnly Property HasItems As Boolean Implements IInventory.HasItems
         Get
-            Return Data.ItemIds.Count <> 0
+            Return GetYokage(Yokages.ITEMS).Any()
         End Get
     End Property
 
     Public ReadOnly Property Items As IEnumerable(Of IItem) Implements IInventory.Items
         Get
-            Return Data.ItemIds.Select(Function(x) Item.Create(world, _data, x))
+            Return GetYokage(Yokages.ITEMS).Select(Function(x) Item.Create(World, _data, x))
         End Get
     End Property
 
@@ -65,8 +65,8 @@ Friend Class Inventory
                     {Yokes.CONTAINER, EntityId}
                 }
             }
-        Data.ItemIds.Add(itemId)
-        Dim result As IItem = Item.Create(world, _data, itemId)
+        AddToYokage(Yokages.ITEMS, itemId)
+        Dim result As IItem = Item.Create(World, _data, itemId)
         initializer?.Invoke(result)
         Return result
     End Function

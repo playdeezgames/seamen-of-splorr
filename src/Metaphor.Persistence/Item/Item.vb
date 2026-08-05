@@ -14,9 +14,9 @@ Friend Class Item
             Return Persistence.Inventory.Create(World, _data, GetYoke(Yokes.CONTAINER))
         End Get
         Set(value As IInventory)
-            _data.Inventories(GetYoke(Yokes.CONTAINER).Value).ItemIds.Remove(EntityId)
+            Container.RemoveFromYokage(Yokages.ITEMS, EntityId)
             SetYoke(Yokes.CONTAINER, value.EntityId)
-            _data.Inventories(GetYoke(Yokes.CONTAINER).Value).ItemIds.Add(EntityId)
+            Container.AddToYokage(Yokages.ITEMS, EntityId)
         End Set
     End Property
 
@@ -33,7 +33,7 @@ Friend Class Item
     End Property
 
     Public Overrides Sub Remove()
-        _data.Inventories(GetYoke(Yokes.CONTAINER).Value).ItemIds.Remove(EntityId)
+        Container.RemoveFromYokage(Yokages.ITEMS, EntityId)
         _data.Entities.Remove(EntityId)
     End Sub
 
