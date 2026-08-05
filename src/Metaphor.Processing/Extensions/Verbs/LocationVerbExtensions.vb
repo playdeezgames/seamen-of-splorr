@@ -101,7 +101,7 @@ Friend Module LocationVerbExtensions
             world.AddMessage($"Battery is now: {location.GetBattery():f2}/{location.GetMaximumBattery():f2}")
             location.ChangeDimension(Dimensions.FUEL, -charge)
             world.AddMessage($"Fuels is now: {location.GetFuel():f2}/{location.GetMaximumFuel():f2}")
-            If Not location.IsSnorkelRaised Then
+            If Not location.IsSnorkelRaised And Not location.IsDocked Then
                 location.ChangeDimension(Dimensions.OXYGEN, -charge)
                 world.AddMessage($"Oxygen is now: {location.GetOxygen():f2}/{location.GetMaximumOxygen():f2}")
             End If
