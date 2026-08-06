@@ -146,4 +146,12 @@ Friend Module ShipExtensions
         Return ship.World.GetLocation(ship.GetYoke(Yokes.BOUND_FOR))
     End Function
 #End Region
+    <Extension>
+    Friend Sub Refuel(ship As ILocation, units As Double)
+        ship.ChangeDimension(Dimensions.FUEL, units)
+    End Sub
+    <Extension>
+    Friend Function GetFuelCapacity(ship As ILocation) As Double
+        Return ship.GetMaximumFuel() - ship.GetFuel()
+    End Function
 End Module

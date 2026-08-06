@@ -27,8 +27,23 @@ Friend Module FeatureVerbExtensions
     Private ReadOnly performTable As New Dictionary(Of String, PerformHandler) From
         {
             {VerbSubtypes.MOVE, AddressOf HandleMove},
-            {VerbSubtypes.ACCEPT_DELIVERY, AddressOf HandleAcceptDelivery}
+            {VerbSubtypes.ACCEPT_DELIVERY, AddressOf HandleAcceptDelivery},
+            {VerbSubtypes.BUY_FUEL, AddressOf HandleBuyFuel}
         }
+
+    Private Sub HandleBuyFuel(verb As IVerb, feature As IFeature, actor As ICharacter)
+        Dim price = feature.GetFuelPrice()
+        Dim jools = actor.GetJools()
+        Dim ship = actor.GetShip()
+        Dim capacity = ship.GetFuelCapacity()
+        Dim maximumPurchace = Math.Min(capacity, jools / price)
+        Dim bubble = feature.Location
+        actor.AddMessage($"{ship.Name} has {ship.GetDimensionStatistic(Dimensions.FUEL)} fuel.")
+        actor.AddMessage($"Price of fuel on {bubble.Name} is {price:f2} jools/unit.")
+        actor.AddMessage($"{actor.Name} has {jools:f2} jools.")
+        actor.AddMessage($"{actor.Name} can buy {maximumPurchace:f2} fuel.")
+        actor.SetMode(Modes.BUYING_FUEL)
+    End Sub
 
     Private Sub HandleAcceptDelivery(verb As IVerb, feature As IFeature, actor As ICharacter)
         Dim world = verb.World

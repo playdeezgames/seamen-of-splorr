@@ -3,6 +3,7 @@
     ReadOnly Property Inventory As IInventoryModel
     ReadOnly Property Verbs As IEnumerable(Of IVerbModel)
     Sub Look()
+    Sub BuyFuel(units As Double)
     ReadOnly Property Ship As IShipModel
     ReadOnly Property IsDead As Boolean
     ReadOnly Property CanStow As Boolean

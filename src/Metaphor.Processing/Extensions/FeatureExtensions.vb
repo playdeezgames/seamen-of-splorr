@@ -33,4 +33,8 @@ Friend Module FeatureExtensions
     Friend Function GetDestination(feature As IFeature) As ILocation
         Return feature.World.GetLocation(feature.GetYoke(Yokes.DESTINATION))
     End Function
+    <Extension>
+    Friend Function GetFuelPrice(feature As IFeature) As Double
+        Return feature.GetDimension(Dimensions.FUEL_PRICE)
+    End Function
 End Module

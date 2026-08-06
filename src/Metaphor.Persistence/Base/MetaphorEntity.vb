@@ -67,6 +67,10 @@ Friend MustInherit Class MetaphorEntity(Of TData As EntityData)
         Return result
     End Function
 
+    Public Sub AddMessage(text As String, Optional hints As IDictionary(Of String, String) = Nothing) Implements IMetaphorEntity.AddMessage
+        World.AddMessage(text, hints)
+    End Sub
+
     Public ReadOnly Property Inventory As IInventory Implements IMetaphorEntity.Inventory
         Get
             Dim inventoryId As Guid

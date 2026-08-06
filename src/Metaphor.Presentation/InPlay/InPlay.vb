@@ -22,7 +22,8 @@ Friend Class InPlay
             {Modes.PICKING_KNOWN_BUBBLE, AddressOf ChooseKnownBubblePrompt.Launch},
             {Modes.SETTING_HEADING, AddressOf SetHeadingPrompt.Launch},
             {Modes.SETTING_SPEED, AddressOf SetSpeedPrompt.Launch},
-            {Modes.SETTING_HYDROPLANE, AddressOf SetHydroplanePrompt.Launch}
+            {Modes.SETTING_HYDROPLANE, AddressOf SetHydroplanePrompt.Launch},
+            {Modes.BUYING_FUEL, AddressOf BuyFuelPrompt.Launch}
         }
 
     Public Overrides Function Run() As IDialogPrompt

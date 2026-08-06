@@ -32,6 +32,12 @@ Friend Module BubbleExtensions
     Friend Function GetBubbleName(bubble As ILocation) As String
         Return If(bubble.HasTag(Tags.KNOWN), bubble.Name, "UNKNOWN BUBBLE")
     End Function
+#Region "Fueling Station"
+    <Extension>
+    Friend Function GetFuelingStation(bubble As ILocation) As IFeature
+        Return bubble.Features.SingleOrDefault(Function(x) x.EntitySubtype = FeatureSubtypes.FUELING_STATION)
+    End Function
+#End Region
 #Region "Job Board"
     <Extension>
     Friend Sub CreateJobBoard(bubble As ILocation)

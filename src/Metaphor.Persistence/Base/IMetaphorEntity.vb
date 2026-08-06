@@ -12,4 +12,5 @@ Public Interface IMetaphorEntity
     Function CreateVerb(verbSubtype As String, name As String, flavor As String, Optional initializer As VerbInitializer = Nothing) As IVerb
     ReadOnly Property Verbs As IEnumerable(Of IVerb)
     ReadOnly Property Inventory As IInventory
+    Sub AddMessage(text As String, Optional hints As IDictionary(Of String, String) = Nothing)
 End Interface

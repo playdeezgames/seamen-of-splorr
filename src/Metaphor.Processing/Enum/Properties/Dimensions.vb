@@ -11,4 +11,5 @@
     Friend Const OXYGEN As String = NameOf(OXYGEN)
     Friend Const SPEED As String = NameOf(SPEED)
     Friend Const VISIBILITY As String = NameOf(VISIBILITY)
+    Friend Const FUEL_PRICE As String = NameOf(FUEL_PRICE)
 End Module

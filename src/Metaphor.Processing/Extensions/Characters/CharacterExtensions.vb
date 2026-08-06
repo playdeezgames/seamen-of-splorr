@@ -174,4 +174,16 @@ Friend Module CharacterExtensions
     Friend Sub ClearMode(character As ICharacter)
         character.SetMetadata(Metadatas.MODE, Nothing)
     End Sub
+    <Extension>
+    Friend Sub BuyFuel(character As ICharacter, units As Double)
+        Dim ship = character.GetShip()
+        Dim price = character.Location.GetFuelingStation().GetFuelPrice()
+        units = {units, ship.GetFuelCapacity(), character.GetJools() / price}.Min()
+        Dim jools = units * price
+        character.AddMessage($"{character.Name} buys {units:f2} fuel @ {price:f2} jools/unit.")
+        ship.Refuel(units)
+        character.AddMessage($"{ship} now has {ship.GetDimensionStatistic(Dimensions.FUEL)} fuel.")
+        character.ChangeDimension(Dimensions.JOOLS, -jools)
+        character.AddMessage($"{character.Name} now has {character.GetJools():f2} jools")
+    End Sub
 End Module

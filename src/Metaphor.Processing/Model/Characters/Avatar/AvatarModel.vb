@@ -61,6 +61,12 @@ Friend Class AvatarModel
         avatar.Look()
     End Sub
 
+    Public Sub BuyFuel(units As Double) Implements IAvatarModel.BuyFuel
+        avatar.World.ClearMessages()
+        avatar.BuyFuel(units)
+        avatar.SetMode(Nothing)
+    End Sub
+
     Friend Shared Function Create(avatar As ICharacter) As IAvatarModel
         Return New AvatarModel(avatar)
     End Function
