@@ -21,6 +21,8 @@ Friend Module BubbleInitializer
                    bubble.SetDimension(Dimensions.DEPTH, RNG.FromRange(context.MinimumBubbleDepth, context.MaximumBubbleDepth))
                    bubble.CreateVerb(VerbSubtypes.EMBARK, "Embark", "You step onto the ship.")
                    bubble.CreateJobBoard()
+                   bubble.CreateFuelingStation()
+                   bubble.CreateShoppe()
                End Sub
     End Function
 

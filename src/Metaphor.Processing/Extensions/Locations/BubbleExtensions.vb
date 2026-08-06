@@ -32,6 +32,7 @@ Friend Module BubbleExtensions
     Friend Function GetBubbleName(bubble As ILocation) As String
         Return If(bubble.HasTag(Tags.KNOWN), bubble.Name, "UNKNOWN BUBBLE")
     End Function
+#Region "Job Board"
     <Extension>
     Friend Sub CreateJobBoard(bubble As ILocation)
         bubble.CreateFeature(FeatureSubtypes.JOB_BOARD, "Job Board", "Here are listed various errand person jobs for making a small amount of jools.", AddressOf InitializeJobBoard)
@@ -44,12 +45,11 @@ Friend Module BubbleExtensions
         Dim characterName As String = GenerateName(bubble)
         Return bubble.CreateCharacter(CharacterSubtypes.RECIPIENT, characterName, "They/Them", $"This is {characterName} of {bubble.Name}.", AddressOf InitializeRecipient)
     End Function
-
     Private Sub InitializeRecipient(character As ICharacter)
         character.CreateVerb(VerbSubtypes.DELIVER_PACKAGE, "Deliver Package", "You deliver the package, right in their package delivery hole.")
     End Sub
-
     Private Function GenerateName(bubble As ILocation) As String
         Return "Nacho Mama"
     End Function
+#End Region
 End Module
