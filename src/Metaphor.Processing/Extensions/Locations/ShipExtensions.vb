@@ -11,7 +11,7 @@ Friend Module ShipExtensions
         world.AddMessage($"Hydroplane: {Utility.DescribeHydroplane(ship.GetHydroplane())}")
         world.AddMessage($"Oxygen: {ship.GetOxygen():f2}/{ship.GetMaximumOxygen():f2}")
         world.AddMessage($"Battery: {ship.GetBattery():f2}/{ship.GetMaximumBattery():f2}")
-        world.AddMessage($"Diesel: {ship.GetFuel():f2}/{ship.GetMaximumFuel():f2}")
+        world.AddMessage($"Fuel: {ship.GetFuel():f2}/{ship.GetMaximumFuel():f2}")
         If ship.IsSnorkelRaised Then
             world.AddMessage($"Snorkel: Raised")
         End If
